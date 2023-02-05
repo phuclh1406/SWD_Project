@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --exec babel-node server"
+    "start": "nodemon server"
   },
   "keywords": [],
   "author": "",
@@ -20,12 +20,12 @@
     "nodemon": "^2.0.20",
     "sequelize": "^6.28.0",
     "swagger-jsdoc": "^6.2.8",
-    "swagger-ui-express": "^4.6.0",
+    "swagger-ui-express": "^4.6.0"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^6.6.0",
     "@babel/core": "^7.20.12",
     "@babel/node": "^7.20.7",
     "@babel/preset-env": "^7.20.2"
-  },
-  "devDependencies": {
-    "sequelize-cli": "^6.6.0"
   }
 }

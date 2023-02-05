@@ -1,6 +1,7 @@
-import db from '../models'
+// import db from '../models';
+const db = require('../models');
 
-export const register = () => new Promise((resolve, reject) => {
+const register = () => new Promise((resolve, reject) => {
     try {
         resolve({
             err: 0,
@@ -9,4 +10,6 @@ export const register = () => new Promise((resolve, reject) => {
     } catch (error) {
         reject(error);
     }
-}) 
+});
+
+module.exports = register;

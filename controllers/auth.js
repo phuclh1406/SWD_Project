@@ -1,6 +1,7 @@
-import * as services from "../services";
+// import * as services from "../services";
+const services = require('../services');
 
-export const register = async (req, res) => {
+const register = async (req, res) => {
     try {
         const response = await services.register();
         return res.status(200).json(response);
@@ -11,3 +12,5 @@ export const register = async (req, res) => {
         })
     }
 };
+
+module.exports = register;

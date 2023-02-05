@@ -1,5 +1,7 @@
-import auth from './auth'
-import post from './post'
+// import auth from './auth';
+// import post from './post';
+const auth = require('./auth');
+const post = require('./post');
 
 const initRoutes = (app) => {
     app.use('/api/v1/auth', auth)

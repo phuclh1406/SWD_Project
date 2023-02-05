@@ -1,13 +1,16 @@
-import db from '../models'
+// import db from '../models';
+const db = require('../models');
 
-export const getAllPost = () => new Promise(async (resolve, reject) => {
+const getAllPost = () => new Promise(async (resolve, reject) => {
     try {
-        const response = await db.Post.findAll();
-        resolve({response});
+        const posts = await db.Post.findAll();
+        resolve({posts});
     } catch (error) {
         reject(error);
     }
 }) 
+
+module.exports = getAllPost;
 
 // export const getPostByName = () => new Promise(async (resolve, reject) => {
 //     try {
