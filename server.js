@@ -24,7 +24,7 @@ const options = {
     },
     servers: [
       {
-        url: "https://capstone-matching.herokuapp.com/",
+        url: "https://capstone-matching.herokuapp.com",
       },
     ],
   },
