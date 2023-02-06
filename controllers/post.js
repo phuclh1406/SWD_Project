@@ -8,7 +8,8 @@ const getAllPost = async (req, res) => {
     } catch (error) {
         return res.status(500).json({
             err: -1,
-            mes: 'Iternal Server Error'
+            mes: 'Iternal Server Error',
+            error
         })
     }
 }

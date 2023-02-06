@@ -14,10 +14,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Post.init({
-    decription: DataTypes.STRING,
-    post_title: DataTypes.STRING,
-    time_start: DataTypes.DATEONLY,
-    time_end: DataTypes.DATEONLY,
+    description: DataTypes.STRING,
+    postTitle: DataTypes.STRING,
+    timeStart: DataTypes.DATEONLY,
+    timeEnd: DataTypes.DATEONLY,
     status: {
       type: DataTypes.ENUM,
       values: ['active', 'pending', 'deleted']

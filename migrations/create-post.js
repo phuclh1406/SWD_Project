@@ -8,16 +8,16 @@ module.exports = {
         defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
       },
-      decription: {
+      description: {
         type: Sequelize.STRING,
       },
-      post_title: {
+      postTitle: {
         type: Sequelize.STRING,
       },
-      time_start: {
+      timeStart: {
         type: Sequelize.DATEONLY,
       },
-      time_end: {
+      timeEnd: {
         type: Sequelize.DATEONLY,
       },
       status: {
