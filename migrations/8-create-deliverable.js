@@ -2,36 +2,31 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Posters", {
-      id: {
+    await queryInterface.createTable("Deliverables", {
+      deliverable_id: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
       },
-      name: {
+      deliverable_name: {
         type: Sequelize.STRING,
+        allowNull: false
       },
-      email: {
-        type: Sequelize.STRING,
+      price: {
+        type: Sequelize.DOUBLE,
+        allowNull: false
       },
-      password: {
-        type: Sequelize.STRING,
-      },
-      birthday: {
-        type: Sequelize.DATEONLY,
-      },
-      avatar: {
-        type: Sequelize.STRING,
-      },
-      address: {
-        type: Sequelize.STRING,
-      },
-      phone: {
-        type: Sequelize.INTEGER(10),
+      apllication_id: {
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
+        references: {
+          model: 'applications',
+          key: 'apllication_id'
+        }
       },
       status: {
         type: Sequelize.ENUM,
-        values: ["active", "deleted"],
+        values: ['active', 'pending', 'deactive', 'finished'],
       },
       createdAt: {
         allowNull: false,
@@ -46,6 +41,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Posters");
+    await queryInterface.dropTable("Deliverables");
   },
 };

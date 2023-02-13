@@ -11,13 +11,19 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Category.hasMany(models.JobPost, {as: 'category_post', foreignKey: 'cate_id'});
     }
   }
   Category.init({
-    name: DataTypes.STRING,
+    cate_id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
+    },
+    cate_name: DataTypes.STRING,
     status: {
       type: DataTypes.ENUM,
-      values: ['active', 'pending', 'deleted']
+      values: ['active', 'deactive']
     }
   }, {
     sequelize,

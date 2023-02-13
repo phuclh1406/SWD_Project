@@ -1,15 +1,23 @@
-"use strict";
+'use strict';
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Payments", {
-      id: {
+    await queryInterface.createTable('Wallets', {
+      wallet_id: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
       },
-      name: {
+      wallet_name: {
         type: Sequelize.STRING,
+      },
+      student_id: {
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
+        references: {
+          model: 'students',
+          key: 'student_id'
+        }
       },
       status: {
         type: Sequelize.ENUM,
@@ -28,6 +36,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Payments");
-  },
+    await queryInterface.dropTable('Wallets');
+  }
 };

@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Deliverable extends Model {
+  class Application extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,18 +11,23 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Deliverable.belongsTo(models.Application, {foreignKey: 'application_id', targetKey: 'application_id', as: 'deliverable_application'});
+      Application.belongsTo(models.Student, {foreignKey: 'student_id', targetKey: 'student_id', as: 'categoryData' })
+      Application.belongsTo(models.JobPost, {foreignKey: 'post_id', targetKey: 'post_id', as: 'application_post'});
+      Application.hasMany(models.Deliverable, {as: 'application_deliverable', foreignKey: 'application_id'});
     }
   }
-  Deliverable.init({
-    deliverable_id: {
+  Application.init({
+    application_id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
-    deliverable_name: DataTypes.STRING,
     price: DataTypes.DOUBLE,
-    application_id: {
+    student_id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4
+    },
+    post_id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4
     },
@@ -32,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     sequelize,
-    modelName: 'Deliverable',
+    modelName: 'Application',
   });
-  return Deliverable;
+  return Application;
 };

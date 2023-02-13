@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Deliverable extends Model {
+  class Wallet extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,28 +11,27 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Deliverable.belongsTo(models.Application, {foreignKey: 'application_id', targetKey: 'application_id', as: 'deliverable_application'});
+      Wallet.belongsTo(models.Student, {foreignKey: 'student_id', targetKey: 'student_id', as: 'wallet_student'});
     }
   }
-  Deliverable.init({
-    deliverable_id: {
+  Wallet.init({
+    wallet_id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
-    deliverable_name: DataTypes.STRING,
-    price: DataTypes.DOUBLE,
-    application_id: {
+    wallet_name: DataTypes.STRING,
+    student_id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4
     },
     status: {
       type: DataTypes.ENUM,
-      values: ['active', 'pending', 'deactive', 'finished']
+      values: ['active', 'deactive']
     }
   }, {
     sequelize,
-    modelName: 'Deliverable',
+    modelName: 'Wallet',
   });
-  return Deliverable;
+  return Wallet;
 };

@@ -2,23 +2,23 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Posts", {
-      id: {
+    await queryInterface.createTable("Projects", {
+      project_id: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
       },
-      description: {
+      project_name: {
         type: Sequelize.STRING,
+        allowNull: false
       },
-      postTitle: {
-        type: Sequelize.STRING,
-      },
-      timeStart: {
-        type: Sequelize.DATEONLY,
-      },
-      timeEnd: {
-        type: Sequelize.DATEONLY,
+      student_id: {
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
+        references: {
+          model: 'students',
+          key: 'student_id'
+        }
       },
       status: {
         type: Sequelize.ENUM,
@@ -37,6 +37,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Posts");
+    await queryInterface.dropTable("Projects");
   },
 };

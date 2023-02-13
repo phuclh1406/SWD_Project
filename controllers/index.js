@@ -1,7 +1,6 @@
-// export * from './auth'
-// export * from './post'
+const {getAllPost, getPostById} = require('./post');
+const loginGoogle = require('./auth');
+const getAllStudent = require('./student');
 
-const getAllPost = require('./post');
-const register = require('./auth');
 
-module.exports = {getAllPost, register};
+module.exports = {getAllPost, getPostById, loginGoogle, getAllStudent};

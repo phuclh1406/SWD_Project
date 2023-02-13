@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class PostItem extends Model {
+  class Major extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,17 +11,23 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Major.hasMany(models.Student, {foreignKey: 'major_id', as: 'major_student'});
     }
   }
-  PostItem.init({
-    name: DataTypes.STRING,
+  Major.init({
+    major_id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
+    },
+    major_name: DataTypes.STRING,
     status: {
       type: DataTypes.ENUM,
-      values: ['active', 'pending', 'deleted']
+      values: ['active', 'deactive']
     }
   }, {
     sequelize,
-    modelName: 'PostItem',
+    modelName: 'Major',
   });
-  return PostItem;
+  return Major;
 };

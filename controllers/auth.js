@@ -1,16 +1,17 @@
-// import * as services from "../services";
 const services = require('../services');
+const {BadRequestError, InternalServerError} = require('../errors');
 
-const register = async (req, res) => {
+const loginGoogle = async (req, res) => {
     try {
-        const response = await services.register();
+        const {email: email} = req.user;
+        if(!email) {
+            throw new BadRequestError('Please provide email');
+        }
+        const response = await services.loginGoogle(req.user);
         return res.status(200).json(response);
     } catch (error) {
-        return res.status(500).json({
-            err: -1,
-            mes: 'Iternal Server Error'
-        })
+        throw new InternalServerError('Internal Server Error');
     }
 };
 
-module.exports = register;
+module.exports = loginGoogle;

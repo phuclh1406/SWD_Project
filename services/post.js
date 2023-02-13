@@ -1,16 +1,42 @@
-// import db from '../models';
 const db = require('../models');
 
-const getAllPost = () => new Promise(async (resolve, reject) => {
+const getAllPost = () => new Promise( async (resolve, reject) => {
     try {
-        const posts = await db.Post.findAll();
+        const posts = await db.JobPost.findAll({
+            attributes: {exclude: ['project_id', 'cate_id', 'major_id']},
+            raw: true,
+            nest: true,
+            include: [{
+                model: db.Category, as: 'post_category', attributes: ['cate_name']
+            }]
+        });
         resolve({posts});
     } catch (error) {
         reject(error);
     }
-}) 
+});
 
-module.exports = getAllPost;
+const getPostById = (id) => new Promise( async (resolve, reject) => {
+    try {
+        const posts = await db.JobPost.findOne({
+            where: {post_id: id},
+            attributes: {exclude: ['project_id', 'cate_id', 'major_id']},
+            raw: true,
+            nest: true,
+            include: [{
+                model: db.Category, as: 'post_category', attributes: ['cate_name']
+            }]
+        });
+        resolve({
+            posts: posts
+        });
+    } catch (error) {
+        reject(error);
+    }
+});
+
+
+module.exports = { getAllPost, getPostById };
 
 // export const getPostByName = () => new Promise(async (resolve, reject) => {
 //     try {

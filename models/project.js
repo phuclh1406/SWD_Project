@@ -11,14 +11,24 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Project.belongsTo(models.Student, {foreignKey: 'student_id', targetKey: 'student_id', as: 'project_student'})
+      Project.hasMany(models.JobPost, {as: 'project_post', foreignKey: 'post_id'});
     }
   }
   Project.init({
-    name: DataTypes.STRING,
-    price: DataTypes.DOUBLE,
+    project_id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
+    },
+    project_name: DataTypes.STRING,
+    student_id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4
+    },
     status: {
       type: DataTypes.ENUM,
-      values: ['active', 'pending', 'deleted']
+      values: ['active', 'deactive']
     }
   }, {
     sequelize,
