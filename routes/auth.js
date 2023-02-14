@@ -8,6 +8,8 @@ const router = express.Router();
  * /api/v1/auth/loginGoogle:
  *   post:
  *     summary: For login with google returns the token
+ *     security: 
+ *         - BearerAuth: []
  *     tags: [auth-controller]
  *     responses:
  *       200:
@@ -16,20 +18,7 @@ const router = express.Router();
  *           application/json:
  *             schema:
  *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Post'
  */
 router.post('/loginGoogle', controllers.loginGoogle);
 
 module.exports = router;
-
-
-
-
-// *     parameters:
-// *       - in: header
-// *         name: auth
-// *         schema:
-// *           type: string
-// *         required: true
-// *         description: an authorization header

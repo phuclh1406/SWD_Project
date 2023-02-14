@@ -12,7 +12,7 @@ router.use(verifyToken);
  * @swagger
  * components:
  *   schemas:
- *     Post:
+ *     JobPost:
  *       type: object
  *       required:
  *         - title
