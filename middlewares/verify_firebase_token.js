@@ -10,6 +10,7 @@ const decodeToken = async (req, res, next) => {
         }
         return res.json({ message: 'Unauthorize' });
     } catch (error) {
+        console.log(error);
         return res.json({ message: 'Internal Error' });
     }
 }
