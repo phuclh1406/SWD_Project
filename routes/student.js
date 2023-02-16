@@ -1,10 +1,12 @@
 const controllers = require('../controllers');
 const express = require('express');
 const verifyToken = require('../middlewares/verify_token');
+const verifyRole = require('../middlewares/verify_role');
 
 const router = express.Router();
 
 router.use(verifyToken);
+router.use(verifyRole);
 
 /**
  * @swagger

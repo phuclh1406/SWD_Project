@@ -1,4 +1,5 @@
 const admin = require('../config/firebase_config');
+const {InternalServerError} = require('../errors');
 
 const decodeToken = async (req, res, next) => {
     try {
@@ -8,10 +9,10 @@ const decodeToken = async (req, res, next) => {
             req.user = decodeValue;
             return next();
         }
-        return res.json({ message: 'Unauthorize' });
+        return res.status(401).json({ msg: 'Unauthorize' });
     } catch (error) {
         console.log(error);
-        return res.json({ message: 'Internal Error' });
+        throw new InternalServerError('Firebase ID token has expired');
     }
 }
 

@@ -1,33 +1,29 @@
 const db = require('../models');
+const { Op } = require('sequelize');
+const { response } = require('express');
 
-const getAllPost = () => new Promise( async (resolve, reject) => {
+const getAllPost = ({page, limit, order, post_title, ...query}) => new Promise( async (resolve, reject) => {
     try {
-        const posts = await db.JobPost.findAll({
-            attributes: {exclude: ['project_id', 'cate_id', 'major_id']},
-            raw: true,
-            nest: true,
-            include: [{
-                model: db.Category, as: 'post_category', attributes: ['cate_name']
-            }]
-        });
-        resolve({posts});
-    } catch (error) {
-        reject(error);
-    }
-});
+        const queries = {raw: true, nest: true};
+        const offset = (!page || +page <= 1) ? 0 : (+page - 1);
+        const flimit = +limit || +process.env.LIMIT_POST;
+        queries.offset = offset * flimit;
+        queries.limit = flimit;
+        if(order) queries.order = [order]
+        if(post_title) query.post_title = {[Op.substring]: post_title}
 
-const getPostById = (id) => new Promise( async (resolve, reject) => {
-    try {
-        const posts = await db.JobPost.findOne({
-            where: {post_id: id},
-            attributes: {exclude: ['project_id', 'cate_id', 'major_id']},
-            raw: true,
-            nest: true,
+        const posts = await db.JobPost.findAndCountAll({
+            where: query,
+            ...queries,
+            attributes: {
+                exclude: ['project_id', 'cate_id', 'major_id', 'createAt', 'updateAt'],
+            },
             include: [{
                 model: db.Category, as: 'post_category', attributes: ['cate_name']
             }]
         });
         resolve({
+            msg: posts ? `Got ${posts.count} posts` : 'Cannot find posts',
             posts: posts
         });
     } catch (error) {
@@ -35,32 +31,57 @@ const getPostById = (id) => new Promise( async (resolve, reject) => {
     }
 });
 
+const createPost = (body) => new Promise( async (resolve, reject) => {
+    try {
+        const posts = await db.JobPost.findOrCreate({
+            where: {post_title: body?.post_title},
+            defaults: {
+                ...body
+            }
+        });
+        resolve({
+            msg: posts[1] ? 'Create new post successfully' : 'Cannot create new post',
+        });
+    } catch (error) {
+        reject(error);
+    }
+});
 
-module.exports = { getAllPost, getPostById };
+const updatePost = ({post_id, ...body}) => new Promise( async (resolve, reject) => {
+    try {
+        const checkDuplicateName = await db.JobPost.findOne({
+            where: {post_title: body?.post_title}
+        });
 
-// export const getPostByName = () => new Promise(async (resolve, reject) => {
-//     try {
-//         const response = await db.Post.findAll();
-//         resolve({response});
-//     } catch (error) {
-//         reject(error);
-//     }
-// }) 
+        if (checkDuplicateName !== null) {
+            resolve({
+                msg: 'Post title already have'
+            });
+        };
+        const posts = await db.JobPost.update(body, {
+            where: {post_id}
+        });
+        resolve({
+            msg: posts[0] > 0 ? `${posts[0]} post update` : 'Cannot update post/ post_id not found',
+        });
+    } catch (error) {
+        reject(error);
+    }
+});
 
-// export const updatePost = () => new Promise(async (resolve, reject) => {
-//     try {
-//         const response = await db.Post.findAll();
-//         resolve({response});
-//     } catch (error) {
-//         reject(error);
-//     }
-// }) 
+const deletePost = (post_ids) => new Promise( async (resolve, reject) => {
+    try {
 
-// export const deletePost = () => new Promise(async (resolve, reject) => {
-//     try {
-//         const response = await db.Post.findAll();
-//         resolve({response});
-//     } catch (error) {
-//         reject(error);
-//     }
-// }) 
+        const posts = await db.JobPost.destroy({
+            where: {post_id: post_ids}
+        });
+        resolve({
+            msg: posts > 0 ? `${posts} post delete` : 'Cannot delete post/ post_id not found',
+        });
+    } catch (error) {
+        reject(error);
+    }
+});
+
+module.exports = { getAllPost, createPost, updatePost, deletePost};
+
