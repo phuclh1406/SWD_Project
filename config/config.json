@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "root",
-    "password": "quan",
-    "database": "swd_database",
-    "host": "127.0.0.1",
+    "username": "us4zqsaqbcsdmgwb",
+    "password": "obkcazvwd8guv7ia",
+    "database": "swd-project",
+    "host": "g84t6zfpijzwx08q.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
     "dialect": "mysql",
     "logging": false,
     "timezone": "+07:00"
