@@ -8,6 +8,7 @@ const notFoundMiddleware = require('../middlewares/not-found');
 const errorHandlerMiddleware = require('../middlewares/error-handler');
 
 const initRoutes = (app) => {
+    
     app.use('/api/v1/auth', firebase_auth, auth);
     app.use('/api/v1/posts', post);
     app.use('/api/v1/students', student);

@@ -36,6 +36,7 @@ const options = {
           type: 'http',
           scheme: 'bearer',
         },
+        
       },
     },
   },
@@ -62,3 +63,4 @@ const start = () => {
 };
 
 start();
+

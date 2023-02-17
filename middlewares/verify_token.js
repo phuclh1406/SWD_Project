@@ -13,6 +13,7 @@ const auth = (req, res, next) => {
         const user = jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
             if (err) return UnauthenticatedError('Access token may be expired or invalid');
             req.user = user;
+            console.log(req.user);
             next();
         })
     } catch (error) {
@@ -20,4 +21,4 @@ const auth = (req, res, next) => {
     }
 };
 
-module.exports = auth
+module.exports = auth;

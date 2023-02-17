@@ -1,5 +1,12 @@
-const {getAllPost, getPostById} = require('./post');
-const loginGoogle = require('./auth');
-const getAllStudent = require('./student');
+const { getAllPost, createPost, updatePost, deletePost} = require("./post");
+const loginGoogle = require("./auth");
+const getAllStudent = require("./student");
 
-module.exports = {getAllPost, getPostById, loginGoogle, getAllStudent};
+module.exports = {
+  getAllPost,
+  loginGoogle,
+  getAllStudent,
+  createPost,
+  updatePost,
+  deletePost
+};
