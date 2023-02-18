@@ -1,21 +1,15 @@
-const express = require("express");
 const multer = require("multer");
 const firebase = require("../config/firebase_config");
+const {NotFoundError} = require("../errors")
 
-function uploadFile(req, res) {
-  const app = express();
-  app.use(express.urlencoded({ extended: false }));
-  app.use(express.json({ extended: false }));
-
+const uploadFile = (req, res) => {
   const upload = multer({
     storage: multer.memoryStorage(),
   });
 
   upload.single("file")(req, res, () => {
-
-    console.log(req.file)
     if (!req.file) {
-      return res.status(400).send("Error: No files found");
+      throw new NotFoundError('No files found');
     }
 
     const blob = firebase.bucket.file(req.file.originalname);
@@ -31,7 +25,7 @@ function uploadFile(req, res) {
     });
 
     blobWriter.on("finish", () => {
-      res.status(200).send("File uploaded.");
+      res.status(200).json({msg: 'File upload'});
     });
 
     blobWriter.end(req.file.buffer);

@@ -1,7 +1,7 @@
 const { Sequelize } = require('sequelize');
 
-const sequelize = new Sequelize('uuacyt2ejjgpgzw4', 'us4zqsaqbcsdmgwb', 'obkcazvwd8guv7ia', {
-  host: 'g84t6zfpijzwx08q.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+const sequelize = new Sequelize('swd_database', 'root', 'quan', {
+  host: '127.0.0.1',
   dialect: 'mysql',
   logging: false,
 });
