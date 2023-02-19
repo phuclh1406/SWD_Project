@@ -1,12 +1,30 @@
 const db = require('../models');
+const { Op } = require('sequelize');
 
-const getAllStudent = () => new Promise( async (resolve, reject) => {
+const getAllStudent = ({page, limit, order, email, ...query}) => new Promise( async (resolve, reject) => {
     try {
+        const queries = {raw: true, nest: true};
+        const offset = (!page || +page <= 1) ? 0 : (+page - 1);
+        const flimit = +limit || +process.env.LIMIT_POST;
+        queries.offset = offset * flimit;
+        queries.limit = flimit;
+        if(order) queries.order = [order]
+        if(email) query.email = {[Op.substring]: email}
+
         const students = await db.Student.findAll({
-            raw: true,
-            nest: true
+            where: query,
+            ...queries,
+            attributes: {
+                exclude: ['role_id', 'major_id', 'createAt', 'updateAt'],
+            },
+            include: [{
+                model: db.Role, as: 'student_role', attributes: ['role_id', 'role_name'],
+            }]
         });
-        resolve({students});
+        resolve({
+            msg: students ? `Got student` : 'Cannot find student',
+            posts: students
+        });
     } catch (error) {
         reject(error);
     }

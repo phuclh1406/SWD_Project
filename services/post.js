@@ -19,11 +19,11 @@ const getAllPost = ({page, limit, order, post_title, ...query}) => new Promise( 
                 exclude: ['project_id', 'cate_id', 'major_id', 'createAt', 'updateAt'],
             },
             include: [{
-                model: db.Category, as: 'post_category', attributes: ['cate_name']
+                model: db.Category, as: 'post_category', attributes: ['cate_id', 'cate_name']
             }]
         });
         resolve({
-            msg: posts ? `Got ${posts.count} posts` : 'Cannot find posts',
+            msg: posts ? `Got posts` : 'Cannot find posts',
             posts: posts
         });
     } catch (error) {

@@ -49,6 +49,32 @@ router.use(verifyRole);
  *         - BearerAuth: []
  *     summary: Returns the list of all the students
  *     tags: [student-controller]
+ *     parameters:
+ *       - name: email
+ *         in: query
+ *         schema:
+ *           type: string
+ *         description: Find student by email
+ *       - name: page
+ *         in: query
+ *         schema:
+ *           type: int
+ *         description: Paging page number
+ *       - name: limit
+ *         in: query
+ *         schema:
+ *           type: int
+ *         description: Paging limit row to get in 1 page
+ *       - name: order[0]
+ *         in: query
+ *         schema:
+ *           type: string
+ *         description: Sort by (student_name/createdAt)
+ *       - name: order[1]
+ *         in: query
+ *         schema:
+ *           type: string
+ *         description: Sort ASC/DESC
  *     responses:
  *       200:
  *         description: For get the list of the students
