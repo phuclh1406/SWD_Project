@@ -50,11 +50,11 @@ router.use(verifyRole);
  *     summary: Returns the list of all the students
  *     tags: [student-controller]
  *     parameters:
- *       - name: email
+ *       - name: student_name
  *         in: query
  *         schema:
  *           type: string
- *         description: Find student by email
+ *         description: Find student by student_name
  *       - name: page
  *         in: query
  *         schema:
@@ -86,5 +86,31 @@ router.use(verifyRole);
  *                 $ref: '#/components/schemas/Student'
  */
 router.get("/", controllers.getAllStudent);
+
+// /**
+//  * @swagger
+//  * /api/v1/students:
+//  *   get:
+//  *     security: 
+//  *         - BearerAuth: []
+//  *     summary: Returns the list of all the students
+//  *     tags: [student-controller]
+//  *     parameters:
+//  *       - name: email
+//  *         in: query
+//  *         schema:
+//  *           type: string
+//  *         description: Find student by email
+//  *     responses:
+//  *       200:
+//  *         description: For get the list of the students
+//  *         content:
+//  *           application/json:
+//  *             schema:
+//  *               type: array
+//  *               items:
+//  *                 $ref: '#/components/schemas/Student'
+//  */
+// router.get("/", controllers.getStudentByEmail);
 
 module.exports = router;

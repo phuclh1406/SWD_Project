@@ -11,5 +11,16 @@ const getAllStudent = async (req, res) => {
     }
 };
 
+// const getStudentByEmail = async (req, res) => {
+//     try {
+//         const response = await services.getStudentByEmail(req.query);
+//         return res.status(200).json(response);
+//     } catch (error) {
+//         console.log(error);
+//         throw new InternalServerError('Internal Server Error');
+//     }
+// };
 
-module.exports = getAllStudent;
+
+
+module.exports = {getAllStudent};

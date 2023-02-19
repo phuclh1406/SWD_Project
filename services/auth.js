@@ -10,6 +10,7 @@ const loginGoogle = ({name, picture, user_id, email}) => new Promise(async (reso
                 student_name: name,
                 email: email,
                 avatar: picture,
+                role_id: "5826d1d9-c33a-45c5-b93e-894e1dde10bd",
             }
         });
 
@@ -18,7 +19,7 @@ const loginGoogle = ({name, picture, user_id, email}) => new Promise(async (reso
             raw: true,
             nest: true,
             attributes: {
-                exclude: ['role_id'],
+                exclude: ['role_id', 'status', 'createdAt', 'updatedAt', 'major_id'],
             },
             include: [{
                 model: db.Role, as: 'student_role', attributes: ['role_name']
@@ -30,11 +31,12 @@ const loginGoogle = ({name, picture, user_id, email}) => new Promise(async (reso
         // const refreshToken = jwt.sign({student_id: response[0].student_id}, process.env.JWT_SECRET, {expiresIn: '10d'});
 
         resolve({
-            err: 0,
             mes: 'Login successfully',
             'access_token': accessToken ? `Bearer ${accessToken}` : accessToken,
             // 'refreshToken': refreshToken
+            'student': student
         });
+
 
         // if(refreshToken) {
         //     await db.User.update({
