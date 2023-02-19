@@ -15,7 +15,7 @@ const getAllStudent = ({page, limit, order, student_name, ...query}) => new Prom
             where: query,
             ...queries,
             attributes: {
-                exclude: ['role_id', 'major_id', 'createAt', 'updateAt'],
+                exclude: ['role_id', 'major_id', 'createAt', 'updateAt', 'refresh_token'],
             },
             include: [{
                 model: db.Role, as: 'student_role', attributes: ['role_id', 'role_name'],

@@ -2,12 +2,12 @@ const DateExtension = require("@joi/date");
 const Joi = require("joi");
 const joi = Joi.extend(DateExtension);
 
-//  const email = joi.string().pattern(new RegExp('gmail.com$')).required()
+ const email = joi.string().pattern(new RegExp('gmail.com$')).required().messages({
+  "string.empty": `email is not allowed to be empty`,
+});
 //  const password = joi.string().min(6).required()
 
-const post_title = joi.string().required().messages({
-  "string.empty": `post_title is not allowed to be empty`,
-});
+const post_title = joi.string().required();
 const description = joi.string().required().messages({
   "string.empty": `description is not allowed to be empty`,
 });
@@ -22,15 +22,28 @@ const time_end = joi.date().format("YYYY-MM-DD").utc().messages({
 const price = joi.number().required().messages({
   "number.base": `price must be a number`,
 });
-const post_id = joi.string().required();
-const cate_id = joi.string().required();
-const project_id = joi.string().required();
-const major_id = joi.string().required();
+const post_id = joi.string().required().messages({
+  "string.empty": `post_id is not allowed to be empty`,
+});
+const cate_id = joi.string().required().messages({
+  "string.empty": `cate_id is not allowed to be empty`,
+});
+const project_id = joi.string().required().messages({
+  "string.empty": `project_id is not allowed to be empty`,
+});
+const major_id = joi.string().required().messages({
+  "string.empty": `major_id is not allowed to be empty`,
+});
 const post_ids = joi.array().required();
+const refresh_token = joi.string().required().messages({
+  "string.empty": `post_ids is not allowed to be empty`,
+});
+const name = joi.string();
 
-//  const refreshToken = joi.string().required();
 
 module.exports = {
+  name,
+  email,
   post_id,
   post_title,
   description,
@@ -41,4 +54,5 @@ module.exports = {
   cate_id,
   project_id,
   major_id,
+  refresh_token
 };

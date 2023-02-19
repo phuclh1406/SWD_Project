@@ -45,6 +45,7 @@ module.exports = (sequelize, DataTypes) => {
       major_id: {
         type: DataTypes.UUID,
       },
+      refresh_token: DataTypes.STRING,
       status: {
         type: DataTypes.ENUM,
         values: ["active", "deactive"],
