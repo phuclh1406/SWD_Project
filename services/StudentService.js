@@ -2,7 +2,7 @@ const db = require('../models');
 const { Op } = require('sequelize');
 const multer = require("multer");
 const firebase = require("../config/FirebaseConfig");
-const {NotFoundError} = require("../errors/Index")
+const {NotFoundError} = require("../errors")
 
 const getAllStudent = ({page, limit, order, student_name, ...query}) => new Promise( async (resolve, reject) => {
     try {
