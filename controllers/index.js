@@ -1,5 +1,5 @@
 const { getAllPost, createPost, updatePost, deletePost} = require("./post");
-const {loginGoogle, refreshAccessToken} = require("./auth");
+const {loginGoogle, refreshAccessToken, logout} = require("./AuthController");
 const {getAllStudent} = require("./student");
 const uploadFile = require('./uploadFile');
 
@@ -9,6 +9,7 @@ module.exports = {
   getAllStudent,
   // getStudentByEmail,
   refreshAccessToken,
+  logout,
   createPost,
   updatePost,
   deletePost,

@@ -1,8 +1,8 @@
 const controllers = require('../controllers');
 const express = require('express');
 const firebase_auth = require('../middlewares/verify_firebase_token');
-
 const router = express.Router();
+const verifyToken = require('../middlewares/verify_token');
 
 /**
  * @swagger
@@ -59,5 +59,31 @@ router.post('/loginGoogle', firebase_auth, controllers.loginGoogle);
  *               type: array
  */
 router.post('/refreshToken', controllers.refreshAccessToken);
+
+router.use(verifyToken);
+
+/**
+ * @swagger
+ * /api/v1/auth/logout:
+ *   post:
+ *     summary: For logout
+ *     security: 
+ *         - BearerAuth: []
+ *     tags: [auth-controller]
+ *     parameters:
+ *       - name: student_id
+ *         in: query
+ *         schema:
+ *           type: string
+ *         description: Input student_id to logout
+ *     responses:
+ *       200:
+ *         description: For logout
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ */
+router.post('/logout', controllers.logout);
 
 module.exports = router;

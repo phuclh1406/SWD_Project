@@ -1,7 +1,7 @@
 const services = require('../services');
 const {BadRequestError, InternalServerError} = require('../errors');
 const joi = require('joi');
-const {refresh_token} = require('../helpers/joi_schema');
+const {refresh_token, student_id} = require('../helpers/joi_schema');
 
 const loginGoogle = async (req, res) => {
     try {
@@ -30,4 +30,18 @@ const refreshAccessToken = async (req, res) => {
     }
 };
 
-module.exports = {loginGoogle, refreshAccessToken};
+const logout = async (req, res) => {
+    try {
+        const { error } = joi.object({student_id}).validate(req.query);
+        if (error) {
+            return res.status(400).json({msg: error.details[0].message});
+        }
+        console.log(req.query.student_id);
+        const response = await services.logout(req.query.student_id);
+        return res.status(200).json(response);
+    } catch (error) {
+        throw new InternalServerError('Internal Server Error');
+    }
+};
+
+module.exports = {loginGoogle, refreshAccessToken, logout};
