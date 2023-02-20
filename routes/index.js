@@ -1,10 +1,10 @@
 require('express-async-errors');
-const auth = require('./AuthRouter');
-const post = require('./PostRouter');
-const student = require('./StudentRouter');
-const uploadFile = require('./UploadFileRouter');
-const notFoundMiddleware = require('../middlewares/RouteNotFound');
-const errorHandlerMiddleware = require('../middlewares/ErrorHandler');
+const auth = require('./authRouter');
+const post = require('./postRouter');
+const student = require('./studentRouter');
+const uploadFile = require('./uploadFileRouter');
+const notFoundMiddleware = require('../middlewares/routeNotFound');
+const errorHandlerMiddleware = require('../middlewares/errorHandler');
 
 const initRoutes = (app) => {
     

@@ -1,7 +1,7 @@
 const services = require('../services');
 const {BadRequestError, InternalServerError} = require('../errors');
 const joi = require('joi');
-const {post_id, post_title, description, time_start, time_end, price, post_ids, cate_id, project_id, major_id} = require('../helpers/JoiSchema');
+const {post_id, post_title, description, time_start, time_end, price, post_ids, cate_id, project_id, major_id} = require('../helpers/joiSchema');
 
 const getAllPost = async (req, res) => {
     try {

@@ -1,7 +1,7 @@
 const services = require('../services');
 const {BadRequestError, InternalServerError} = require('../errors');
 const joi = require('joi');
-const {student_id, student_ids} = require('../helpers/JoiSchema');
+const {student_id, student_ids} = require('../helpers/joiSchema');
 
 const getAllStudent = async (req, res) => {
     try {
