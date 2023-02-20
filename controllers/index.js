@@ -1,7 +1,7 @@
-const { getAllPost, createPost, updatePost, deletePost} = require("./postController");
-const {loginGoogle, refreshAccessToken, logout} = require("./authController");
-const {getAllStudent, updateStudent, deleteStudent} = require("./studentController");
-const uploadFile = require('./uploadFileController');
+const { getAllPost, createPost, updatePost, deletePost} = require("./post");
+const {loginGoogle, refreshAccessToken, logout} = require("./auth");
+const {getAllStudent, updateStudent, deleteStudent} = require("./student");
+const uploadFile = require('./uploadFile');
 
 module.exports = {
   getAllPost,

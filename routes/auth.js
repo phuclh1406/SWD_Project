@@ -1,8 +1,8 @@
 const controllers = require('../controllers');
 const express = require('express');
-const firebase_auth = require('../middlewares/verifyFirebaseToken');
+const firebase_auth = require('../middlewares/verify_firebase_token');
 const router = express.Router();
-const verifyToken = require('../middlewares/verifyToken');
+const verifyToken = require('../middlewares/verify_token');
 
 /**
  * @swagger

@@ -1,5 +1,5 @@
 const multer = require("multer");
-const firebase = require("../config/FirebaseConfig");
+const firebase = require("../config/firebase_config");
 const {NotFoundError} = require("../errors");
 const request = require('request');
 const path = require('path');

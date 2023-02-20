@@ -6,7 +6,7 @@ const cors = require("cors");
 const initRoutes = require("./routes");
 const swaggerUi = require("swagger-ui-express");
 const swaggerJSDoc = require("swagger-jsdoc");
-require("./config/ConnectionDatabase");
+require("./config/connection_database");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

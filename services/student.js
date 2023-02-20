@@ -1,7 +1,7 @@
 const db = require('../models');
 const { Op } = require('sequelize');
 const multer = require("multer");
-const firebase = require("../config/FirebaseConfig");
+const firebase = require("../config/firebase_config");
 
 const getAllStudent = ({page, limit, order, student_name, ...query}) => new Promise( async (resolve, reject) => {
     try {

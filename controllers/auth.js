@@ -1,7 +1,7 @@
 const services = require('../services');
 const {BadRequestError, InternalServerError} = require('../errors');
 const joi = require('joi');
-const {refresh_token, student_id} = require('../helpers/joiSchema');
+const {refresh_token, student_id} = require('../helpers/joi_schema');
 
 const loginGoogle = async (req, res) => {
     try {
