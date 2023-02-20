@@ -2,6 +2,9 @@ const multer = require("multer");
 const firebase = require("../config/FirebaseConfig");
 const {NotFoundError} = require("../errors/Index");
 const request = require('request');
+const path = require('path');
+
+const parentDirectory = path.dirname(__dirname);
 
 const uploadFile = async (req, res) => {
   const upload = multer({
@@ -29,8 +32,6 @@ const uploadFile = async (req, res) => {
       console.log(`File upload ${req.file.originalname}`);
     });
 
-    
-
     // Get a signed URL for the file
     const file = firebase.bucket.file(req.file.originalname);
     const [url] = await file.getSignedUrl({
@@ -45,7 +46,8 @@ const uploadFile = async (req, res) => {
       } else {
         // Write the file to disk
         const fs = require('fs');
-        fs.writeFile(req.file.originalname, body, (err) => {
+        var pathImg = parentDirectory + "/public/" + req.file.originalname;
+        fs.writeFile(pathImg, body, (err) => {
           if (err) {
             console.log(err);
           } else {
