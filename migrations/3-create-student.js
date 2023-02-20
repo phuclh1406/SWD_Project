@@ -25,7 +25,7 @@ module.exports = {
       //   allowNull: false,
       // },
       avatar: {
-        type: Sequelize.STRING,
+        type: Sequelize.BLOB,
       },
       // address: {
       //   type: Sequelize.STRING,
@@ -34,6 +34,9 @@ module.exports = {
       //   type: Sequelize.STRING,
       //   allowNull: false,
       // },
+      refresh_token: {
+        type: Sequelize.STRING,
+      },
       role_id: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,

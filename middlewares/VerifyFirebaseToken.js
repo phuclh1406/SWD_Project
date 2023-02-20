@@ -1,5 +1,5 @@
-const {admin} = require('../config/firebase_config');
-const {InternalServerError} = require('../errors');
+const {admin} = require('../config/FirebaseConfig');
+const {InternalServerError} = require('../errors/Index');
 
 const decodeToken = async (req, res, next) => {
     try {
@@ -12,7 +12,7 @@ const decodeToken = async (req, res, next) => {
         return res.status(401).json({ msg: 'Unauthorize' });
     } catch (error) {
         console.log(error);
-        throw new InternalServerError("Internal Server Error");
+        throw new InternalServerError(error);
     }
 }
 

@@ -38,6 +38,7 @@ const student_id = joi.string().required().messages({
   "string.empty": `major_id is not allowed to be empty`,
 });
 const post_ids = joi.array().required();
+const student_ids = joi.array().required();
 const refresh_token = joi.string().required().messages({
   "string.empty": `post_ids is not allowed to be empty`,
 });
@@ -58,5 +59,6 @@ module.exports = {
   cate_id,
   project_id,
   major_id,
+  student_ids,
   refresh_token
 };

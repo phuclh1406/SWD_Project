@@ -1,5 +1,5 @@
 require("dotenv").config();
-const db = require("../models");
+const db = require("../models/Index");
 const jwt = require("jsonwebtoken");
 
 const loginGoogle = ({ name, picture, user_id, email }) =>

@@ -1,8 +1,8 @@
 const controllers = require('../controllers');
 const express = require('express');
-const firebase_auth = require('../middlewares/verify_firebase_token');
+const firebase_auth = require('../middlewares/VerifyFirebaseToken');
 const router = express.Router();
-const verifyToken = require('../middlewares/verify_token');
+const verifyToken = require('../middlewares/VerifyToken');
 
 /**
  * @swagger
@@ -18,7 +18,7 @@ const verifyToken = require('../middlewares/verify_token');
 
 /**
  * @swagger
- * /api/v1/auth/loginGoogle:
+ * /api/v1/auth/login-google:
  *   post:
  *     summary: For login with google returns the token
  *     security: 
@@ -32,11 +32,11 @@ const verifyToken = require('../middlewares/verify_token');
  *             schema:
  *               type: array
  */
-router.post('/loginGoogle', firebase_auth, controllers.loginGoogle);
+router.post('/login-google', firebase_auth, controllers.loginGoogle);
 
 /**
  * @swagger
- * /api/v1/auth/refreshToken:
+ * /api/v1/auth/refresh-token:
  *   post:
  *     summary: For refresh new token
  *     security: 
@@ -58,7 +58,7 @@ router.post('/loginGoogle', firebase_auth, controllers.loginGoogle);
  *             schema:
  *               type: array
  */
-router.post('/refreshToken', controllers.refreshAccessToken);
+router.post('/refresh-token', controllers.refreshAccessToken);
 
 router.use(verifyToken);
 

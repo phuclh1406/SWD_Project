@@ -1,6 +1,6 @@
 const controllers = require('../controllers');
 const express = require('express');
-const verifyToken = require('../middlewares/verify_token');
+const verifyToken = require('../middlewares/VerifyToken');
 
 const router = express.Router();
 
@@ -8,7 +8,7 @@ router.use(verifyToken);
 
 /**
  * @swagger
- * /api/v1/uploadFile:
+ * /api/v1/upload-file:
  *   post:
  *     security: 
  *         - BearerAuth: []

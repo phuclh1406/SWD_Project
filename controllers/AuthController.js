@@ -1,7 +1,7 @@
-const services = require('../services');
-const {BadRequestError, InternalServerError} = require('../errors');
+const services = require('../services/Index');
+const {BadRequestError, InternalServerError} = require('../errors/Index');
 const joi = require('joi');
-const {refresh_token, student_id} = require('../helpers/joi_schema');
+const {refresh_token, student_id} = require('../helpers/JoiSchema');
 
 const loginGoogle = async (req, res) => {
     try {
@@ -12,8 +12,7 @@ const loginGoogle = async (req, res) => {
         const response = await services.loginGoogle(req.user);
         return res.status(200).json(response);
     } catch (error) {
-        console.log(error);
-        throw new InternalServerError('Internal Server Error');
+        throw new InternalServerError(error);
     }
 };
 
@@ -26,7 +25,7 @@ const refreshAccessToken = async (req, res) => {
         const response = await services.refreshAccessToken(req.body.refresh_token);
         return res.status(200).json(response);
     } catch (error) {
-        throw new InternalServerError('Internal Server Error');
+        throw new InternalServerError(error);
     }
 };
 

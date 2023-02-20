@@ -1,5 +1,8 @@
-const db = require('../models');
+const db = require('../models/Index');
 const { Op } = require('sequelize');
+const multer = require("multer");
+const firebase = require("../config/FirebaseConfig");
+const {NotFoundError} = require("../errors/Index")
 
 const getAllStudent = ({page, limit, order, student_name, ...query}) => new Promise( async (resolve, reject) => {
     try {
@@ -30,27 +33,30 @@ const getAllStudent = ({page, limit, order, student_name, ...query}) => new Prom
     }
 });
 
-// const getStudentByEmail = ({ email }) => new Promise( async (resolve, reject) => {
-//     try {
+const updateStudent = ({student_id, ...body}) => new Promise( async (resolve, reject) => {
+    try {
+        const students = await db.Student.update(body, {
+            where: {student_id}
+        });
+        resolve({
+            msg: students[0] > 0 ? `${students[0]} student update` : 'Cannot update student/ student_id not found',
+        });
+    } catch (error) {
+        reject(error);
+    }
+});
 
-//         const students = await db.Student.findAll({
-//             where: {email},
-//             raw: true,
-//             nest: true,
-//             attributes: {
-//                 exclude: ['role_id', 'major_id', 'createAt', 'updateAt'],
-//             },
-//             include: [{
-//                 model: db.Role, as: 'student_role', attributes: ['role_id', 'role_name'],
-//             }]
-//         });
-//         resolve({
-//             msg: students ? `Got student` : 'Cannot find student',
-//             posts: students
-//         });
-//     } catch (error) {
-//         reject(error);
-//     }
-// });
+const deleteStudent = (student_ids) => new Promise( async (resolve, reject) => {
+    try {
+        const students = await db.Student.destroy({
+            where: {student_id: student_ids}
+        });
+        resolve({
+            msg: students > 0 ? `${students} student delete` : 'Cannot delete student/ student_id not found',
+        });
+    } catch (error) {
+        reject(error);
+    }
+});
 
-module.exports =  {getAllStudent};
+module.exports =  {getAllStudent, updateStudent, deleteStudent};

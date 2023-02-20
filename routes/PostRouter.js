@@ -1,6 +1,6 @@
 const controllers = require('../controllers');
 const express = require('express');
-const verifyToken = require('../middlewares/verify_token');
+const verifyToken = require('../middlewares/VerifyToken');
 
 const router = express.Router();
 
@@ -165,7 +165,7 @@ router.put("/", controllers.updatePost);
 
 /**
  * @swagger
- * /api/v1/posts:
+ * /api/v1/posts/{id}:
  *   delete:
  *     security: 
  *         - BearerAuth: []
@@ -187,6 +187,6 @@ router.put("/", controllers.updatePost);
  *               items:
  *                 $ref: '#/components/schemas/JobPost'
  */
-router.delete("/", controllers.deletePost);
+router.delete("/:id", controllers.deletePost);
 
 module.exports = router;

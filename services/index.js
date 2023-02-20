@@ -1,15 +1,16 @@
-const { getAllPost, createPost, updatePost, deletePost} = require("./post");
-const {loginGoogle, refreshAccessToken, logout}= require("./auth");
-const {getAllStudent} = require("./student");
+const { getAllPost, createPost, updatePost, deletePost} = require("./PostService");
+const {loginGoogle, refreshAccessToken, logout}= require("./AuthService");
+const {getAllStudent, updateStudent, deleteStudent} = require("./StudentService");
 
 module.exports = {
   getAllPost,
   loginGoogle,
-  getAllStudent,
-  // getStudentByEmail,
   logout,
+  getAllStudent,
+  updateStudent,
+  deleteStudent,
   refreshAccessToken,
   createPost,
   updatePost,
-  deletePost
+  deletePost,
 };

@@ -6,7 +6,7 @@ const cors = require("cors");
 const initRoutes = require("./routes");
 const swaggerUi = require("swagger-ui-express");
 const swaggerJSDoc = require("swagger-jsdoc");
-require("./config/connection_database");
+require("./config/ConnectionDatabase");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -22,7 +22,7 @@ const options = {
   definition: {
     openapi: "3.0.0",
     info: {
-      title: "Node JS API",
+      title: "Capstone Matching API",
       version: "1.0.0",
     },
     servers: [
