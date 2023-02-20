@@ -30,33 +30,32 @@ const uploadFile = async (req, res) => {
 
     blobWriter.on("finish", () => {
       console.log(`File upload ${req.file.originalname}`);
-      res.status(200).json("Ok");
     });
 
-    // // Get a signed URL for the file
-    // const file = firebase.bucket.file(req.file.originalname);
-    // const [url] = await file.getSignedUrl({
-    //   action: 'read',
-    //   expires: '03-17-2023', // expiration date in mm-dd-yyyy format
-    // });
+    // Get a signed URL for the file
+    const file = firebase.bucket.file(req.file.originalname);
+    const [url] = await file.getSignedUrl({
+      action: 'read',
+      expires: '03-17-2023', // expiration date in mm-dd-yyyy format
+    });
 
-    // // Use the URL to download the image
-    // request.get(url, (err, response, body) => {
-    //   if (err) {
-    //     console.log(err);
-    //   } else {
-    //     // Write the file to disk
-    //     const fs = require('fs');
-    //     var pathImg = parentDirectory + "/public/" + req.file.originalname;
-    //     fs.writeFile(pathImg, body, (err) => {
-    //       if (err) {
-    //         console.log(err);
-    //       } else {
-    //         res.status(200).json({ url });
-    //       }
-    //     });
-    //   }
-    // });
+    // Use the URL to download the image
+    request.get(url, (err, response, body) => {
+      if (err) {
+        console.log(err);
+      } else {
+        // Write the file to disk
+        const fs = require('fs');
+        var pathImg = parentDirectory + "/public/" + req.file.originalname;
+        fs.writeFile(pathImg, body, (err) => {
+          if (err) {
+            console.log(err);
+          } else {
+            res.status(200).json({ url });
+          }
+        });
+      }
+    });
     blobWriter.end(req.file.buffer);
   });
 }

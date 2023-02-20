@@ -36,7 +36,6 @@ const options = {
           type: 'http',
           scheme: 'bearer',
         },
-        
       },
     },
   },

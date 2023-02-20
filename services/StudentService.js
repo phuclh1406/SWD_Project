@@ -1,4 +1,4 @@
-const db = require('../models/Index');
+const db = require('../models');
 const { Op } = require('sequelize');
 const multer = require("multer");
 const firebase = require("../config/FirebaseConfig");
