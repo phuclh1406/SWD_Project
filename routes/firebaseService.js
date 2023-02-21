@@ -4,8 +4,6 @@ const verifyToken = require('../middlewares/verify_token');
 
 const router = express.Router();
 
-router.use(verifyToken);
-
 /**
  * @swagger
  * components:
@@ -27,6 +25,35 @@ router.use(verifyToken);
  *           type: string
  *           description: The content message
  */
+
+/**
+ * @swagger
+ * /api/v1/push-notification:
+ *   post:
+ *     summary: Push notification
+ *     tags: [firebase-controller]
+ *     requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Firebase'
+ *            example:
+ *              token: string
+ *              title: string
+ *              content: string
+ *     responses:
+ *       200:
+ *         description: Push notification
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: string
+ *               format: binary
+ */
+router.post("/push-notification", controllers.pushNotification);
+
+router.use(verifyToken);
 
 /**
  * @swagger
@@ -57,32 +84,6 @@ router.use(verifyToken);
  */
 router.post("/upload-file", controllers.uploadFile);
 
-/**
- * @swagger
- * /api/v1/push-notification:
- *   post:
- *     summary: Upload image
- *     tags: [firebase-controller]
- *     requestBody:
- *        required: true
- *        content:
- *          application/json:
- *            schema:
- *              $ref: '#/components/schemas/Firebase'
- *            example:
- *              token: string
- *              title: string
- *              content: string
- *     responses:
- *       200:
- *         description: Upload image
- *         content:
- *           application/json:
- *             schema:
- *               type: string
- *               format: binary
- */
-router.post("/push-notification", controllers.pushNotification);
 
 module.exports = router;
 
