@@ -121,7 +121,7 @@ router.post("/", controllers.createProject);
  *            schema:
  *              $ref: '#/components/schemas/Project'
  *            example:
- *               project_id: 
+ *               project_id: 8c382e13-8620-460a-bd95-96b1152c1368
  *               project_name: Design Pattern
  *               status: active
  *     responses:

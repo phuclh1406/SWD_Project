@@ -14,7 +14,7 @@ const getAllStudent = ({page, limit, order, student_name, ...query}) => new Prom
         if(student_name) query.student_name = {[Op.substring]: student_name};
         query.status = {[Op.ne]: 'deactive'};
 
-        const students = await db.Student.findAll({
+        const students = await db.Student.findAndCountAll({
             where: query,
             ...queries,
             attributes: {
@@ -28,7 +28,7 @@ const getAllStudent = ({page, limit, order, student_name, ...query}) => new Prom
         });
         resolve({
             msg: students ? `Got student` : 'Cannot find student',
-            posts: students
+            students: students
         });
     } catch (error) {
         reject(error);

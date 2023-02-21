@@ -9,8 +9,9 @@ const getAllProjects = ({page, limit, order, project_name, ...query}) => new Pro
         const flimit = +limit || +process.env.LIMIT_POST;
         queries.offset = offset * flimit;
         queries.limit = flimit;
-        if(order) queries.order = [order]
-        if(project_name) query.project_name = {[Op.substring]: project_name}
+        if(order) queries.order = [order];
+        if(project_name) query.project_name = {[Op.substring]: project_name};
+        query.status = {[Op.ne]: 'deactive'};
 
         const projects = await db.Project.findAndCountAll({
             where: query,
@@ -72,7 +73,7 @@ const updateProject = ({project_id, ...body}) => new Promise( async (resolve, re
 const deleteProject = (project_ids) => new Promise( async (resolve, reject) => {
     try {
 
-        const projects = await db.Project.destroy({
+        const projects = await db.Project.update({status: 'deactive'}, {
             where: {project_id: project_ids}
         });
         resolve({
