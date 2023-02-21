@@ -45,6 +45,8 @@ const refresh_token = joi.string().required().messages({
 const name = joi.string();
 const project_name = joi.string().required()
 const project_ids = joi.array().required()
+const major_name = joi.string()
+const major_ids = joi.array().required()
 
 
 module.exports = {
@@ -64,5 +66,7 @@ module.exports = {
   major_id,
   student_ids,
   refresh_token,
-  project_name
+  project_name,
+  major_name,
+  major_ids
 };

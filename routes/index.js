@@ -4,6 +4,7 @@ const post = require('./post');
 const student = require('./student');
 const firebaseService = require('./firebaseService');
 const project = require('./project')
+const major = require('./major')
 const notFoundMiddleware = require('../middlewares/not-found');
 const errorHandlerMiddleware = require('../middlewares/error_handler');
 
@@ -14,6 +15,7 @@ const initRoutes = (app) => {
     app.use('/api/v1/students', student);
     app.use('/api/v1', firebaseService);
     app.use('/api/v1/projects', project);
+    app.use('/api/v1/majors', major);
 
     app.use(notFoundMiddleware);
     app.use(errorHandlerMiddleware);
