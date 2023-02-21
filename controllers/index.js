@@ -1,7 +1,7 @@
 const { getAllPost, createPost, updatePost, deletePost} = require("./post");
 const {loginGoogle, refreshAccessToken, logout} = require("./auth");
 const {getAllStudent, updateStudent, deleteStudent} = require("./student");
-const uploadFile = require('./uploadFile');
+const {uploadFile, pushNotification} = require('./firebaseService');
 
 module.exports = {
   getAllPost,
@@ -15,4 +15,5 @@ module.exports = {
   updatePost,
   deletePost,
   uploadFile,
+  pushNotification,
 };

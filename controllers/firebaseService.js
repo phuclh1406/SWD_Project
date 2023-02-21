@@ -60,4 +60,22 @@ const uploadFile = async (req, res) => {
   });
 }
 
-module.exports = uploadFile;
+const pushNotification = (req, res) => {
+    const message = {
+        notification: {
+          title: req.body.title,
+          body: req.body.content
+        },
+        token: req.body.device_token
+      };
+      
+      firebase.messaging().send(message)
+        .then((response) => {
+          console.log('Successfully sent message:', response);
+        })
+        .catch((error) => {
+          console.log('Error sending message:', error);
+        });
+}
+
+module.exports = {uploadFile, pushNotification};
