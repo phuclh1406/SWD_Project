@@ -9,8 +9,9 @@ const getAllPost = ({page, limit, order, post_title, ...query}) => new Promise( 
         const flimit = +limit || +process.env.LIMIT_POST;
         queries.offset = offset * flimit;
         queries.limit = flimit;
-        if(order) queries.order = [order]
-        if(post_title) query.post_title = {[Op.substring]: post_title}
+        if(order) queries.order = [order];
+        if(post_title) query.post_title = {[Op.substring]: post_title};
+        query.status = {[Op.ne]: 'deactive'};
 
         const posts = await db.JobPost.findAndCountAll({
             where: query,
@@ -20,6 +21,10 @@ const getAllPost = ({page, limit, order, post_title, ...query}) => new Promise( 
             },
             include: [{
                 model: db.Category, as: 'post_category', attributes: ['cate_id', 'cate_name']
+            }, {
+                model: db.Project, as: 'post_project', attributes: ['project_id', 'project_name']
+            }, {
+                model: db.Major, as: 'post_major', attributes: ['major_id', 'major_name']
             }]
         });
         resolve({
@@ -72,7 +77,7 @@ const updatePost = ({post_id, ...body}) => new Promise( async (resolve, reject) 
 const deletePost = (post_ids) => new Promise( async (resolve, reject) => {
     try {
 
-        const posts = await db.JobPost.destroy({
+        const posts = await db.JobPost.update({status: 'deactive'}, {
             where: {post_id: post_ids}
         });
         resolve({

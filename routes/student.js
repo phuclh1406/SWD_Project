@@ -34,13 +34,10 @@ router.use(verifyRole);
  *           type: enum
  *           description: The student status('active', 'deactive')
  *       example:
- *         student_id: V2sSC1HSLASNtTT0RhzwqDxxwri2,
- *         student_name: Nhan Nguyen,
- *         email: dnhan2426@gmail.com,
- *         avatar: https://lh3.googleusercontent.com/a/AEdFTp4508ZdzGjVRFFIwb0ULZXYm5V5_vyRsiKq-cfA=s96-c,
- *         status: active,
- *         createdAt: 2023-02-16T04:22:42.000Z,
- *         updatedAt: 2023-02-20T12:58:24.000Z,
+ *         student_id: V2sSC1HSLASNtTT0RhzwqDxxwri2
+ *         student_name: Nhan Nguyen
+ *         email: dnhan2426@gmail.com
+ *         avatar: https://lh3.googleusercontent.com/a/AEdFTp4508ZdzGjVRFFIwb0ULZXYm5V5_vyRsiKq-cfA=s96-c
  */
 
 /**
@@ -121,30 +118,30 @@ router.get("/", controllers.getAllStudent);
  */
 router.put("/", controllers.updateStudent);
 
-// /**
-//  * @swagger
-//  * /api/v1/students/{id}:
-//  *   delete:
-//  *     security: 
-//  *         - BearerAuth: []
-//  *     summary: Delete the students by id
-//  *     tags: [student-controller]
-//  *     parameters:
-//  *       - name: student_ids[0]
-//  *         in: query
-//  *         schema:
-//  *           type: string
-//  *         description: Input student_id to delete
-//  *     responses:
-//  *       200:
-//  *         description: Delete the student by id
-//  *         content:
-//  *           application/json:
-//  *             schema:
-//  *               type: array
-//  *               items:
-//  *                 $ref: '#/components/schemas/Student'
-//  */
-// router.delete("/:id", controllers.deleteStudent);
+/**
+ * @swagger
+ * /api/v1/students/{id}:
+ *   put:
+ *     security: 
+ *         - BearerAuth: []
+ *     summary: Delete the students by id
+ *     tags: [student-controller]
+ *     parameters:
+ *       - name: student_ids[0]
+ *         in: query
+ *         schema:
+ *           type: string
+ *         description: Input student_id to delete
+ *     responses:
+ *       200:
+ *         description: Delete the student by id
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Student'
+ */
+router.put("/:id", controllers.deleteStudent);
 
 module.exports = router;

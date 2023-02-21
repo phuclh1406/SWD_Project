@@ -10,8 +10,9 @@ const getAllStudent = ({page, limit, order, student_name, ...query}) => new Prom
         const flimit = +limit || +process.env.LIMIT_POST;
         queries.offset = offset * flimit;
         queries.limit = flimit;
-        if(order) queries.order = [order]
-        if(student_name) query.student_name = {[Op.substring]: student_name}
+        if(order) queries.order = [order];
+        if(student_name) query.student_name = {[Op.substring]: student_name};
+        query.status = {[Op.ne]: 'deactive'};
 
         const students = await db.Student.findAll({
             where: query,
@@ -20,7 +21,9 @@ const getAllStudent = ({page, limit, order, student_name, ...query}) => new Prom
                 exclude: ['role_id', 'major_id', 'createAt', 'updateAt', 'refresh_token'],
             },
             include: [{
-                model: db.Role, as: 'student_role', attributes: ['role_id', 'role_name'],
+                model: db.Role, as: 'student_role', attributes: ['role_id', 'role_name']
+            }, {
+                model: db.Major, as: 'student_major', attributes: ['major_id', 'major_name']
             }]
         });
         resolve({
@@ -47,7 +50,7 @@ const updateStudent = ({student_id, ...body}) => new Promise( async (resolve, re
 
 const deleteStudent = (student_ids) => new Promise( async (resolve, reject) => {
     try {
-        const students = await db.Student.destroy({
+        const students = await db.Student.update({status: 'deactive'}, {
             where: {student_id: student_ids}
         });
         resolve({

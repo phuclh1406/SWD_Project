@@ -166,7 +166,7 @@ router.put("/", controllers.updatePost);
 /**
  * @swagger
  * /api/v1/posts/{id}:
- *   delete:
+ *   put:
  *     security: 
  *         - BearerAuth: []
  *     summary: Delete the posts by id
@@ -187,6 +187,6 @@ router.put("/", controllers.updatePost);
  *               items:
  *                 $ref: '#/components/schemas/JobPost'
  */
-router.delete("/:id", controllers.deletePost);
+router.put("/:id", controllers.deletePost);
 
 module.exports = router;

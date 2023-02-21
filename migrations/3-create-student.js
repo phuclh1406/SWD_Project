@@ -25,7 +25,7 @@ module.exports = {
       //   allowNull: false,
       // },
       avatar: {
-        type: Sequelize.BLOB,
+        type: Sequelize.STRING(500),
       },
       // address: {
       //   type: Sequelize.STRING,
