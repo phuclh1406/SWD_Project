@@ -43,6 +43,8 @@ const refresh_token = joi.string().required().messages({
   "string.empty": `post_ids is not allowed to be empty`,
 });
 const name = joi.string();
+const project_name = joi.string().required()
+const project_ids = joi.array().required()
 
 
 module.exports = {
@@ -58,7 +60,9 @@ module.exports = {
   student_id,
   cate_id,
   project_id,
+  project_ids,
   major_id,
   student_ids,
-  refresh_token
+  refresh_token,
+  project_name
 };
