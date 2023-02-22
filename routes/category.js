@@ -117,7 +117,7 @@ router.post("/", controllers.createCategory);
  *            schema:
  *              $ref: '#/components/schemas/Category'
  *            example:
- *               cate_id: 9a3dbef2-a705-45aa-9dcd-b23b3d7c12f9
+ *               cate_id: ec4b9413-cb91-473b-b80b-c6beaf1a420c
  *               cate_name: Design Pattern
  *               status: active
  *     responses:
