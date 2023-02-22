@@ -10,40 +10,37 @@ router.use(verifyToken);
  * @swagger
  * components:
  *   schemas:
- *     Project:
+ *     Category:
  *       type: object
  *       required:
  *         - title
  *         - author
  *       properties:
- *         project_id:
+ *         category_id:
  *           type: UUID
  *           description: The auto-generated id of the book
- *         project_name:
+ *         category_name:
  *           type: string
- *           description: The project name
- *         student_id:
- *           type: UUID
- *           description: student id
+ *           description: The category name
  *         status:
  *           type: enum
- *           description: The project status('active', 'pending', 'deactive')
+ *           description: The category status('active', 'pending', 'deactive')
  */
 
 /**
  * @swagger
- * /api/v1/projects:
+ * /api/v1/categories:
  *   get:
  *     security: 
  *         - BearerAuth: []
- *     summary: Returns the list of all the projects
- *     tags: [project-controller]
+ *     summary: Returns the list of all the categories
+ *     tags: [category-controller]
  *     parameters:
- *       - name: project_name
+ *       - name: category_name
  *         in: query
  *         schema:
  *           type: string
- *         description: Find project by project_name
+ *         description: Find category by category_name
  *       - name: page
  *         in: query
  *         schema:
@@ -58,7 +55,7 @@ router.use(verifyToken);
  *         in: query
  *         schema:
  *           type: string
- *         description: Sort by (project_name/status)
+ *         description: Sort by (category_name/status)
  *       - name: order[1]
  *         in: query
  *         schema:
@@ -66,100 +63,99 @@ router.use(verifyToken);
  *         description: Sort ASC/DESC
  *     responses:
  *       200:
- *         description: Get the list of the projects successfully
+ *         description: Get the list of the categories successfully
  *         content:
  *           application/json:
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/Project'
+ *                 $ref: '#/components/schemas/Category'
  */
-router.get("/", controllers.getAllProjects);
+router.get("/", controllers.getAllCategories);
 
 /**
  * @swagger
- * /api/v1/projects:
+ * /api/v1/categories:
  *   post:
  *     security: 
  *         - BearerAuth: []
- *     summary: Create new project
- *     tags: [project-controller]
+ *     summary: Create new category
+ *     tags: [category-controller]
  *     requestBody:
  *        required: true
  *        content:
  *          application/json:
  *            schema:
- *              $ref: '#/components/schemas/Project'
+ *              $ref: '#/components/schemas/Category'
  *            example:
- *              student_id: V2sSC1HSLASNtTT0RhzwqDxxwri2
- *              project_name: Design Pattern 
+ *              category_name: Design Pattern 
  *     responses:
  *       200:
- *         description: Create new project successfully
+ *         description: Create new category successfully
  *         content:
  *           application/json:
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/Project'
+ *                 $ref: '#/components/schemas/Category'
 
  */
-router.post("/", controllers.createProject);
+router.post("/", controllers.createCategory);
 
 /**
  * @swagger
- * /api/v1/projects:
+ * /api/v1/categories:
  *   put:
  *     security: 
  *         - BearerAuth: []
- *     summary: Update the project by id
- *     tags: [project-controller]
+ *     summary: Update the category by id
+ *     tags: [category-controller]
  *     requestBody:
  *        required: true
  *        content:
  *          application/json:
  *            schema:
- *              $ref: '#/components/schemas/Project'
+ *              $ref: '#/components/schemas/Category'
  *            example:
- *               project_id: 
- *               project_name: Design Pattern
+ *               category_id: 9a3dbef2-a705-45aa-9dcd-b23b3d7c12f9
+ *               category_name: Design Pattern
  *               status: active
  *     responses:
  *       200:
- *         description: For get the list of the projects
+ *         description: For get the list of the categories
  *         content:
  *           application/json:
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/Project'
+ *                 $ref: '#/components/schemas/Category'
  */
-router.put("/", controllers.updateProject);
+router.put("/", controllers.updateCategory);
 
 /**
  * @swagger
- * /api/v1/projects/{id}:
+ * /api/v1/categories/{id}:
  *   delete:
  *     security: 
  *         - BearerAuth: []
- *     summary: Delete the projects by id
- *     tags: [project-controller]
+ *     summary: Delete the categories by id
+ *     tags: [category-controller]
  *     parameters:
- *       - name: project_ids[0]
+ *       - name: cate_ids[0]
  *         in: query
  *         schema:
  *           type: string
- *         description: Input project_id to delete
+ *         description: Input cate_id to delete
  *     responses:
  *       200:
- *         description: Delete the projects by id
+ *         description: Delete the categories by id
  *         content:
  *           application/json:
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/Project'
+ *                 $ref: '#/components/schemas/Category'
  */
-router.delete("/:id", controllers.deleteProject);
+router.delete("/:id", controllers.deleteCategory);
 
 module.exports = router;

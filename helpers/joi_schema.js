@@ -48,6 +48,9 @@ const project_ids = joi.array().required()
 const major_name = joi.string()
 const major_ids = joi.array().required()
 
+const cate_name = joi.string().required()
+const cate_ids = joi.array().required()
+
 
 module.exports = {
   name,
@@ -68,5 +71,7 @@ module.exports = {
   refresh_token,
   project_name,
   major_name,
-  major_ids
+  major_ids,
+  cate_name,
+  cate_ids,
 };

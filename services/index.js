@@ -3,6 +3,7 @@ const {loginGoogle, refreshAccessToken, logout}= require("./auth");
 const {getAllStudent, updateStudent, deleteStudent} = require("./student");
 const {getAllProjects, createProject, updateProject, deleteProject} = require("./project")
 const {getAllMajors, createMajor, updateMajor, deleteMajor} = require("./major")
+const {getAllCategories, createCategory, updateCategory, deleteCategory} = require("./category")
 
 module.exports = {
   getAllPost,
@@ -22,5 +23,9 @@ module.exports = {
   getAllMajors,
   createMajor,
   updateMajor,
-  deleteMajor
+  deleteMajor,
+  getAllCategories,
+  createCategory,
+  updateCategory,
+  deleteCategory,
 };

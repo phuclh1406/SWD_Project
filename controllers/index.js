@@ -4,6 +4,7 @@ const {getAllStudent, updateStudent, deleteStudent} = require("./student");
 const {uploadFile, pushNotification} = require('./firebaseService');
 const {getAllProjects, createProject, updateProject, deleteProject} = require('./project')
 const {getAllMajors, createMajor, updateMajor, deleteMajor} = require('./major')
+const {getAllCategories, createCategory, updateCategory, deleteCategory} = require('./category')
 module.exports = {
   getAllPost,
   loginGoogle,
@@ -24,5 +25,9 @@ module.exports = {
   getAllMajors,
   createMajor,
   updateMajor,
-  deleteMajor
+  deleteMajor,
+  getAllCategories,
+  createCategory,
+  updateCategory,
+  deleteCategory
 };
