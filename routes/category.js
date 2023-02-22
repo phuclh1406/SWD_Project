@@ -88,7 +88,7 @@ router.get("/", controllers.getAllCategories);
  *            schema:
  *              $ref: '#/components/schemas/Category'
  *            example:
- *              category_name: Design Pattern 
+ *              cate_name: Design Pattern 
  *     responses:
  *       200:
  *         description: Create new category successfully
@@ -117,8 +117,8 @@ router.post("/", controllers.createCategory);
  *            schema:
  *              $ref: '#/components/schemas/Category'
  *            example:
- *               category_id: 9a3dbef2-a705-45aa-9dcd-b23b3d7c12f9
- *               category_name: Design Pattern
+ *               cate_id: 9a3dbef2-a705-45aa-9dcd-b23b3d7c12f9
+ *               cate_name: Design Pattern
  *               status: active
  *     responses:
  *       200:
