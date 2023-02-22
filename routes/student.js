@@ -106,6 +106,7 @@ router.get("/", controllers.getAllStudent);
  *              avatar: https://storage.googleapis.com/react-auth-bc0a4.appspot.com/web.jpg?GoogleAccessId=firebase-adminsdk-c5k74%40react-auth-bc0a4.iam.gserviceaccount.com&Expires=1678986000&Signature=IWWYMwdwfrzEiteVuS3VURcm3zsHUu0wm0RD1nLapblU3CPOaXB1Srbs2iqN2fIA3zQ8jpprHYNHoASp7XdzAS3KiT4ufnHgxQrPFkSsno9Mh3IoqbLAzAosRlYiCjv91D84wqGW2nQJ3GyqeqrBsxt2cTZ%2B%2BGIaZUAtPyXUv%2FOVPKwC8amCl1DL%2F%2BRlO%2F65wXRxvuvukLz49v9B%2BOuXQjeWZq04t6OYyokYXMGTekMTADQls0I9vw%2FczFgjKA%2FXgN6P9XyrazdkqFMHWxEJV%2ByUp3CD%2BH%2Bu%2BjliezcJ%2B%2FlLhYKm2OuQryJAmhHLxYkadwb74I82T1%2FCzHAn%2BCcLAw%3D%3D
  *              role_id: 5826d1d9-c33a-45c5-b93e-894e1dde10bd
  *              major_id: 9a3dbef2-a705-45aa-9dcd-b23b3d7c12f9
+ *              status: active
  *     responses:
  *       200:
  *         description: For get the list of the students

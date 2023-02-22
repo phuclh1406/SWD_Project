@@ -69,7 +69,7 @@ router.use(verifyToken);
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/Majors'
+ *                 $ref: '#/components/schemas/Major'
  */
 router.get("/", controllers.getAllMajors);
 
@@ -135,7 +135,7 @@ router.put("/", controllers.updateMajor);
 /**
  * @swagger
  * /api/v1/majors/{id}:
- *   delete:
+ *   put:
  *     security: 
  *         - BearerAuth: []
  *     summary: Delete the majors by id
@@ -156,6 +156,6 @@ router.put("/", controllers.updateMajor);
  *               items:
  *                 $ref: '#/components/schemas/Major'
  */
-router.delete("/:id", controllers.deleteMajor);
+router.put("/:id", controllers.deleteMajor);
 
 module.exports = router;

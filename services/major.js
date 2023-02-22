@@ -23,7 +23,7 @@ const getAllMajors = ({page, limit, order, major_name, ...query}) => new Promise
         });
         resolve({
             msg: majors ? `Got major` : 'Cannot find major',
-            posts: majors
+            majors: majors
         });
     } catch (error) {
         reject(error);

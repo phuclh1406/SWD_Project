@@ -9,8 +9,9 @@ const getAllCategories = ({page, limit, order, cate_name, ...query}) => new Prom
         const flimit = +limit || +process.env.LIMIT_POST;
         queries.offset = offset * flimit;
         queries.limit = flimit;
-        if(order) queries.order = [order]
-        if(cate_name) query.cate_name = {[Op.substring]: cate_name}
+        if(order) queries.order = [order];
+        if(cate_name) query.cate_name = {[Op.substring]: cate_name};
+        query.status = {[Op.ne]: 'deactive'};
 
         const categories = await db.Category.findAndCountAll({
             where: query,
@@ -18,7 +19,7 @@ const getAllCategories = ({page, limit, order, cate_name, ...query}) => new Prom
         });
         resolve({
             msg: categories ? `Got category` : 'Cannot find category',
-            posts: categories
+            categories: categories
         });
     } catch (error) {
         reject(error);
@@ -49,14 +50,14 @@ const updateCategory = ({cate_id, ...body}) => new Promise( async (resolve, reje
 
         if (checkDuplicateName !== null) {
             resolve({
-                msg: 'category name already have'
+                msg: 'Category name already have'
             });
         };
         const categories = await db.Category.update(body, {
             where: {cate_id}
         });
         resolve({
-            msg: categories[0] > 0 ? `${categories[0]} project is updated` : 'Cannot update project/ project_id not found',
+            msg: categories[0] > 0 ? `${categories[0]} category is updated` : 'Cannot update category/ cate_id not found',
         });
     } catch (error) {
         reject(error);
@@ -66,7 +67,7 @@ const updateCategory = ({cate_id, ...body}) => new Promise( async (resolve, reje
 const deleteCategory = (cate_ids) => new Promise( async (resolve, reject) => {
     try {
 
-        const categories = await db.Category.destroy({
+        const categories = await db.Category.update({status: 'deactive'}, {
             where: {cate_id: cate_ids}
         });
         resolve({

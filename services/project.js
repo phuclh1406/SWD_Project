@@ -25,7 +25,7 @@ const getAllProjects = ({page, limit, order, project_name, ...query}) => new Pro
         });
         resolve({
             msg: projects ? `Got projects` : 'Cannot find projects',
-            posts: projects
+            projects: projects
         });
     } catch (error) {
         reject(error);

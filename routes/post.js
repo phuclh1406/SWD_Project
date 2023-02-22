@@ -151,6 +151,7 @@ router.post("/", controllers.createPost);
  *              project_id: 7bedd70c-deb9-429a-821f-064bff37129a
  *              cate_id: ec4b9413-cb91-473b-b80b-c6beaf1a420c
  *              major_id: 9a3dbef2-a705-45aa-9dcd-b23b3d7c12f9
+ *              status: active
  *     responses:
  *       200:
  *         description: For get the list of the posts

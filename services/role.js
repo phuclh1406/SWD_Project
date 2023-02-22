@@ -18,7 +18,7 @@ const getAllRoles = ({page, limit, order, role_name, ...query}) => new Promise( 
         });
         resolve({
             msg: roles ? `Got role` : 'Cannot find role',
-            posts: roles
+            roles: roles
         });
     } catch (error) {
         reject(error);

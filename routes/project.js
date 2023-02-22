@@ -139,7 +139,7 @@ router.put("/", controllers.updateProject);
 /**
  * @swagger
  * /api/v1/projects/{id}:
- *   delete:
+ *   put:
  *     security: 
  *         - BearerAuth: []
  *     summary: Delete the projects by id
@@ -160,6 +160,6 @@ router.put("/", controllers.updateProject);
  *               items:
  *                 $ref: '#/components/schemas/Project'
  */
-router.delete("/:id", controllers.deleteProject);
+router.put("/:id", controllers.deleteProject);
 
 module.exports = router;

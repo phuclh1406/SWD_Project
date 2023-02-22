@@ -135,7 +135,7 @@ router.put("/", controllers.updateCategory);
 /**
  * @swagger
  * /api/v1/categories/{id}:
- *   delete:
+ *   put:
  *     security: 
  *         - BearerAuth: []
  *     summary: Delete the categories by id
@@ -156,6 +156,6 @@ router.put("/", controllers.updateCategory);
  *               items:
  *                 $ref: '#/components/schemas/Category'
  */
-router.delete("/:id", controllers.deleteCategory);
+router.put("/:id", controllers.deleteCategory);
 
 module.exports = router;
