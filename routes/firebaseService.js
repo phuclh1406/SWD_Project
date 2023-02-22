@@ -39,7 +39,7 @@ const router = express.Router();
  *            schema:
  *              $ref: '#/components/schemas/Firebase'
  *            example:
- *              token: string
+ *              device_token: string
  *              title: string
  *              content: string
  *     responses:

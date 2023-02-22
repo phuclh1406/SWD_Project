@@ -9,15 +9,20 @@ const getAllMajors = ({page, limit, order, major_name, ...query}) => new Promise
         const flimit = +limit || +process.env.LIMIT_POST;
         queries.offset = offset * flimit;
         queries.limit = flimit;
-        if(order) queries.order = [order]
-        if(major_name) query.major_name = {[Op.substring]: major_name}
+        if(order) queries.order = [order];
+        if(major_name) query.major_name = {[Op.substring]: major_name};
+        query.status = {[Op.ne]: 'deactive'};
+
 
         const majors = await db.Major.findAndCountAll({
             where: query,
             ...queries,
+            attributes: {
+                exclude: ['major_id', 'createAt', 'updateAt'],
+            },
         });
         resolve({
-            msg: majors ? `Got mayjor` : 'Cannot find major',
+            msg: majors ? `Got major` : 'Cannot find major',
             posts: majors
         });
     } catch (error) {
@@ -66,7 +71,7 @@ const updateMajor = ({major_id, ...body}) => new Promise( async (resolve, reject
 const deleteMajor = (major_ids) => new Promise( async (resolve, reject) => {
     try {
 
-        const majors = await db.Major.destroy({
+        const majors = await db.Major.update({status: 'deactive'}, {
             where: {major_id: major_ids}
         });
         resolve({

@@ -40,13 +40,22 @@ const student_id = joi.string().required().messages({
 const post_ids = joi.array().required();
 const student_ids = joi.array().required();
 const refresh_token = joi.string().required().messages({
-  "string.empty": `post_ids is not allowed to be empty`,
+  "string.empty": `refresh_token is not allowed to be empty`,
 });
 const name = joi.string();
 const project_name = joi.string().required()
 const project_ids = joi.array().required()
 const major_name = joi.string()
 const major_ids = joi.array().required()
+const title = joi.string().required().messages({
+  "string.empty": `title is not allowed to be empty`,
+});
+const body = joi.string().required().messages({
+  "string.empty": `body is not allowed to be empty`,
+});
+const device_token = joi.string().required().messages({
+  "string.empty": `device_token is not allowed to be empty`,
+});
 
 
 module.exports = {
@@ -68,5 +77,8 @@ module.exports = {
   refresh_token,
   project_name,
   major_name,
-  major_ids
+  major_ids,
+  title,
+  body,
+  device_token,
 };

@@ -17,7 +17,7 @@ const getAllProjects = ({page, limit, order, project_name, ...query}) => new Pro
             where: query,
             ...queries,
             attributes: {
-                exclude: ['student_id'],
+                exclude: ['student_id', 'createAt', 'updateAt'],
             },
             include: [{
                 model: db.Student, as: 'project_student', attributes: ['student_id', 'student_name']
