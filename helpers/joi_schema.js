@@ -38,15 +38,21 @@ const student_id = joi.string().required().messages({
   "string.empty": `major_id is not allowed to be empty`,
 });
 const post_ids = joi.array().required();
-const student_ids = joi.array().required();
+const student_ids = joi.array().required().messages({
+  'any.required': 'student_ids are required'
+});
 const refresh_token = joi.string().required().messages({
   "string.empty": `refresh_token is not allowed to be empty`,
 });
 const name = joi.string();
-const project_name = joi.string().required()
-const project_ids = joi.array().required()
-const major_name = joi.string()
-const major_ids = joi.array().required()
+const project_name = joi.string().required();
+const project_ids = joi.array().required().messages({
+  'any.required': 'project_ids are required'
+});
+const major_name = joi.string();
+const major_ids = joi.array().required().messages({
+  'any.required': 'major_ids are required'
+});
 const title = joi.string().required().messages({
   "string.empty": `title is not allowed to be empty`,
 });
@@ -55,6 +61,13 @@ const body = joi.string().required().messages({
 });
 const device_token = joi.string().required().messages({
   "string.empty": `device_token is not allowed to be empty`,
+});
+
+const cate_name = joi.string().required().messages({
+  "string.empty": `cate_name is not allowed to be empty`,
+});
+const cate_ids = joi.array().required().messages({
+  'any.required': 'cate_ids are required'
 });
 
 
@@ -81,4 +94,6 @@ module.exports = {
   title,
   body,
   device_token,
+  cate_name,
+  cate_ids,
 };
