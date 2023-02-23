@@ -5,7 +5,7 @@ const {student_id, student_ids} = require('../helpers/joi_schema');
 
 const getAllStudent = async (req, res) => {
     try {
-        const response = await services.getAllStudent(req.query);
+        
         return res.status(200).json(response);
     } catch (error) {
         console.log(error);
