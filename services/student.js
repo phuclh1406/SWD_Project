@@ -95,8 +95,9 @@ const getStudentById = (student_id) =>
           exclude: [
             "role_id",
             "major_id",
-            "createAt",
-            "updateAt",
+            "createdAt",
+            "updatedAt",
+            "status",
             "refresh_token",
           ],
         },

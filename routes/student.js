@@ -95,8 +95,8 @@ router.get("/", controllers.getAllStudent);
  *     summary: Returns the the students by id
  *     tags: [student-controller]
  *     parameters:
- *       - name: student_id
- *         in: params
+ *       - name: id
+ *         in: path
  *         schema:
  *           type: string
  *         description: Find student by student_id
