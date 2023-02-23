@@ -37,4 +37,15 @@ const deleteStudent = async (req, res) => {
     }
 };
 
-module.exports = {getAllStudent, updateStudent, deleteStudent};
+const getStudentById = async (req, res) => {
+    try {
+        const { id: student_id } = req.params;
+        const response = await services.getStudentById(student_id);
+        return res.status(200).json(response);
+    } catch (error) {
+        console.log(error);
+        throw new InternalServerError(error.message);
+    }
+};
+
+module.exports = {getAllStudent, updateStudent, deleteStudent, getStudentById};

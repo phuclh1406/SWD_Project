@@ -23,7 +23,13 @@ module.exports = (sequelize, DataTypes) => {
     cate_name: DataTypes.STRING,
     status: {
       type: DataTypes.ENUM,
-      values: ['active', 'deactive']
+      values: ['active', 'deactive'],
+      validate: {
+        isIn: {
+          args: [['active', 'deactive']],
+          msg: 'Invalid value for category.status (active, deactive)'
+        }
+      }
     }
   }, {
     sequelize,

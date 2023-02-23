@@ -43,6 +43,7 @@ const uploadFile = async (req, res) => {
 
     // Use the URL to download the image
     request.get(url, (err, response, body) => {
+      console.log(req.file.originalname);
       if (err) {
         console.log(err);
         return res.status(500).json({ message: "Server error!" });

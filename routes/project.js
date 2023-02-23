@@ -139,7 +139,7 @@ router.put("/", controllers.updateProject);
 /**
  * @swagger
  * /api/v1/projects/{id}:
- *   put:
+ *   delete:
  *     security: 
  *         - BearerAuth: []
  *     summary: Delete the projects by id

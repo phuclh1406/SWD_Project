@@ -88,6 +88,32 @@ router.get("/", controllers.getAllStudent);
 
 /**
  * @swagger
+ * /api/v1/students/{id}:
+ *   get:
+ *     security: 
+ *         - BearerAuth: []
+ *     summary: Returns the the students by id
+ *     tags: [student-controller]
+ *     parameters:
+ *       - name: student_id
+ *         in: params
+ *         schema:
+ *           type: string
+ *         description: Find student by student_id
+ *     responses:
+ *       200:
+ *         description: For get the students by id
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Student'
+ */
+router.get("/:id", controllers.getStudentById);
+
+/**
+ * @swagger
  * /api/v1/students:
  *   put:
  *     security: 
@@ -122,7 +148,7 @@ router.put("/", controllers.updateStudent);
 /**
  * @swagger
  * /api/v1/students/{id}:
- *   put:
+ *   delete:
  *     security: 
  *         - BearerAuth: []
  *     summary: Delete the students by id

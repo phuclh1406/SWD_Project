@@ -167,7 +167,7 @@ router.put("/", controllers.updatePost);
 /**
  * @swagger
  * /api/v1/posts/{id}:
- *   put:
+ *   delete:
  *     security: 
  *         - BearerAuth: []
  *     summary: Delete the posts by id
