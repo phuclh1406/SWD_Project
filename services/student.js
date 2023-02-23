@@ -91,6 +91,8 @@ const getStudentById = (student_id) =>
     try {
       const student = await db.Student.findOne({
         where: { student_id: student_id },
+        raw: true,
+        nest: true,
         attributes: {
           exclude: [
             "role_id",
@@ -101,6 +103,18 @@ const getStudentById = (student_id) =>
             "refresh_token",
           ],
         },
+        include: [
+          {
+            model: db.Role,
+            as: "student_role",
+            attributes: ["role_id", "role_name"],
+          },
+          {
+            model: db.Major,
+            as: "student_major",
+            attributes: ["major_id", "major_name"],
+          },
+        ],
       });
       if (student) {
         resolve({
