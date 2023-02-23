@@ -8,7 +8,7 @@ const {getAllStudent} = require('../controllers/student')
 //GET method
 describe('getAllStudent function', () => {
   it('should return a 200 response with the correct data', async () => {
-    // Arrange
+    // Arrange  
     const req = { query: { /* Add any necessary query parameters */ } };
     const res = { status: jest.fn().mockReturnThis(), json: jest.fn() };
     const expectedResponse = { /* Add the expected response object here */ };
