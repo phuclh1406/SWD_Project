@@ -20,6 +20,11 @@ const initRoutes = (app) => {
     app.use('/api/v1/categories', category);
     app.use('/api/v1/roles', role);
 
+    
+    app.use('/', (req, res) => {
+        res.status(200).send('Hello!')
+    });
+
     app.use(notFoundMiddleware);
     app.use(errorHandlerMiddleware);
 }

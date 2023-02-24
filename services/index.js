@@ -1,7 +1,7 @@
-const { getAllPost, createPost, updatePost, deletePost} = require("./post");
+const { getAllPost, createPost, updatePost, deletePost, getPostById} = require("./post");
 const {loginGoogle, refreshAccessToken, logout}= require("./auth");
-const {getAllStudent, updateStudent, deleteStudent, getStudentById} = require("./student");
-const {getAllProjects, createProject, updateProject, deleteProject} = require("./project")
+const {getAllStudent, updateStudent, deleteStudent, getStudentById, createStudent} = require("./student");
+const {getAllProjects, createProject, updateProject, deleteProject, getProjectById} = require("./project")
 const {getAllMajors, createMajor, updateMajor, deleteMajor} = require("./major")
 const {getAllCategories, createCategory, updateCategory, deleteCategory} = require("./category")
 const {getAllRoles} = require('./role')
@@ -30,5 +30,9 @@ module.exports = {
   updateCategory,
   deleteCategory,
   getAllRoles,
-  getStudentById
+  getStudentById,
+  getProjectById,
+  getPostById,
+  createStudent,
+  
 };

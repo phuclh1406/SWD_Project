@@ -76,7 +76,6 @@ const updatePost = ({post_id, ...body}) => new Promise( async (resolve, reject) 
 
 const deletePost = (post_ids) => new Promise( async (resolve, reject) => {
     try {
-
         const posts = await db.JobPost.update({status: 'deactive'}, {
             where: {post_id: post_ids}
         });
@@ -88,5 +87,37 @@ const deletePost = (post_ids) => new Promise( async (resolve, reject) => {
     }
 });
 
-module.exports = { getAllPost, createPost, updatePost, deletePost};
+const getPostById = (post_id) =>
+  new Promise(async (resolve, reject) => {
+    try {
+      const post = await db.JobPost.findOne({
+        where: { post_id: post_id },
+        raw: true,
+        nest: true,
+        attributes: {
+            exclude: ['project_id', 'cate_id', 'major_id', 'createAt', 'updateAt'],
+        },
+        include: [{
+            model: db.Category, as: 'post_category', attributes: ['cate_id', 'cate_name']
+        }, {
+            model: db.Project, as: 'post_project', attributes: ['project_id', 'project_name']
+        }, {
+            model: db.Major, as: 'post_major', attributes: ['major_id', 'major_name']
+        }]
+      });
+      if (post) {
+        resolve({
+            post: post 
+        });
+      } else {
+        resolve({
+          msg: `Cannot find post with id: ${post_id}`
+        });
+      }
+    } catch (error) {
+      reject(error);
+    }
+  });
+
+module.exports = { getAllPost, createPost, updatePost, deletePost, getPostById};
 

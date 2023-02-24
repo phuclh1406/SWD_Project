@@ -84,4 +84,32 @@ const deleteProject = (project_ids) => new Promise( async (resolve, reject) => {
     }
 });
 
- module.exports = { getAllProjects, createProject , updateProject, deleteProject};
+const getProjectById = (project_id) =>
+  new Promise(async (resolve, reject) => {
+    try {
+      const project = await db.Project.findOne({
+        where: { project_id: project_id },
+        raw: true,
+        nest: true,
+        attributes: {
+            exclude: ['student_id', 'createAt', 'updateAt'],
+        },
+        include: [{
+            model: db.Student, as: 'project_student', attributes: ['student_id', 'student_name']
+        }]
+      });
+      if (project) {
+        resolve({
+            project: project 
+        });
+      } else {
+        resolve({
+          msg: `Cannot find project with id: ${project_id}`
+        });
+      }
+    } catch (error) {
+      reject(error);
+    }
+  });
+
+ module.exports = { getAllProjects, createProject , updateProject, deleteProject, getProjectById};

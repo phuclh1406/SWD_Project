@@ -1,11 +1,25 @@
 const services = require('../services');
 const {BadRequestError, InternalServerError} = require('../errors');
 const joi = require('joi');
-const {student_id, student_ids} = require('../helpers/joi_schema');
+const {student_id, student_ids, student_name, email, avatar, role_id, major_id} = require('../helpers/joi_schema');
 
 const getAllStudent = async (req, res) => {
     try {
         const response = await services.getAllStudent(req.query);
+        return res.status(200).json(response);
+    } catch (error) {
+        console.log(error);
+        throw new InternalServerError(error);
+    }
+};
+
+const createStudent = async (req, res) => {
+    try {
+        const { error } = joi.object({student_name, email, avatar, role_id, major_id}).validate(req.body);
+        if (error) {
+            return res.status(400).json({msg: error.details[0].message});
+        }
+        const response = await services.createStudent(req.body);
         return res.status(200).json(response);
     } catch (error) {
         console.log(error);
@@ -48,4 +62,4 @@ const getStudentById = async (req, res) => {
     }
 };
 
-module.exports = {getAllStudent, updateStudent, deleteStudent, getStudentById};
+module.exports = {getAllStudent, updateStudent, deleteStudent, getStudentById, createStudent};

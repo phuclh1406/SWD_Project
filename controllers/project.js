@@ -49,4 +49,15 @@ const deleteProject = async (req, res) => {
     }
 };
 
-module.exports = {getAllProjects, createProject, updateProject, deleteProject};
+const getProjectById = async (req, res) => {
+    try {
+        const { id: project_id } = req.params;
+        const response = await services.getProjectById(project_id);
+        return res.status(200).json(response);
+    } catch (error) {
+        console.log(error);
+        throw new InternalServerError(error.message);
+    }
+};
+
+module.exports = {getAllProjects, createProject, updateProject, deleteProject, getProjectById};

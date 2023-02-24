@@ -1,7 +1,5 @@
 const db = require("../models");
 const { Op } = require("sequelize");
-const multer = require("multer");
-const firebase = require("../config/firebase_config");
 
 const getAllStudent = ({ page, limit, order, student_name, ...query }) =>
   new Promise(async (resolve, reject) => {
@@ -48,6 +46,22 @@ const getAllStudent = ({ page, limit, order, student_name, ...query }) =>
       reject(error);
     }
   });
+
+  const createStudent = (body) => new Promise( async (resolve, reject) => {
+    try {
+        const student = await db.Student.findOrCreate({
+            where: {email: body?.email},
+            defaults: {
+                ...body
+            }
+        });
+        resolve({
+            msg: student[1] ? 'Create new student successfully' : 'Cannot create new student',
+        });
+    } catch (error) {
+        reject(error);
+    }
+});
 
 const updateStudent = ({ student_id, ...body }) =>
   new Promise(async (resolve, reject) => {
@@ -99,7 +113,6 @@ const getStudentById = (student_id) =>
             "major_id",
             "createdAt",
             "updatedAt",
-            "status",
             "refresh_token",
           ],
         },
@@ -125,15 +138,17 @@ const getStudentById = (student_id) =>
           msg: `Cannot find student with id: ${student_id}`
         });
       }
-      
     } catch (error) {
       reject(error);
     }
   });
+
+
 
 module.exports = {
   getAllStudent,
   updateStudent,
   deleteStudent,
   getStudentById,
+  createStudent,
 };

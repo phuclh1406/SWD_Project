@@ -49,4 +49,16 @@ const deletePost = async (req, res) => {
     }
 };
 
-module.exports = { getAllPost, createPost, updatePost, deletePost};
+const getPostById = async (req, res) => {
+    try {
+        const { id: post_id } = req.params;
+        const response = await services.getPostById(post_id);
+        return res.status(200).json(response);
+    } catch (error) {
+        console.log(error);
+        throw new InternalServerError(error.message);
+    }
+};
+
+
+module.exports = { getAllPost, createPost, updatePost, deletePost, getPostById};
