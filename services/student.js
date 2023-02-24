@@ -56,7 +56,7 @@ const getAllStudent = ({ page, limit, order, student_name, ...query }) =>
             }
         });
         resolve({
-            msg: student[1] ? 'Create new student successfully' : 'Cannot create new student',
+            msg: student[1] ? 'Create new student successfully' : 'Cannot create new student/ Email already exists',
         });
     } catch (error) {
         reject(error);
