@@ -48,6 +48,26 @@ router.use(verifyRole);
  *         - BearerAuth: []
  *     summary: Returns the list of all the students
  *     tags: [student-controller]
+ *     responses:
+ *       200:
+ *         description: For get the list of the students
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Student'
+ */
+router.get("/", controllers.getAllStudent);
+
+/**
+ * @swagger
+ * /api/v1/students/paging/:
+ *   get:
+ *     security: 
+ *         - BearerAuth: []
+ *     summary: Returns the list of all the students paging
+ *     tags: [student-controller]
  *     parameters:
  *       - name: student_name
  *         in: query
@@ -76,7 +96,7 @@ router.use(verifyRole);
  *         description: Sort ASC/DESC
  *     responses:
  *       200:
- *         description: For get the list of the students
+ *         description: For get the list of the students paging
  *         content:
  *           application/json:
  *             schema:
@@ -84,7 +104,7 @@ router.use(verifyRole);
  *               items:
  *                 $ref: '#/components/schemas/Student'
  */
-router.get("/", controllers.getAllStudent);
+router.get("/paging/", controllers.getAllStudentPaging);
 
 /**
  * @swagger

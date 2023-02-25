@@ -1,7 +1,47 @@
 const db = require("../models");
 const { Op } = require("sequelize");
 
-const getAllStudent = ({ page, limit, order, student_name, ...query }) =>
+const getAllStudent = () =>
+  new Promise(async (resolve, reject) => {
+    try {
+      const students = await db.Student.findAndCountAll({
+        where: {
+          status: {
+            [Op.ne]: "deactive",
+          }
+        },
+        attributes: {
+          exclude: [
+            "role_id",
+            "major_id",
+            "createAt",
+            "updateAt",
+            "refresh_token",
+          ],
+        },
+        include: [
+          {
+            model: db.Role,
+            as: "student_role",
+            attributes: ["role_id", "role_name"],
+          },
+          {
+            model: db.Major,
+            as: "student_major",
+            attributes: ["major_id", "major_name"],
+          },
+        ],
+      });
+      resolve({
+        msg: students ? `Got student` : "Cannot find student",
+        students: students,
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
+
+const getAllStudentPaging = ({ page, limit, order, student_name, ...query }) =>
   new Promise(async (resolve, reject) => {
     try {
       const queries = { raw: true, nest: true };
@@ -12,6 +52,51 @@ const getAllStudent = ({ page, limit, order, student_name, ...query }) =>
       if (order) queries.order = [order];
       if (student_name) query.student_name = { [Op.substring]: student_name };
       query.status = { [Op.ne]: "deactive" };
+
+      const students = await db.Student.findAndCountAll({
+        where: query,
+        ...queries,
+        attributes: {
+          exclude: [
+            "role_id",
+            "major_id",
+            "createAt",
+            "updateAt",
+            "refresh_token",
+          ],
+        },
+        include: [
+          {
+            model: db.Role,
+            as: "student_role",
+            attributes: ["role_id", "role_name"],
+          },
+          {
+            model: db.Major,
+            as: "student_major",
+            attributes: ["major_id", "major_name"],
+          },
+        ],
+      });
+      resolve({
+        msg: students ? `Got student` : "Cannot find student",
+        students: students,
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
+
+  const getAllStudentByAdmin = ({ page, limit, order, student_name, ...query }) =>
+  new Promise(async (resolve, reject) => {
+    try {
+      const queries = { raw: true, nest: true };
+      const offset = !page || +page <= 1 ? 0 : +page - 1;
+      const flimit = +limit || +process.env.LIMIT_POST;
+      queries.offset = offset * flimit;
+      queries.limit = flimit;
+      if (order) queries.order = [order];
+      if (student_name) query.student_name = { [Op.substring]: student_name };
 
       const students = await db.Student.findAndCountAll({
         where: query,
@@ -151,4 +236,6 @@ module.exports = {
   deleteStudent,
   getStudentById,
   createStudent,
+  getAllStudentByAdmin,
+  getAllStudentPaging,
 };

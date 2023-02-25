@@ -5,7 +5,27 @@ const {student_id, student_ids, student_name, email, avatar, role_id, major_id} 
 
 const getAllStudent = async (req, res) => {
     try {
-        const response = await services.getAllStudent(req.query);
+        const response = await services.getAllStudent();
+        return res.status(200).json(response);
+    } catch (error) {
+        console.log(error);
+        throw new InternalServerError(error);
+    }
+};
+
+const getAllStudentPaging = async (req, res) => {
+    try {
+        const response = await services.getAllStudentPaging(req.query);
+        return res.status(200).json(response);
+    } catch (error) {
+        console.log(error);
+        throw new InternalServerError(error);
+    }
+};
+
+const getAllStudentByAdmin = async (req, res) => {
+    try {
+        const response = await services.getAllStudentByAdmin(req.query);
         return res.status(200).json(response);
     } catch (error) {
         console.log(error);
@@ -62,4 +82,4 @@ const getStudentById = async (req, res) => {
     }
 };
 
-module.exports = {getAllStudent, updateStudent, deleteStudent, getStudentById, createStudent};
+module.exports = {getAllStudent, updateStudent, deleteStudent, getStudentById, createStudent, getAllStudentByAdmin, getAllStudentPaging};
