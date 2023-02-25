@@ -135,7 +135,7 @@ router.put("/", controllers.updateCategory);
 /**
  * @swagger
  * /api/v1/categories/{id}:
- *   put:
+ *   delete:
  *     security: 
  *         - BearerAuth: []
  *     summary: Delete the categories by id

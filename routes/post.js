@@ -93,6 +93,32 @@ router.get("/", controllers.getAllPost);
 
 /**
  * @swagger
+ * /api/v1/posts/{id}:
+ *   get:
+ *     security: 
+ *         - BearerAuth: []
+ *     summary: Returns the the post by id
+ *     tags: [post-controller]
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         schema:
+ *           type: string
+ *         description: Find post by student_id
+ *     responses:
+ *       200:
+ *         description: For get the post by id
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/JobPost'
+ */
+router.get("/:id", controllers.getPostById);
+
+/**
+ * @swagger
  * /api/v1/posts:
  *   post:
  *     security: 
@@ -167,7 +193,7 @@ router.put("/", controllers.updatePost);
 /**
  * @swagger
  * /api/v1/posts/{id}:
- *   put:
+ *   delete:
  *     security: 
  *         - BearerAuth: []
  *     summary: Delete the posts by id

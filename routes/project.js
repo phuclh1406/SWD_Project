@@ -78,6 +78,33 @@ router.get("/", controllers.getAllProjects);
 
 /**
  * @swagger
+ * /api/v1/projects/{id}:
+ *   get:
+ *     security: 
+ *         - BearerAuth: []
+ *     summary: Returns the the project by id
+ *     tags: [project-controller]
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         schema:
+ *           type: string
+ *         description: Find project by student_id
+ *     responses:
+ *       200:
+ *         description: For get the project by id
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Project'
+ */
+router.get("/:id", controllers.getProjectById);
+
+
+/**
+ * @swagger
  * /api/v1/projects:
  *   post:
  *     security: 
@@ -139,7 +166,7 @@ router.put("/", controllers.updateProject);
 /**
  * @swagger
  * /api/v1/projects/{id}:
- *   put:
+ *   delete:
  *     security: 
  *         - BearerAuth: []
  *     summary: Delete the projects by id

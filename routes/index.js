@@ -11,7 +11,6 @@ const notFoundMiddleware = require('../middlewares/not-found');
 const errorHandlerMiddleware = require('../middlewares/error_handler');
 
 const initRoutes = (app) => {
-    
     app.use('/api/v1/auth', auth);
     app.use('/api/v1/posts', post);
     app.use('/api/v1/students', student);
@@ -20,6 +19,11 @@ const initRoutes = (app) => {
     app.use('/api/v1/majors', major);
     app.use('/api/v1/categories', category);
     app.use('/api/v1/roles', role);
+
+    
+    app.use('/', (req, res) => {
+        res.status(200).send('Hello!')
+    });
 
     app.use(notFoundMiddleware);
     app.use(errorHandlerMiddleware);

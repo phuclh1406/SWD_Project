@@ -69,6 +69,15 @@ const cate_name = joi.string().required().messages({
 const cate_ids = joi.array().required().messages({
   'any.required': 'cate_ids are required'
 });
+const student_name = joi.string().required().messages({
+  "string.empty": `student_name is not allowed to be empty`,
+});
+const avatar = joi.string().required().messages({
+  "string.empty": `avatar is not allowed to be empty`,
+});
+const role_id = joi.string().required().messages({
+  "string.empty": `avatar is not allowed to be empty`,
+});
 
 
 module.exports = {
@@ -96,4 +105,8 @@ module.exports = {
   device_token,
   cate_name,
   cate_ids,
+  student_name, 
+  avatar,
+  role_id,
+  
 };

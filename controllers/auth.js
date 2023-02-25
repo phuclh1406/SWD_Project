@@ -39,7 +39,7 @@ const logout = async (req, res) => {
         const response = await services.logout(req.query.student_id);
         return res.status(200).json(response);
     } catch (error) {
-        throw new InternalServerError('Internal Server Error');
+        throw new InternalServerError(error);
     }
 };
 

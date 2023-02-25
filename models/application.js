@@ -33,7 +33,13 @@ module.exports = (sequelize, DataTypes) => {
     },
     status: {
       type: DataTypes.ENUM,
-      values: ['active', 'pending', 'deactive', 'finished']
+      values: ['active', 'pending', 'deactive', 'finished'],
+      validate: {
+        isIn: {
+          args: [['active', 'pending', 'deactive', 'finish']],
+          msg: 'Invalid value for student.status (active, pending, deactive, finish)'
+        }
+      }
     }
   }, {
     sequelize,
