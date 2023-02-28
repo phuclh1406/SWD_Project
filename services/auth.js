@@ -7,15 +7,18 @@ const loginGoogle = ({ name, picture, user_id, email }) =>
     try {
       const response = await db.Student.findOrCreate({
         where: { email },
+        raw: true,
+        nest: true,
         defaults: {
           student_id: user_id,
           student_name: name,
           email: email,
           avatar: picture,
-          role_id: "bd86e723-a2d5-47f5-87f2-9a4bc6fe8bb2",
+          role_id: "5826d1d9-c33a-45c5-b93e-894e1dde10bd",
         },
       });
-
+      // console.log("0",response);
+      // console.log("1", response[0]);
       const student = await db.Student.findOne({
         where: { email: email },
         raw: true,

@@ -13,6 +13,8 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Project.belongsTo(models.Student, {foreignKey: 'student_id', targetKey: 'student_id', as: 'project_student'})
       Project.hasMany(models.JobPost, {as: 'project_post', foreignKey: 'post_id'});
+      Project.belongsToMany(models.Student, {through: models.History });
+      Project.hasMany(models.History, {as: "project_history", foreignKey: 'project_id'});
     }
   }
   Project.init({
@@ -26,13 +28,15 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4
     },
+    description: DataTypes.STRING,
+    url: DataTypes.STRING,
     status: {
       type: DataTypes.ENUM,
-      values: ['active', 'deactive'],
+      values: ['Active', 'Deactive', 'Finished'],
       validate: {
         isIn: {
-          args: [['active', 'deactive']],
-          msg: 'Invalid value for project.status (active, deactive)'
+          args: [['Active', 'Deactive', 'Finished']],
+          msg: 'Invalid value for project.status (Active, Deactive, Finished)'
         }
       }
     }

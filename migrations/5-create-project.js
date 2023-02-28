@@ -12,6 +12,13 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
+      description: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      url: {
+        type: Sequelize.STRING,
+      },
       student_id: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
@@ -22,7 +29,7 @@ module.exports = {
       },
       status: {
         type: Sequelize.ENUM,
-        values: ["active", "pending", "deactive"],
+        values: ['Active', 'Deactive', 'Finished'],
         defaultValue: 'active',
       },
       createdAt: {

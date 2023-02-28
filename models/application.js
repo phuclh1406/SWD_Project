@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Application.belongsTo(models.Student, {foreignKey: 'student_id', targetKey: 'student_id', as: 'categoryData' })
+      Application.belongsTo(models.Student, {foreignKey: 'student_id', targetKey: 'student_id', as: 'application_student'})
       Application.belongsTo(models.JobPost, {foreignKey: 'post_id', targetKey: 'post_id', as: 'application_post'});
       Application.hasMany(models.Deliverable, {as: 'application_deliverable', foreignKey: 'application_id'});
     }
@@ -33,11 +33,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     status: {
       type: DataTypes.ENUM,
-      values: ['active', 'pending', 'deactive', 'finished'],
+      values: ["Active", "Pending", "Deactive", "Finished"],
       validate: {
         isIn: {
-          args: [['active', 'pending', 'deactive', 'finish']],
-          msg: 'Invalid value for student.status (active, pending, deactive, finish)'
+          args: ["Active", "Pending", "Deactive", "Finished"],
+          msg: 'Invalid value for student.status (Active, Pending, Deactive, Finished)'
         }
       }
     }

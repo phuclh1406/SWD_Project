@@ -1,16 +1,32 @@
-"use strict";
+'use strict';
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Categories", {
-      cate_id: {
+    await queryInterface.createTable('Histories', {
+      history_id: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
       },
-      cate_name: {
-        type: Sequelize.STRING,
+      price: {
+        type: Sequelize.DOUBLE,
         allowNull: false
+      },
+      student_id: {
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
+        references: {
+          model: 'students',
+          key: 'student_id'
+        }
+      },
+      project_id: {
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
+        references: {
+          model: 'projects',
+          key: 'project_id'
+        }
       },
       status: {
         type: Sequelize.ENUM,
@@ -26,10 +42,10 @@ module.exports = {
         allowNull: false,
         type: "TIMESTAMP",
         defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
-      },
+      }
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Categories");
-  },
+    await queryInterface.dropTable('Histories');
+  }
 };

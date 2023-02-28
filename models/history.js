@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Wallet extends Model {
+  class History extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,17 +11,22 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Wallet.belongsTo(models.Student, {foreignKey: 'student_id', targetKey: 'student_id', as: 'wallet_student'});
+      History.belongsTo(models.Student, {foreignKey: 'student_id', targetKey: 'student_id', as: 'history_student' })
+      History.belongsTo(models.Project, {foreignKey: 'project_id', targetKey: 'project_id', as: 'history_project'});
     }
   }
-  Wallet.init({
-    wallet_id: {
+  History.init({
+    history_id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
-    wallet_name: DataTypes.STRING,
+    price: DataTypes.DOUBLE,
     student_id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4
+    },
+    project_id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4
     },
@@ -30,14 +35,14 @@ module.exports = (sequelize, DataTypes) => {
       values: ["Active", "Deactive"],
       validate: {
         isIn: {
-          args: [['Active', 'Deactive']],
+          args: ["Active", "Deactive"],
           msg: 'Invalid value for student.status (Active, Deactive)'
         }
       }
-    },
+    }
   }, {
     sequelize,
-    modelName: 'Wallet',
+    modelName: 'History',
   });
-  return Wallet;
+  return History;
 };

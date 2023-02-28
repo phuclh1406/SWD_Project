@@ -8,13 +8,8 @@ module.exports = {
         defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
       },
-      deliverable_name: {
+      url: {
         type: Sequelize.STRING,
-        allowNull: false
-      },
-      price: {
-        type: Sequelize.DOUBLE,
-        allowNull: false
       },
       apllication_id: {
         type: Sequelize.UUID,
@@ -26,7 +21,7 @@ module.exports = {
       },
       status: {
         type: Sequelize.ENUM,
-        values: ['active', 'pending', 'deactive', 'finished'],
+        values: ['Active', 'Deactive', 'Finished'],
         defaultValue: 'active',
       },
       createdAt: {

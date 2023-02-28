@@ -23,11 +23,11 @@ module.exports = (sequelize, DataTypes) => {
     major_name: DataTypes.STRING,
     status: {
       type: DataTypes.ENUM,
-      values: ['active', 'deactive'],
+      values: ['Active', 'Deactive'],
       validate: {
         isIn: {
-          args: [['active', 'deactive']],
-          msg: 'Invalid value for major.status (active, deactive)'
+          args: [['Active', 'Deactive']],
+          msg: 'Invalid value for major.status (Active, Deactive)'
         }
       }
     }

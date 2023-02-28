@@ -30,16 +30,18 @@ module.exports = {
       },
       status: {
         type: Sequelize.ENUM,
-        values: ["active", "pending", "deactive", "finished"],
+        values: ["Active", "Pending", "Deactive", "Finished"],
         defaultValue: 'active',
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: "TIMESTAMP",
+        defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: "TIMESTAMP",
+        defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
       }
     });
   },

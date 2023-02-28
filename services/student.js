@@ -1,40 +1,54 @@
 const db = require("../models");
 const { Op } = require("sequelize");
+const redisClient = require("../config/redis_config");
 
 const getAllStudent = () =>
   new Promise(async (resolve, reject) => {
     try {
-      const students = await db.Student.findAndCountAll({
-        where: {
-          status: {
-            [Op.ne]: "deactive",
-          }
-        },
-        attributes: {
-          exclude: [
-            "role_id",
-            "major_id",
-            "createAt",
-            "updateAt",
-            "refresh_token",
-          ],
-        },
-        include: [
-          {
-            model: db.Role,
-            as: "student_role",
-            attributes: ["role_id", "role_name"],
-          },
-          {
-            model: db.Major,
-            as: "student_major",
-            attributes: ["major_id", "major_name"],
-          },
-        ],
-      });
-      resolve({
-        msg: students ? `Got student` : "Cannot find student",
-        students: students,
+      redisClient.get("student", async (error, student) => {
+        if (error) console.error(error);
+        if (student != null) {
+          resolve({
+            msg: student ? `Got student` : "Cannot find student",
+            student: JSON.parse(student),
+          });
+        } else {
+          const students = await db.Student.findAndCountAll({
+            where: {
+              status: {
+                [Op.ne]: "deactive",
+              },
+            },
+            attributes: {
+              exclude: [
+                "role_id",
+                "major_id",
+                "createAt",
+                "updateAt",
+                "refresh_token",
+              ],
+            },
+            include: [
+              {
+                model: db.Role,
+                as: "student_role",
+                attributes: ["role_id", "role_name"],
+              },
+              {
+                model: db.Major,
+                as: "student_major",
+                attributes: ["major_id", "major_name"],
+              },
+            ],
+          });
+          redisClient.setEx("student", 3600, JSON.stringify(students));
+          console.log(students);
+
+          resolve({
+            msg: students ? `Got student` : "Cannot find student",
+            students: students,
+          });
+        }
       });
     } catch (error) {
       reject(error);
@@ -87,7 +101,7 @@ const getAllStudentPaging = ({ page, limit, order, student_name, ...query }) =>
     }
   });
 
-  const getAllStudentByAdmin = ({ page, limit, order, student_name, ...query }) =>
+const getAllStudentByAdmin = ({ page, limit, order, student_name, ...query }) =>
   new Promise(async (resolve, reject) => {
     try {
       const queries = { raw: true, nest: true };
@@ -132,21 +146,24 @@ const getAllStudentPaging = ({ page, limit, order, student_name, ...query }) =>
     }
   });
 
-  const createStudent = (body) => new Promise( async (resolve, reject) => {
+const createStudent = (body) =>
+  new Promise(async (resolve, reject) => {
     try {
-        const student = await db.Student.findOrCreate({
-            where: {email: body?.email},
-            defaults: {
-                ...body
-            }
-        });
-        resolve({
-            msg: student[1] ? 'Create new student successfully' : 'Cannot create new student/ Email already exists',
-        });
+      const student = await db.Student.findOrCreate({
+        where: { email: body?.email },
+        defaults: {
+          ...body,
+        },
+      });
+      resolve({
+        msg: student[1]
+          ? "Create new student successfully"
+          : "Cannot create new student/ Email already exists",
+      });
     } catch (error) {
-        reject(error);
+      reject(error);
     }
-});
+  });
 
 const updateStudent = ({ student_id, ...body }) =>
   new Promise(async (resolve, reject) => {
@@ -216,19 +233,17 @@ const getStudentById = (student_id) =>
       });
       if (student) {
         resolve({
-          student: student 
+          student: student,
         });
       } else {
         resolve({
-          msg: `Cannot find student with id: ${student_id}`
+          msg: `Cannot find student with id: ${student_id}`,
         });
       }
     } catch (error) {
       reject(error);
     }
   });
-
-
 
 module.exports = {
   getAllStudent,

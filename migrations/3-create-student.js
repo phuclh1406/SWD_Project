@@ -27,6 +27,10 @@ module.exports = {
       avatar: {
         type: Sequelize.STRING(500),
       },
+      portfolio: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       // address: {
       //   type: Sequelize.STRING,
       // },
@@ -55,7 +59,7 @@ module.exports = {
       },
       status: {
         type: Sequelize.ENUM,
-        values: ["active", "deactive"],
+        values: ["Active", "Deactive"],
         defaultValue: 'active',
       },
       createdAt: {
