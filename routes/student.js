@@ -180,10 +180,11 @@ router.post("/", controllers.createStudent);
  *            schema:
  *              $ref: '#/components/schemas/Student'
  *            example:
- *              student_id: eade5e05-c27e-4fc8-96f2-50af09b7924d
+ *              student_id: V2sSC1HSLASNtTT0RhzwqDxxwri2
  *              student_name: Nhan Nguyen
- *              avatar: https://storage.googleapis.com/react-auth-bc0a4.appspot.com/web.jpg?GoogleAccessId=firebase-adminsdk-c5k74%40react-auth-bc0a4.iam.gserviceaccount.com&Expires=1678986000&Signature=IWWYMwdwfrzEiteVuS3VURcm3zsHUu0wm0RD1nLapblU3CPOaXB1Srbs2iqN2fIA3zQ8jpprHYNHoASp7XdzAS3KiT4ufnHgxQrPFkSsno9Mh3IoqbLAzAosRlYiCjv91D84wqGW2nQJ3GyqeqrBsxt2cTZ%2B%2BGIaZUAtPyXUv%2FOVPKwC8amCl1DL%2F%2BRlO%2F65wXRxvuvukLz49v9B%2BOuXQjeWZq04t6OYyokYXMGTekMTADQls0I9vw%2FczFgjKA%2FXgN6P9XyrazdkqFMHWxEJV%2ByUp3CD%2BH%2Bu%2BjliezcJ%2B%2FlLhYKm2OuQryJAmhHLxYkadwb74I82T1%2FCzHAn%2BCcLAw%3D%3D
- *              role_id: 5826d1d9-c33a-45c5-b93e-894e1dde10bd
+ *              avatar: https://lh3.googleusercontent.com/a/AEdFTp4508ZdzGjVRFFIwb0ULZXYm5V5_vyRsiKq-cfA=s96-c
+ *              portfolio: https://www.topcv.vn/xem-cv/ClRXAgQGVVRXAFACV1tZAFFXXg4EAgMOBQJWDQ95e2
+ *              role_id: bd86e723-a2d5-47f5-87f2-9a4bc6fe8bb2
  *              major_id: 9a3dbef2-a705-45aa-9dcd-b23b3d7c12f9
  *              status: active
  *     responses:
@@ -201,7 +202,7 @@ router.put("/", controllers.updateStudent);
 /**
  * @swagger
  * /api/v1/students/{id}:
- *   delete:
+ *   put:
  *     security: 
  *         - BearerAuth: []
  *     summary: Delete the students by id

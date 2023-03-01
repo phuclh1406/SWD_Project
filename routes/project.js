@@ -119,7 +119,9 @@ router.get("/:id", controllers.getProjectById);
  *              $ref: '#/components/schemas/Project'
  *            example:
  *              student_id: V2sSC1HSLASNtTT0RhzwqDxxwri2
- *              project_name: Design Pattern 
+ *              project_name: Football Field Booking Management System
+ *              description: The system to manage field of the field owner and the field booking schedule of customer in Ho Chi Minh city
+ *              url: https://github.com/nhannguyen24/math-util-live.git
  *     responses:
  *       200:
  *         description: Create new project successfully
@@ -166,7 +168,7 @@ router.put("/", controllers.updateProject);
 /**
  * @swagger
  * /api/v1/projects/{id}:
- *   delete:
+ *   put:
  *     security: 
  *         - BearerAuth: []
  *     summary: Delete the projects by id

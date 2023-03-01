@@ -5,7 +5,7 @@ const redisClient = require("../config/redis_config");
 const getAllStudent = () =>
   new Promise(async (resolve, reject) => {
     try {
-      redisClient.get("student", async (error, student) => {
+      redisClient.get("students", async (error, student) => {
         if (error) console.error(error);
         if (student != null) {
           resolve({
@@ -14,6 +14,8 @@ const getAllStudent = () =>
           });
         } else {
           const students = await db.Student.findAndCountAll({
+            raw: true,
+            nest: true,
             where: {
               status: {
                 [Op.ne]: "deactive",
@@ -41,8 +43,7 @@ const getAllStudent = () =>
               },
             ],
           });
-          redisClient.setEx("student", 3600, JSON.stringify(students));
-          console.log(students);
+          redisClient.setEx("students", 3600, JSON.stringify(students));
 
           resolve({
             msg: students ? `Got student` : "Cannot find student",
@@ -55,96 +56,64 @@ const getAllStudent = () =>
     }
   });
 
-const getAllStudentPaging = ({ page, limit, order, student_name, ...query }) =>
+const getAllStudentPaging = ({ page, limit, order, student_name, ...query}) =>
   new Promise(async (resolve, reject) => {
     try {
-      const queries = { raw: true, nest: true };
-      const offset = !page || +page <= 1 ? 0 : +page - 1;
-      const flimit = +limit || +process.env.LIMIT_POST;
-      queries.offset = offset * flimit;
-      queries.limit = flimit;
-      if (order) queries.order = [order];
-      if (student_name) query.student_name = { [Op.substring]: student_name };
-      query.status = { [Op.ne]: "deactive" };
+      redisClient.get(`student_paging_${page}`, async (error, student_paging) => {
+        if (error) console.error(error);
+        if (student_paging != null) {
+          resolve({
+            msg: student_paging ? `Got student` : "Cannot find student",
+            student_paging: JSON.parse(student_paging),
+          });
+        } else {
+          const queries = { raw: true, nest: true };
+          const offset = !page || +page <= 1 ? 0 : +page - 1;
+          const flimit = +limit || +process.env.LIMIT_POST;
+          queries.offset = offset * flimit;
+          queries.limit = flimit;
+          if (order) queries.order = [order];
+          if (student_name) query.student_name = { [Op.substring]: student_name };
+          query.status = { [Op.ne]: "deactive" };
 
-      const students = await db.Student.findAndCountAll({
-        where: query,
-        ...queries,
-        attributes: {
-          exclude: [
-            "role_id",
-            "major_id",
-            "createAt",
-            "updateAt",
-            "refresh_token",
-          ],
-        },
-        include: [
-          {
-            model: db.Role,
-            as: "student_role",
-            attributes: ["role_id", "role_name"],
-          },
-          {
-            model: db.Major,
-            as: "student_major",
-            attributes: ["major_id", "major_name"],
-          },
-        ],
-      });
-      resolve({
-        msg: students ? `Got student` : "Cannot find student",
-        students: students,
+          const students = await db.Student.findAndCountAll({
+            where: query,
+            ...queries,
+            attributes: {
+              exclude: [
+                "role_id",
+                "major_id",
+                "createAt",
+                "updateAt",
+                "refresh_token",
+              ],
+            },
+            include: [
+              {
+                model: db.Role,
+                as: "student_role",
+                attributes: ["role_id", "role_name"],
+              },
+              {
+                model: db.Major,
+                as: "student_major",
+                attributes: ["major_id", "major_name"],
+              },
+            ],
+          });
+          redisClient.setEx(`student_paging_${page}`, 3600, JSON.stringify(students));
+
+          resolve({
+            msg: students ? `Got student` : "Cannot find student",
+            students: students,
+          });
+        }
       });
     } catch (error) {
       reject(error);
     }
   });
 
-const getAllStudentByAdmin = ({ page, limit, order, student_name, ...query }) =>
-  new Promise(async (resolve, reject) => {
-    try {
-      const queries = { raw: true, nest: true };
-      const offset = !page || +page <= 1 ? 0 : +page - 1;
-      const flimit = +limit || +process.env.LIMIT_POST;
-      queries.offset = offset * flimit;
-      queries.limit = flimit;
-      if (order) queries.order = [order];
-      if (student_name) query.student_name = { [Op.substring]: student_name };
-
-      const students = await db.Student.findAndCountAll({
-        where: query,
-        ...queries,
-        attributes: {
-          exclude: [
-            "role_id",
-            "major_id",
-            "createAt",
-            "updateAt",
-            "refresh_token",
-          ],
-        },
-        include: [
-          {
-            model: db.Role,
-            as: "student_role",
-            attributes: ["role_id", "role_name"],
-          },
-          {
-            model: db.Major,
-            as: "student_major",
-            attributes: ["major_id", "major_name"],
-          },
-        ],
-      });
-      resolve({
-        msg: students ? `Got student` : "Cannot find student",
-        students: students,
-      });
-    } catch (error) {
-      reject(error);
-    }
-  });
 
 const createStudent = (body) =>
   new Promise(async (resolve, reject) => {
@@ -186,7 +155,7 @@ const deleteStudent = (student_ids) =>
   new Promise(async (resolve, reject) => {
     try {
       const students = await db.Student.update(
-        { status: "deactive" },
+        { status: "Deactive" },
         {
           where: { student_id: student_ids },
         }
@@ -251,6 +220,6 @@ module.exports = {
   deleteStudent,
   getStudentById,
   createStudent,
-  getAllStudentByAdmin,
   getAllStudentPaging,
 };
+

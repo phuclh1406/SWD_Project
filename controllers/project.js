@@ -1,11 +1,12 @@
 const services = require('../services');
 const {BadRequestError, InternalServerError} = require('../errors');
 const joi = require('joi');
-const {project_name, student_id, project_id, project_ids} = require('../helpers/joi_schema');
+const {project_name, student_id, project_id, project_ids, description, url} = require('../helpers/joi_schema');
 
 const getAllProjects = async (req, res) => {
     try {
-        const response = await services.getAllProjects(req.query);
+        const { role_name } = req.user;
+        const response = await services.getAllProjects(req.query, role_name);
         return res.status(200).json(response);
     } catch (error) {
         throw new InternalServerError(error);
@@ -14,7 +15,7 @@ const getAllProjects = async (req, res) => {
 
 const createProject = async (req, res) => {
     try {
-        const { error } = joi.object({project_name, student_id}).validate(req.body);
+        const { error } = joi.object({project_name, student_id, description, url}).validate(req.body);
         if (error) {
             return res.status(400).json({msg: error.details[0].message});
         }

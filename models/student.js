@@ -44,10 +44,12 @@ module.exports = (sequelize, DataTypes) => {
       // phone: DataTypes.INTEGER(10),
       portfolio: DataTypes.STRING,
       role_id: {
-        type: DataTypes.STRING,
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4
       },
       major_id: {
         type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4
       },
       refresh_token: DataTypes.STRING,
       status: {

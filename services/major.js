@@ -1,8 +1,7 @@
 const db = require('../models');
 const { Op } = require('sequelize');
-const { response } = require('express');
 
-const getAllMajors = ({page, limit, order, major_name, ...query}) => new Promise( async (resolve, reject) => {
+const getAllMajors = ({page, limit, order, major_name, ...query}, role_name) => new Promise( async (resolve, reject) => {
     try {
         const queries = {raw: true, nest: true};
         const offset = (!page || +page <= 1) ? 0 : (+page - 1);
@@ -11,7 +10,7 @@ const getAllMajors = ({page, limit, order, major_name, ...query}) => new Promise
         queries.limit = flimit;
         if(order) queries.order = [order];
         if(major_name) query.major_name = {[Op.substring]: major_name};
-        query.status = {[Op.ne]: 'deactive'};
+        if (role_name !== 'Admin' ) {query.status = { [Op.ne]: "deactive" }};
 
 
         const majors = await db.Major.findAndCountAll({
@@ -71,7 +70,7 @@ const updateMajor = ({major_id, ...body}) => new Promise( async (resolve, reject
 const deleteMajor = (major_ids) => new Promise( async (resolve, reject) => {
     try {
 
-        const majors = await db.Major.update({status: 'deactive'}, {
+        const majors = await db.Major.update({status: 'Deactive'}, {
             where: {major_id: major_ids}
         });
         resolve({

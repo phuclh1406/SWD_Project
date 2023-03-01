@@ -1,8 +1,7 @@
 const db = require('../models');
 const { Op } = require('sequelize');
-const { response } = require('express');
 
-const getAllCategories = ({page, limit, order, cate_name, ...query}) => new Promise( async (resolve, reject) => {
+const getAllCategories = ({page, limit, order, cate_name, ...query}, role_name) => new Promise( async (resolve, reject) => {
     try {
         const queries = {raw: true, nest: true};
         const offset = (!page || +page <= 1) ? 0 : (+page - 1);
@@ -11,7 +10,7 @@ const getAllCategories = ({page, limit, order, cate_name, ...query}) => new Prom
         queries.limit = flimit;
         if(order) queries.order = [order];
         if(cate_name) query.cate_name = {[Op.substring]: cate_name};
-        query.status = {[Op.ne]: 'deactive'};
+        if (role_name !== 'Admin' ) {query.status = { [Op.ne]: "deactive" }};
 
         const categories = await db.Category.findAndCountAll({
             where: query,
@@ -67,7 +66,7 @@ const updateCategory = ({cate_id, ...body}) => new Promise( async (resolve, reje
 const deleteCategory = (cate_ids) => new Promise( async (resolve, reject) => {
     try {
 
-        const categories = await db.Category.update({status: 'deactive'}, {
+        const categories = await db.Category.update({status: 'Deactive'}, {
             where: {cate_id: cate_ids}
         });
         resolve({

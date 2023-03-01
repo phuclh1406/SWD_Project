@@ -5,7 +5,8 @@ const {post_id, post_title, description, time_start, time_end, price, post_ids, 
 
 const getAllPost = async (req, res) => {
     try {
-        const response = await services.getAllPost(req.query);
+        const { role_name } = req.user;
+        const response = await services.getAllPost(req.query, role_name);
         return res.status(200).json(response);
     } catch (error) {
         throw new InternalServerError(error);

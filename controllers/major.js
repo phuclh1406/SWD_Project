@@ -5,7 +5,8 @@ const {major_name, major_id, major_ids} = require('../helpers/joi_schema');
 
 const getAllMajors = async (req, res) => {
     try {
-        const response = await services.getAllMajors(req.query);
+        const { role_name } = req.user;
+        const response = await services.getAllMajors(req.query, role_name);
         return res.status(200).json(response);
     } catch (error) {
         throw new InternalServerError(error);

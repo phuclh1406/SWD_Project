@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       JobPost.belongsTo(models.Major, {foreignKey: 'major_id', targetKey: 'major_id', as: 'post_major'});
       JobPost.belongsTo(models.Student, {foreignKey: 'doer_id', targetKey: 'student_id', as: 'post_student'});
       JobPost.belongsToMany(models.Student, {through: models.Application});
-      JobPost.hasMany(models.Application);
+      JobPost.hasMany(models.Application, {as: "post_application", foreignKey: 'post_id'});
     }
   }
   JobPost.init({
@@ -43,8 +43,7 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: DataTypes.UUIDV4
     },
     doer_id: {
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4
+      type: DataTypes.UUID
     },
     status: {
       type: DataTypes.ENUM,

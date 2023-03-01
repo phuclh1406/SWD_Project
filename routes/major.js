@@ -135,7 +135,7 @@ router.put("/", controllers.updateMajor);
 /**
  * @swagger
  * /api/v1/majors/{id}:
- *   delete:
+ *   put:
  *     security: 
  *         - BearerAuth: []
  *     summary: Delete the majors by id

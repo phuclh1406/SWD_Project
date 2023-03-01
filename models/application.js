@@ -37,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         isIn: {
           args: ["Active", "Pending", "Deactive", "Finished"],
-          msg: 'Invalid value for student.status (Active, Pending, Deactive, Finished)'
+          msg: 'Invalid value for application.status (Active, Pending, Deactive, Finished)'
         }
       }
     }
