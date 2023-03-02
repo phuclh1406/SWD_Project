@@ -68,10 +68,10 @@ router.use(verifyToken);
  *          content:
  *            multipart/form-data:
  *              schema:
- *                type: file
+ *                type: object
  *                properties:
  *                  file:
- *                    type: file
+ *                    type: string
  *                    format: binary
  *     responses:
  *       200:
@@ -79,7 +79,7 @@ router.use(verifyToken);
  *         content:
  *           application/json:
  *             schema:
- *               type: file
+ *               type: string
  *               format: binary
  */
 router.post("/upload-file", controllers.uploadFile);
