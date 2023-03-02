@@ -27,8 +27,14 @@ module.exports = (sequelize, DataTypes) => {
     },
     status: {
       type: DataTypes.ENUM,
-      values: ['active', 'deactive']
-    }
+      values: ["Active", "Deactive"],
+      validate: {
+        isIn: {
+          args: [['Active', 'Deactive']],
+          msg: 'Invalid value for wallet.status (Active, Deactive)'
+        }
+      }
+    },
   }, {
     sequelize,
     modelName: 'Wallet',

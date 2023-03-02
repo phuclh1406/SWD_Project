@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Deliverable extends Model {
+  class History extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,33 +11,38 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Deliverable.belongsTo(models.Application, {foreignKey: 'application_id', targetKey: 'application_id', as: 'deliverable_application'});
+      History.belongsTo(models.Student, {foreignKey: 'student_id', targetKey: 'student_id', as: 'history_student' })
+      History.belongsTo(models.Project, {foreignKey: 'project_id', targetKey: 'project_id', as: 'history_project'});
     }
   }
-  Deliverable.init({
-    deliverable_id: {
+  History.init({
+    history_id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
-    url: DataTypes.STRING,
-    application_id: {
+    price: DataTypes.DOUBLE,
+    student_id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4
+    },
+    project_id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4
     },
     status: {
       type: DataTypes.ENUM,
-      values: ["Active", "Pending", "Deactive", "Finished"],
+      values: ["Active", "Deactive"],
       validate: {
         isIn: {
-          args: [["Active", "Pending", "Deactive", "Finished"]],
-          msg: 'Invalid value for deliverable.status (Active, Pending, Deactive, Finished)'
+          args: ["Active", "Deactive"],
+          msg: 'Invalid value for history.status (Active, Deactive)'
         }
       }
     }
   }, {
     sequelize,
-    modelName: 'Deliverable',
+    modelName: 'History',
   });
-  return Deliverable;
+  return History;
 };

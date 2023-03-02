@@ -52,10 +52,18 @@ module.exports = {
           key: 'major_id'
         }
       },
+      doer_id: {
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
+        references: {
+          model: 'students',
+          key: 'student_id'
+        }
+      },
       status: {
         type: Sequelize.ENUM,
-        values: ['active', 'deactive', 'finished'],
-        defaultValue: 'active',
+        values: ['Active', 'Deactive', 'Available', 'Unavailable', 'Finished'],
+        defaultValue: 'Active',
       },
       createdAt: {
         allowNull: false,

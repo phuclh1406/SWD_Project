@@ -1,11 +1,12 @@
 const { getAllPost, createPost, updatePost, deletePost, getPostById} = require("./post");
 const {loginGoogle, refreshAccessToken, logout} = require("./auth");
-const {getAllStudent, updateStudent, deleteStudent, getStudentById, createStudent} = require("./student");
+const {getAllStudent, updateStudent, deleteStudent, getStudentById, createStudent, getAllStudentPaging} = require("./student");
 const {uploadFile, pushNotification} = require('./firebaseService');
 const {getAllProjects, createProject, updateProject, deleteProject, getProjectById} = require('./project')
 const {getAllMajors, createMajor, updateMajor, deleteMajor} = require('./major')
 const {getAllCategories, createCategory, updateCategory, deleteCategory} = require('./category')
 const {getAllRoles} = require('./role')
+
 module.exports = {
   getAllPost,
   loginGoogle,
@@ -36,5 +37,5 @@ module.exports = {
   getProjectById,
   getPostById,
   createStudent,
-  
+  getAllStudentPaging,
 };

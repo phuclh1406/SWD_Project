@@ -14,8 +14,9 @@ module.exports = (sequelize, DataTypes) => {
       JobPost.belongsTo(models.Project, {foreignKey: 'project_id', targetKey: 'project_id', as: 'post_project'});
       JobPost.belongsTo(models.Category, {foreignKey: 'cate_id', targetKey: 'cate_id', as: 'post_category'});
       JobPost.belongsTo(models.Major, {foreignKey: 'major_id', targetKey: 'major_id', as: 'post_major'});
+      JobPost.belongsTo(models.Student, {foreignKey: 'doer_id', targetKey: 'student_id', as: 'post_student'});
       JobPost.belongsToMany(models.Student, {through: models.Application});
-      JobPost.hasMany(models.Application);
+      JobPost.hasMany(models.Application, {as: "post_application", foreignKey: 'post_id'});
     }
   }
   JobPost.init({
@@ -41,13 +42,16 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4
     },
+    doer_id: {
+      type: DataTypes.UUID
+    },
     status: {
       type: DataTypes.ENUM,
-      values: ['active', 'deactive', 'finished'],
+      values: ['Active', 'Deactive', 'Available', 'Unavailable', 'Finished'],
       validate: {
         isIn: {
-          args: [['active', 'deactive', 'finish']],
-          msg: 'Invalid value for jobpost.status (active, deactive, finish)'
+          args: [['Active', 'Deactive', 'Available', 'Unavailable', 'Finished']],
+          msg: 'Invalid value for jobpost.status (Active, Deactive, Available, Unavailable, Finished)'
         }
       }
     }

@@ -5,7 +5,8 @@ const {cate_name, cate_ids, cate_id} = require('../helpers/joi_schema');
 
 const getAllCategories = async (req, res) => {
     try {
-        const response = await services.getAllCategories(req.query);
+        const { role_name } = req.user;
+        const response = await services.getAllCategories(req.query, role_name);
         return res.status(200).json(response);
     } catch (error) {
         throw new InternalServerError(error);

@@ -20,8 +20,11 @@ module.exports = (sequelize, DataTypes) => {
         targetKey: 'major_id',
         as: "student_major",
       });
+      Student.hasMany(models.JobPost, {as: 'student_post', foreignKey: 'doer_id'});
       Student.belongsToMany(models.JobPost, {through: models.Application });
-      Student.hasMany(models.Application, {as: "student_application", foreignKey: 'application_id'});
+      Student.hasMany(models.Application, {as: "student_application", foreignKey: 'student_id'});
+      Student.belongsToMany(models.Project, {through: models.History });
+      Student.hasMany(models.History, {as: "student_history", foreignKey: 'student_id'});
       Student.hasMany(models.Wallet, {as: "student_wallet", foreignKey: 'student_id'});
     }
   }
@@ -36,23 +39,26 @@ module.exports = (sequelize, DataTypes) => {
       email: DataTypes.STRING,
       // password: DataTypes.STRING,
       // birthday: DataTypes.DATEONLY,
-      avatar: DataTypes.BLOB,
+      avatar: DataTypes.STRING,
       // address: DataTypes.STRING,
       // phone: DataTypes.INTEGER(10),
+      portfolio: DataTypes.STRING,
       role_id: {
-        type: DataTypes.STRING,
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4
       },
       major_id: {
         type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4
       },
       refresh_token: DataTypes.STRING,
       status: {
         type: DataTypes.ENUM,
-        values: ["active", "deactive"],
+        values: ["Active", "Deactive"],
         validate: {
           isIn: {
-            args: [['active', 'deactive']],
-            msg: 'Invalid value for student.status (active, deactive)'
+            args: [['Active', 'Deactive']],
+            msg: 'Invalid value for student.status (Active, Deactive)'
           }
         }
       },

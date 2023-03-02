@@ -78,7 +78,9 @@ const avatar = joi.string().required().messages({
 const role_id = joi.string().required().messages({
   "string.empty": `avatar is not allowed to be empty`,
 });
-
+const url = joi.string().required().messages({
+  "string.empty": `url is not allowed to be empty`,
+});
 
 module.exports = {
   name,
@@ -108,5 +110,6 @@ module.exports = {
   student_name, 
   avatar,
   role_id,
+  url,
   
 };
