@@ -28,8 +28,7 @@ module.exports = {
         type: Sequelize.STRING(500),
       },
       portfolio: {
-        type: Sequelize.STRING,
-        allowNull: false,
+        type: Sequelize.STRING
       },
       // address: {
       //   type: Sequelize.STRING,

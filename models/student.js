@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
       // Student.hasMany(models.JobPost, {as: 'student_post', foreignKey: 'doer_id'});
       Student.belongsTo(models.Project, {
         foreignKey: "doer_id",
-        targetKey: 'doer_id',
+        targetKey: 'student_id',
         as: "doer_project",
       });
       Student.belongsToMany(models.Project, {through: models.Application });
