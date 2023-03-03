@@ -12,7 +12,13 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Project.belongsTo(models.Student, {foreignKey: 'poster_id', targetKey: 'student_id', as: 'project_student'})
-      Project.hasOne(models.Student, {as: 'project_doer', foreignKey: 'doer_id'});
+
+      Project.belongsTo(models.Student, {
+        foreignKey: "doer_id",
+        targetKey: 'student_id',
+        as: "project_doer",
+      });
+
       // Project.hasMany(models.JobPost, {as: 'project_post', foreignKey: 'post_id'});
       Project.belongsToMany(models.Student, {through: models.History });
       Project.hasMany(models.History, {as: "project_history", foreignKey: 'project_id'});

@@ -21,11 +21,9 @@ module.exports = (sequelize, DataTypes) => {
         as: "student_major",
       });
       // Student.hasMany(models.JobPost, {as: 'student_post', foreignKey: 'doer_id'});
-      Student.belongsTo(models.Project, {
-        foreignKey: "doer_id",
-        targetKey: 'student_id',
-        as: "doer_project",
-      });
+
+      Student.hasOne(models.Project, {as: 'doer_project', foreignKey: 'doer_id'});
+
       Student.belongsToMany(models.Project, {through: models.Application });
       Student.hasMany(models.Application, {as: "student_application", foreignKey: 'student_id'});
       Student.belongsToMany(models.Project, {through: models.History });
