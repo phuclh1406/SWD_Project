@@ -16,7 +16,7 @@ const getAllCategories = ({page, limit, order, cate_name, ...query}, role_name) 
             where: query,
             ...queries,
             attributes: {
-                exclude: ['createAt', 'updateAt'],
+                exclude: ['createdAt', 'updatedAt'],
             },
         });
         resolve({
