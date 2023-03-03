@@ -50,8 +50,7 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: DataTypes.UUIDV4
       },
       major_id: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4
+        type: DataTypes.UUID
       },
       refresh_token: DataTypes.STRING,
       status: {
