@@ -15,6 +15,9 @@ const getAllCategories = ({page, limit, order, cate_name, ...query}, role_name) 
         const categories = await db.Category.findAndCountAll({
             where: query,
             ...queries,
+            attributes: {
+                exclude: ['createAt', 'updateAt'],
+            },
         });
         resolve({
             msg: categories ? `Got category` : 'Cannot find category',

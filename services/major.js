@@ -17,7 +17,7 @@ const getAllMajors = ({page, limit, order, major_name, ...query}, role_name) => 
             where: query,
             ...queries,
             attributes: {
-                exclude: ['major_id', 'createAt', 'updateAt'],
+                exclude: ['createAt', 'updateAt'],
             },
         });
         resolve({
