@@ -29,7 +29,6 @@ const createProject = async (req, res) => {
         if (error) {
             return res.status(400).json({msg: error.details[0].message});
         }
-        console.log(student_id);
         const response = await services.createProject(req.body, student_id);
         return res.status(200).json(response);
     } catch (error) {

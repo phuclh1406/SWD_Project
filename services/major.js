@@ -10,7 +10,7 @@ const getAllMajors = ({page, limit, order, major_name, ...query}, role_name) => 
         queries.limit = flimit;
         if(order) queries.order = [order];
         if(major_name) query.major_name = {[Op.substring]: major_name};
-        if (role_name !== 'Admin' ) {query.status = { [Op.ne]: "deactive" }};
+        if (role_name !== 'Admin' ) {query.status = { [Op.ne]: "Deactive" }};
 
 
         const majors = await db.Major.findAndCountAll({

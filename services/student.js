@@ -18,7 +18,7 @@ const getAllStudent = () =>
             nest: true,
             where: {
               status: {
-                [Op.ne]: "deactive",
+                [Op.ne]: "Deactive",
               },
             },
             attributes: {
@@ -74,7 +74,7 @@ const getAllStudentPaging = ({ page, limit, order, student_name, ...query}) =>
           queries.limit = flimit;
           if (order) queries.order = [order];
           if (student_name) query.student_name = { [Op.substring]: student_name };
-          query.status = { [Op.ne]: "deactive" };
+          query.status = { [Op.ne]: "Deactive" };
 
           const students = await db.Student.findAndCountAll({
             where: query,

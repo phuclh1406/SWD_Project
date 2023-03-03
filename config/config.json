@@ -5,7 +5,7 @@
     "database": "uuacyt2ejjgpgzw4",
     "host": "g84t6zfpijzwx08q.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
     "dialect": "mysql",
-    "logging": false,
+
     "timezone": "+07:00"
   },
   "test": {

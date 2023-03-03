@@ -127,7 +127,7 @@ router.get("/paging/", verifyToken, verifyRole, controllers.getAllStudentPaging)
  *               items:
  *                 $ref: '#/components/schemas/Student'
  */
-router.get("/:id", verifyToken, verifyRole, controllers.getStudentById);
+router.get("/:id", verifyToken, controllers.getStudentById);
 
 /**
  * @swagger

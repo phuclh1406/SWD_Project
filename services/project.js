@@ -33,7 +33,7 @@ const getAllProjects = (
           if (poster_id)
             query.poster_id = { [Op.eq]: poster_id };
           if (role_name !== "Admin") {
-            query.status = { [Op.ne]: "deactive" };
+            query.status = { [Op.ne]: "Deactive" };
           }
 
           const projects = await db.Project.findAndCountAll({
@@ -99,7 +99,7 @@ const getAllProjects = (
             if (order) queries.order = [order];
             if (project_name)
               query.project_name = { [Op.substring]: project_name };
-              query.status = { [Op.ne]: "deactive" };
+              query.status = { [Op.ne]: "Deactive" };
   
             const projects = await db.Project.findAndCountAll({
               where: query,
@@ -158,7 +158,7 @@ const getAllProjects = (
               queries.limit = flimit;
               if (order) queries.order = [order];
                 query.student_id = { [Op.eq]: student_id };
-                query.status = { [Op.ne]: "deactive" };
+                query.status = { [Op.ne]: "Deactive" };
     
               const projects = await db.Application.findAndCountAll({
                 where: query, 
@@ -209,7 +209,7 @@ const getAllProjects = (
     //           // if (project_name)
     //           //   query.project_name = { [Op.substring]: project_name };
     //           //   query.student_id = { [Op.eq]: student_id };
-    //           //   query.status = { [Op.ne]: "deactive" };
+    //           //   query.status = { [Op.ne]: "Deactive" };
     
     //           // const projects = await db.Project.findAndCountAll({
     //           //   where: query, 
@@ -258,7 +258,10 @@ const createProject = (body, student_id) =>
   new Promise(async (resolve, reject) => {
     try {
       const projects = await db.Project.findOrCreate({
-        where: { project_name: body?.project_name },
+        where: { 
+          project_name: body?.project_name,
+          status: "Deactive", 
+        },
         defaults: {
           ...body,
           poster_id: student_id
@@ -267,7 +270,7 @@ const createProject = (body, student_id) =>
       resolve({
         msg: projects[1]
           ? "Create new project successfully"
-          : "Cannot create new project",
+          : "Cannot create new project/ Project name already has",
       });
     } catch (error) {
       reject(error);
