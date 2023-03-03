@@ -5,9 +5,6 @@ const verifyRole = require('../middlewares/verify_role');
 
 const router = express.Router();
 
-router.use(verifyToken);
-router.use(verifyRole);
-
 /**
  * @swagger
  * components:
@@ -19,7 +16,7 @@ router.use(verifyRole);
  *         - author
  *       properties:
  *         student_id:
- *           type: UUID
+ *           type: string
  *           description: The auto-generated id of the student
  *         student_name:
  *           type: string
@@ -31,7 +28,7 @@ router.use(verifyRole);
  *           type: string
  *           description: The student avatar
  *         status:
- *           type: enum
+ *           type: string
  *           description: The student status('active', 'deactive')
  *       example:
  *         student_id: V2sSC1HSLASNtTT0RhzwqDxxwri2
@@ -58,11 +55,11 @@ router.use(verifyRole);
  *               items:
  *                 $ref: '#/components/schemas/Student'
  */
-router.get("/", controllers.getAllStudent);
+router.get("/", verifyToken, verifyRole, controllers.getAllStudent);
 
 /**
  * @swagger
- * /api/v1/students/paging/:
+ * /api/v1/students/paging:
  *   get:
  *     security: 
  *         - BearerAuth: []
@@ -104,7 +101,7 @@ router.get("/", controllers.getAllStudent);
  *               items:
  *                 $ref: '#/components/schemas/Student'
  */
-router.get("/paging/", controllers.getAllStudentPaging);
+router.get("/paging/", verifyToken, verifyRole, controllers.getAllStudentPaging);
 
 /**
  * @swagger
@@ -130,7 +127,7 @@ router.get("/paging/", controllers.getAllStudentPaging);
  *               items:
  *                 $ref: '#/components/schemas/Student'
  */
-router.get("/:id", controllers.getStudentById);
+router.get("/:id", verifyToken, verifyRole, controllers.getStudentById);
 
 /**
  * @swagger
@@ -163,7 +160,7 @@ router.get("/:id", controllers.getStudentById);
  *                 $ref: '#/components/schemas/Student'
 
  */
-router.post("/", controllers.createStudent);
+router.post("/", verifyToken, verifyRole, controllers.createStudent);
 
 /**
  * @swagger
@@ -186,7 +183,7 @@ router.post("/", controllers.createStudent);
  *              portfolio: https://www.topcv.vn/xem-cv/ClRXAgQGVVRXAFACV1tZAFFXXg4EAgMOBQJWDQ95e2
  *              role_id: bd86e723-a2d5-47f5-87f2-9a4bc6fe8bb2
  *              major_id: 9a3dbef2-a705-45aa-9dcd-b23b3d7c12f9
- *              status: active
+ *              status: Active
  *     responses:
  *       200:
  *         description: For get the list of the students
@@ -197,7 +194,38 @@ router.post("/", controllers.createStudent);
  *               items:
  *                 $ref: '#/components/schemas/Student'
  */
-router.put("/", controllers.updateStudent);
+router.put("/", verifyToken, verifyRole, controllers.updateStudent);
+
+/**
+ * @swagger
+ * /api/v1/students/profile:
+ *   put:
+ *     security: 
+ *         - BearerAuth: []
+ *     summary: Update the profile
+ *     tags: [student-controller]
+ *     requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Student'
+ *            example:
+ *              student_name: Nhan Nguyen
+ *              avatar: https://lh3.googleusercontent.com/a/AEdFTp4508ZdzGjVRFFIwb0ULZXYm5V5_vyRsiKq-cfA=s96-c
+ *              portfolio: https://www.topcv.vn/xem-cv/ClRXAgQGVVRXAFACV1tZAFFXXg4EAgMOBQJWDQ95e2
+ *              major_id: 9a3dbef2-a705-45aa-9dcd-b23b3d7c12f9
+ *     responses:
+ *       200:
+ *         description: For get the list of the students
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Student'
+ */
+router.put("/profile/", verifyToken, controllers.updateProfile);
 
 /**
  * @swagger
@@ -223,6 +251,6 @@ router.put("/", controllers.updateStudent);
  *               items:
  *                 $ref: '#/components/schemas/Student'
  */
-router.put("/:id", controllers.deleteStudent);
+router.put("/:id", verifyToken, verifyRole, controllers.deleteStudent);
 
 module.exports = router;

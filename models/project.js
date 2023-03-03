@@ -40,11 +40,9 @@ module.exports = (sequelize, DataTypes) => {
     url: DataTypes.STRING,
     poster_id: {
       type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4
     },
     doer_id: {
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4
+      type: DataTypes.UUID
     },
     cate_id: {
       type: DataTypes.UUID,

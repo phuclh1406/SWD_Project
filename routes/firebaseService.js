@@ -53,7 +53,6 @@ const router = express.Router();
  */
 router.post("/push-notification", controllers.pushNotification);
 
-router.use(verifyToken);
 
 /**
  * @swagger
@@ -82,7 +81,7 @@ router.use(verifyToken);
  *               type: string
  *               format: binary
  */
-router.post("/upload-file", controllers.uploadFile);
+router.post("/upload-file", verifyToken, controllers.uploadFile);
 
 
 module.exports = router;

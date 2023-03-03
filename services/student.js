@@ -151,21 +151,44 @@ const updateStudent = ({ student_id, ...body }) =>
     }
   });
 
-const deleteStudent = (student_ids) =>
+  const updateProfile = (body, student_id) =>
   new Promise(async (resolve, reject) => {
     try {
-      const students = await db.Student.update(
-        { status: "Deactive" },
-        {
-          where: { student_id: student_ids },
-        }
-      );
+      const students = await db.Student.update(body, {
+        where: { student_id: student_id},
+      });
       resolve({
         msg:
-          students > 0
-            ? `${students} student delete`
-            : "Cannot delete student/ student_id not found",
+          students[0] > 0
+            ? "Update profile successfully"
+            : "Cannot update student/ student_id not found",
       });
+    } catch (error) {
+      reject(error.message);
+    }
+  });
+
+const deleteStudent = (student_ids, student_id) =>
+  new Promise(async (resolve, reject) => {
+    try {
+      if (student_ids.includes(student_id)) {
+        resolve({
+          msg: "Cannot delete student/ Account is in use",
+        });
+      } else {
+        const students = await db.Student.update(
+          { status: "Deactive" },
+          {
+            where: { student_id: student_ids },
+          }
+        );
+        resolve({
+          msg:
+            students > 0
+              ? `${students} student delete`
+              : "Cannot delete student/ student_id not found",
+        });
+      }
     } catch (error) {
       reject(error);
     }
@@ -221,5 +244,7 @@ module.exports = {
   getStudentById,
   createStudent,
   getAllStudentPaging,
+  updateProfile,
+
 };
 
