@@ -14,7 +14,7 @@ const loginGoogle = ({ name, picture, user_id, email }) =>
           student_name: name,
           email: email,
           avatar: picture,
-          role_id: "bd86e723-a2d5-47f5-87f2-9a4bc6fe8bb2",
+          role_id: "5826d1d9-c33a-45c5-b93e-894e1dde10bd",
         },
       });
       // console.log("0",response);

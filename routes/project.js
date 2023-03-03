@@ -191,4 +191,50 @@ router.put("/", controllers.updateProject);
  */
 router.put("/:id", controllers.deleteProject);
 
+/**
+ * @swagger
+ * /api/v1/projects:
+ *   get:
+ *     security: 
+ *         - BearerAuth: []
+ *     summary: Returns the list of all the projects
+ *     tags: [project-controller]
+ *     parameters:
+ *       - name: project_name
+ *         in: query
+ *         schema:
+ *           type: string
+ *         description: Find project by project_name
+ *       - name: page
+ *         in: query
+ *         schema:
+ *           type: int
+ *         description: Paging page number
+ *       - name: limit
+ *         in: query
+ *         schema:
+ *           type: int
+ *         description: Paging limit row to get in 1 page
+ *       - name: order[0]
+ *         in: query
+ *         schema:
+ *           type: string
+ *         description: Sort by (project_name/status)
+ *       - name: order[1]
+ *         in: query
+ *         schema:
+ *           type: string
+ *         description: Sort ASC/DESC
+ *     responses:
+ *       200:
+ *         description: Get the list of the projects successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Project'
+ */
+router.get("/poster/", controllers.getProjectsByPosterId);
+
 module.exports = router;

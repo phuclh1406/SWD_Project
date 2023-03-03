@@ -3,7 +3,7 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Applications', {
-      apllication_id: {
+      application_id: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
@@ -20,12 +20,12 @@ module.exports = {
           key: 'student_id'
         }
       },
-      post_id: {
+      project_id: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
         references: {
-          model: 'jobposts',
-          key: 'post_id'
+          model: 'projects',
+          key: 'project_id'
         }
       },
       status: {

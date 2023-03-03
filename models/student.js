@@ -14,18 +14,22 @@ module.exports = (sequelize, DataTypes) => {
         targetKey: 'role_id',
         as: "student_role",
       });
-      Student.hasMany(models.Project, {as: "student_project" , foreignKey: 'student_id'});
+      Student.hasMany(models.Project, {as: "student_project" , foreignKey: 'poster_id'});
       Student.belongsTo(models.Major, {
         foreignKey: "major_id",
         targetKey: 'major_id',
         as: "student_major",
       });
-      Student.hasMany(models.JobPost, {as: 'student_post', foreignKey: 'doer_id'});
-      Student.belongsToMany(models.JobPost, {through: models.Application });
+      // Student.hasMany(models.JobPost, {as: 'student_post', foreignKey: 'doer_id'});
+      Student.belongsTo(models.Project, {
+        foreignKey: "doer_id",
+        targetKey: 'doer_id',
+        as: "doer_project",
+      });
+      Student.belongsToMany(models.Project, {through: models.Application });
       Student.hasMany(models.Application, {as: "student_application", foreignKey: 'student_id'});
       Student.belongsToMany(models.Project, {through: models.History });
       Student.hasMany(models.History, {as: "student_history", foreignKey: 'student_id'});
-      Student.hasMany(models.Wallet, {as: "student_wallet", foreignKey: 'student_id'});
     }
   }
   Student.init(

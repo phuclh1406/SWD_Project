@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Application.belongsTo(models.Student, {foreignKey: 'student_id', targetKey: 'student_id', as: 'application_student'})
-      Application.belongsTo(models.JobPost, {foreignKey: 'post_id', targetKey: 'post_id', as: 'application_post'});
+      Application.belongsTo(models.Project, {foreignKey: 'project_id', targetKey: 'project_id', as: 'application_project'});
       Application.hasMany(models.Deliverable, {as: 'application_deliverable', foreignKey: 'application_id'});
     }
   }

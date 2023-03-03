@@ -13,6 +13,17 @@ const getAllProjects = async (req, res) => {
     }
 };
 
+const getProjectsByPosterId = async (req, res) => {
+    try {
+        const { student_id } = req.user;
+        const response = await services.getProjectsByPosterId(req.query, student_id);
+        return res.status(200).json(response);
+    } catch (error) {
+        throw new InternalServerError(error);
+    }
+};
+
+
 const createProject = async (req, res) => {
     try {
         const { error } = joi.object({project_name, student_id, description, url}).validate(req.body);
@@ -61,4 +72,4 @@ const getProjectById = async (req, res) => {
     }
 };
 
-module.exports = {getAllProjects, createProject, updateProject, deleteProject, getProjectById};
+module.exports = {getAllProjects, createProject, updateProject, deleteProject, getProjectById, getProjectsByPosterId};

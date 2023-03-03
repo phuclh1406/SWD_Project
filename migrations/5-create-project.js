@@ -16,15 +16,43 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
+      price: {
+        type: Sequelize.DOUBLE,
+        allowNull: false
+      },
       url: {
         type: Sequelize.STRING,
       },
-      student_id: {
+      poster_id: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
         references: {
           model: 'students',
           key: 'student_id'
+        }
+      },
+      doer_id: {
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
+        references: {
+          model: 'students',
+          key: 'student_id'
+        }
+      },
+      cate_id: {
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
+        references: {
+          model: 'categories',
+          key: 'cate_id'
+        }
+      },
+      major_id: {
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
+        references: {
+          model: 'majors',
+          key: 'major_id'
         }
       },
       status: {

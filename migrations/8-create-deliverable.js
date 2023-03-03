@@ -11,12 +11,12 @@ module.exports = {
       url: {
         type: Sequelize.STRING,
       },
-      apllication_id: {
+      application_id: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
         references: {
           model: 'applications',
-          key: 'apllication_id'
+          key: 'application_id'
         }
       },
       status: {

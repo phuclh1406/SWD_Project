@@ -11,10 +11,15 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Project.belongsTo(models.Student, {foreignKey: 'student_id', targetKey: 'student_id', as: 'project_student'})
-      Project.hasMany(models.JobPost, {as: 'project_post', foreignKey: 'post_id'});
+      Project.belongsTo(models.Student, {foreignKey: 'poster_id', targetKey: 'student_id', as: 'project_student'})
+      Project.hasOne(models.Student, {as: 'project_doer', foreignKey: 'doer_id'});
+      // Project.hasMany(models.JobPost, {as: 'project_post', foreignKey: 'post_id'});
       Project.belongsToMany(models.Student, {through: models.History });
       Project.hasMany(models.History, {as: "project_history", foreignKey: 'project_id'});
+      Project.belongsTo(models.Category, {foreignKey: 'cate_id', targetKey: 'cate_id', as: 'project_category'});
+      Project.belongsTo(models.Major, {foreignKey: 'major_id', targetKey: 'major_id', as: 'project_major'});
+      Project.belongsToMany(models.Student, {through: models.Application});
+      Project.hasMany(models.Application, {as: "project_application", foreignKey: 'project_id'});
     }
   }
   Project.init({
@@ -24,12 +29,25 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
     },
     project_name: DataTypes.STRING,
-    student_id: {
+    description: DataTypes.STRING,
+    price: DataTypes.DOUBLE,
+    url: DataTypes.STRING,
+    poster_id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4
     },
-    description: DataTypes.STRING,
-    url: DataTypes.STRING,
+    doer_id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4
+    },
+    cate_id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4
+    },
+    major_id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4
+    },
     status: {
       type: DataTypes.ENUM,
       values: ['Active', 'Deactive', 'Finished'],
