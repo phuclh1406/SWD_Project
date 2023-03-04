@@ -4,7 +4,7 @@ module.exports = {
       return queryInterface.addColumn(
         'Projects',
         'image',
-       Sequelize.BOOLEAN
+       Sequelize.STRING
       );
   
     },

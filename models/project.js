@@ -38,6 +38,7 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.STRING,
     price: DataTypes.DOUBLE,
     url: DataTypes.STRING,
+    image: DataTypes.STRING,
     poster_id: {
       type: DataTypes.UUID,
     },

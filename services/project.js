@@ -260,7 +260,7 @@ const createProject = (body, student_id) =>
       const projects = await db.Project.findOrCreate({
         where: { 
           project_name: body?.project_name,
-          status: "Deactive", 
+          status: "Active", 
         },
         defaults: {
           ...body,
