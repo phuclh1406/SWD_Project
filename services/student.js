@@ -146,6 +146,7 @@ const updateStudent = ({ student_id, ...body }) =>
             ? `${students[0]} student update`
             : "Cannot update student/ student_id not found",
       });
+      redisClient.del('students');
     } catch (error) {
       reject(error.message);
     }
@@ -188,6 +189,7 @@ const deleteStudent = (student_ids, student_id) =>
               ? `${students} student delete`
               : "Cannot delete student/ student_id not found",
         });
+        redisClient.del('students');
       }
     } catch (error) {
       reject(error);
