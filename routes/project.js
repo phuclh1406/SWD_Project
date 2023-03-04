@@ -57,26 +57,6 @@ const router = express.Router();
  *         schema:
  *           type: string
  *         description: Find project by project_name
- *       - name: page
- *         in: query
- *         schema:
- *           type: int
- *         description: Paging page number
- *       - name: limit
- *         in: query
- *         schema:
- *           type: int
- *         description: Paging limit row to get in 1 page
- *       - name: order[0]
- *         in: query
- *         schema:
- *           type: string
- *         description: Sort by (project_name/status)
- *       - name: order[1]
- *         in: query
- *         schema:
- *           type: string
- *         description: Sort ASC/DESC
  *     responses:
  *       200:
  *         description: Get the list of the projects successfully
@@ -109,26 +89,6 @@ router.get("/home/", controllers.getAllProjectsHome);
  *         schema:
  *           type: string
  *         description: Find project by poster_id
- *       - name: page
- *         in: query
- *         schema:
- *           type: int
- *         description: Paging page number
- *       - name: limit
- *         in: query
- *         schema:
- *           type: int
- *         description: Paging limit row to get in 1 page
- *       - name: order[0]
- *         in: query
- *         schema:
- *           type: string
- *         description: Sort by (project_name/status)
- *       - name: order[1]
- *         in: query
- *         schema:
- *           type: string
- *         description: Sort ASC/DESC
  *     responses:
  *       200:
  *         description: Get the list of the projects successfully

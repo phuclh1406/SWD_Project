@@ -23,6 +23,9 @@ module.exports = {
       url: {
         type: Sequelize.STRING,
       },
+      image: {
+        type: Sequelize.STRING,
+      },
       poster_id: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
@@ -57,7 +60,7 @@ module.exports = {
       },
       status: {
         type: Sequelize.ENUM,
-        values: ['Active', 'Deactive', 'Finished'],
+        values: ['Active', 'Deactive', 'Received', 'Finished'],
         defaultValue: 'Active',
       },
       createdAt: {

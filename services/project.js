@@ -1,21 +1,21 @@
 const db = require("../models");
-const { Op, QueryTypes } = require("sequelize");
+const { Op } = require("sequelize");
 const redisClient = require("../config/redis_config");
 
 const getAllProjects = (
-  { page, limit, order, project_name, poster_id, ...query },
+  { project_name, poster_id, ...query },
   role_name
 ) =>
   new Promise(async (resolve, reject) => {
     try {
-      const project = await redisClient.get(`projects_${page}`);
+      const project = await redisClient.get('projects');
       if (project != null && project != "") {
         resolve({
           msg: project ? `Got projects` : "Cannot find projects",
           projects: JSON.parse(project),
         });
       } else {
-        const adminProject = await redisClient.get(`admin_projects_${page}`);
+        const adminProject = await redisClient.get('admin_projects');
         if (adminProject != null && adminProject != "") {
           resolve({
             msg: adminProject ? `Got projects` : "Cannot find projects",
@@ -23,17 +23,12 @@ const getAllProjects = (
           });
         } else {
           const queries = { raw: true, nest: true };
-          const offset = !page || +page <= 1 ? 0 : +page - 1;
-          const flimit = +limit || +process.env.LIMIT_POST;
-          queries.offset = offset * flimit;
-          queries.limit = flimit;
-          if (order) queries.order = [order];
           if (project_name)
             query.project_name = { [Op.substring]: project_name };
           if (poster_id)
             query.poster_id = { [Op.eq]: poster_id };
           if (role_name !== "Admin") {
-            query.status = { [Op.ne]: "Deactive" };
+            query.status = { [Op.notIn]: ['Deactive', 'Received'] };
           }
 
           const projects = await db.Project.findAndCountAll({
@@ -45,7 +40,7 @@ const getAllProjects = (
             include: [
               {
                 model: db.Student,
-                as: "project_student",
+                as: "project_poster",
                 attributes: ["student_id", "student_name", "avatar"],
               },
               {
@@ -62,9 +57,9 @@ const getAllProjects = (
           });
 
           if (role_name !== "Admin") {
-            redisClient.setEx(`projects_${page}`, 3600, JSON.stringify(projects));
+            redisClient.setEx('projects', 3600, JSON.stringify(projects));
           } else {
-            redisClient.setEx(`admin_projects_${page}`, 3600, JSON.stringify(projects));
+            redisClient.setEx('admin_projects', 3600, JSON.stringify(projects));
           }
 
           resolve({
@@ -80,11 +75,11 @@ const getAllProjects = (
   });
 
   const getAllProjectsHome = (
-    { page, limit, order, project_name, ...query }
+    { project_name, ...query }
   ) =>
     new Promise(async (resolve, reject) => {
       try {
-          const adminProject = await redisClient.get(`projects_home_${page}`);
+          const adminProject = await redisClient.get('projects_home');
           if (adminProject != null && adminProject != "") {
             resolve({
               msg: adminProject ? `Got projects` : "Cannot find projects",
@@ -92,14 +87,9 @@ const getAllProjects = (
             });
           } else {
             const queries = { raw: true, nest: true };
-            const offset = !page || +page <= 1 ? 0 : +page - 1;
-            const flimit = +limit || +process.env.LIMIT_POST;
-            queries.offset = offset * flimit;
-            queries.limit = flimit;
-            if (order) queries.order = [order];
             if (project_name)
               query.project_name = { [Op.substring]: project_name };
-              query.status = { [Op.ne]: "Deactive" };
+              query.status = { [Op.notIn]: ['Deactive', 'Received'] };
   
             const projects = await db.Project.findAndCountAll({
               where: query,
@@ -110,7 +100,7 @@ const getAllProjects = (
               include: [
                 {
                   model: db.Student,
-                  as: "project_student",
+                  as: "project_poster",
                   attributes: ["student_id", "student_name", "avatar"],
                 },
                 {
@@ -125,7 +115,7 @@ const getAllProjects = (
                 },
               ],
             });
-              redisClient.setEx(`projects_home_${page}`, 3600, JSON.stringify(projects));
+              redisClient.setEx('projects_home', 3600, JSON.stringify(projects));
   
             resolve({
               msg: projects ? `Got projects` : "Cannot find projects",
@@ -169,7 +159,7 @@ const getAllProjects = (
                 include: [
                   {
                     model: db.Student,
-                    as: "project_student",
+                    as: "project_poster",
                     attributes: ["student_id", "student_name", "avatar"],
                   },
                 ],
@@ -336,7 +326,7 @@ const getProjectById = (project_id) =>
         include: [
           {
             model: db.Student,
-            as: "project_student",
+            as: "project_poster",
             attributes: ["student_id", "student_name", "avatar"],
           },
           {

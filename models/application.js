@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4
     },
-    post_id: {
+    project_id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4
     },

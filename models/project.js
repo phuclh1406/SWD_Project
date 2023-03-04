@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Project.belongsTo(models.Student, {foreignKey: 'poster_id', targetKey: 'student_id', as: 'project_student'})
+      Project.belongsTo(models.Student, {foreignKey: 'poster_id', targetKey: 'student_id', as: 'project_poster'})
 
       Project.belongsTo(models.Student, {
         foreignKey: "doer_id",
@@ -55,11 +55,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     status: {
       type: DataTypes.ENUM,
-      values: ['Active', 'Deactive', 'Finished'],
+      values: ['Active', 'Deactive', 'Received', 'Finished'],
       validate: {
         isIn: {
-          args: [['Active', 'Deactive', 'Finished']],
-          msg: 'Invalid value for project.status (Active, Deactive, Finished)'
+          args: [['Active', 'Deactive', 'Received', 'Finished']],
+          msg: 'Invalid value for project.status (Active, Deactive, Received, Finished)'
         }
       }
     }

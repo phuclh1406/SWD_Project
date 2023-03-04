@@ -4,6 +4,7 @@ const {getAllProjects, createProject, updateProject, deleteProject, getProjectBy
 const {getAllMajors, createMajor, updateMajor, deleteMajor} = require("./major")
 const {getAllCategories, createCategory, updateCategory, deleteCategory} = require("./category")
 const {getAllRoles} = require('./role')
+const {getAllApplications, getAllApplicationsByStudentId, createApplication, acceptApplication, getApplicationById, updateApplication, deleteApplication} = require("./application")
 
 module.exports = {
   loginGoogle,
@@ -31,5 +32,12 @@ module.exports = {
   getAllStudentPaging,
   updateProfile,
   getAllProjectsHome,
-
+  getAllApplications, 
+  getAllApplicationsByStudentId, 
+  createApplication, 
+  acceptApplication, 
+  getApplicationById, 
+  updateApplication, 
+  deleteApplication,
+  
 };
