@@ -185,7 +185,6 @@ router.get("/:id", verifyToken, controllers.getProjectById);
  *              project_name: Football Field Booking Management System
  *              description: The system to manage field of the field owner and the field booking schedule of customer in Ho Chi Minh city
  *              price: 20
- *              url: https://github.com/nhannguyen24/math-util-live.git
  *              cate_id: b84a02a8-1b39-4ebf-bc5b-4255df846818
  *              major_id: 9a3dbef2-a705-45aa-9dcd-b23b3d7c12f9
  *     responses:
