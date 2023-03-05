@@ -16,13 +16,13 @@ const router = express.Router();
  *       properties:
  *         category_id:
  *           type: string
- *           description: The auto-generated id of the book
+ *           description: The auto-generated id of the category
  *         category_name:
  *           type: string
  *           description: The category name
  *         status:
  *           type: string
- *           description: The category status('active', 'pending', 'deactive')
+ *           description: The category status('Active', 'Deactive')
  */
 
 /**

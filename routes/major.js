@@ -16,13 +16,13 @@ const router = express.Router();
  *       properties:
  *         major_id:
  *           type: string
- *           description: The auto-generated id of the book
+ *           description: The auto-generated id of the major
  *         major_name:
  *           type: string
  *           description: The major name
  *         status:
  *           type: string
- *           description: The major status('active', 'pending', 'deactive')
+ *           description: The major status('Active', 'Deactive')
  */
 
 /**

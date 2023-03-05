@@ -17,13 +17,13 @@ const router = express.Router();
  *       properties:
  *         role_id:
  *           type: string
- *           description: The auto-generated id of the book
+ *           description: The auto-generated id of the role
  *         role_name:
  *           type: string
  *           description: The role name
  *         status:
  *           type: string
- *           description: The role status('active', 'deactive')
+ *           description: The role status("Active", "Deactive")
  */
 
 /**

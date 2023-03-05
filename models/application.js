@@ -11,8 +11,16 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Application.belongsTo(models.Student, {foreignKey: 'student_id', targetKey: 'student_id', as: 'application_student'})
-      Application.belongsTo(models.Project, {foreignKey: 'project_id', targetKey: 'project_id', as: 'application_project'});
+      Application.belongsTo(models.Student, {
+        foreignKey: 'student_id',
+        as: 'application_student'
+      });
+      
+      Application.belongsTo(models.Project, {
+        foreignKey: 'project_id',
+        as: 'application_project'
+      });
+      
       Application.hasMany(models.Deliverable, {as: 'application_deliverable', foreignKey: 'application_id'});
     }
   }
@@ -36,7 +44,7 @@ module.exports = (sequelize, DataTypes) => {
       values: ["Active", "Pending", "Deactive", "Finished"],
       validate: {
         isIn: {
-          args: ["Active", "Pending", "Deactive", "Finished"],
+          args: [["Active", "Pending", "Deactive", "Finished"]],
           msg: 'Invalid value for application.status (Active, Pending, Deactive, Finished)'
         }
       }

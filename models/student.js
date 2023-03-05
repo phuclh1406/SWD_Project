@@ -23,9 +23,14 @@ module.exports = (sequelize, DataTypes) => {
       // Student.hasMany(models.JobPost, {as: 'student_post', foreignKey: 'doer_id'});
 
       Student.hasOne(models.Project, {as: 'doer_project', foreignKey: 'doer_id'});
+      
+      Student.belongsToMany(models.Project, {
+        through: 'Application',
+        foreignKey: 'student_id',
+        otherKey: 'project_id',
+        as: "student_application",
+      });
 
-      Student.belongsToMany(models.Project, {through: models.Application });
-      Student.hasMany(models.Application, {as: "student_application", foreignKey: 'student_id'});
       Student.belongsToMany(models.Project, {through: models.History });
       Student.hasMany(models.History, {as: "student_history", foreignKey: 'student_id'});
     }
@@ -58,7 +63,7 @@ module.exports = (sequelize, DataTypes) => {
         values: ["Active", "Deactive"],
         validate: {
           isIn: {
-            args: [['Active', 'Deactive']],
+            args: [["Active", "Deactive"]],
             msg: 'Invalid value for student.status (Active, Deactive)'
           }
         }

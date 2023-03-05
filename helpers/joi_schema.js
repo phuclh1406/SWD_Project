@@ -81,6 +81,12 @@ const role_id = joi.string().required().messages({
 const url = joi.string().required().messages({
   "string.empty": `url is not allowed to be empty`,
 });
+const application_id = joi.string().required().messages({
+  "string.empty": `url is not allowed to be empty`,
+});
+const application_ids = joi.array().required().messages({
+  'any.required': 'cate_ids are required'
+});
 
 module.exports = {
   name,
@@ -111,5 +117,7 @@ module.exports = {
   avatar,
   role_id,
   url,
+  application_id, 
+  application_ids,
   
 };

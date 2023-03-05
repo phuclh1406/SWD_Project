@@ -74,7 +74,7 @@ const deleteMajor = (major_ids) => new Promise( async (resolve, reject) => {
             where: {major_id: major_ids}
         });
         resolve({
-            msg: majors > 0 ? `${majors} majors is deleted` : 'Cannot delete majors/ project_id not found',
+            msg: majors > 0 ? `${majors} majors is deleted` : 'Cannot delete majors/ major_id not found',
         });
     } catch (error) {
         reject(error);

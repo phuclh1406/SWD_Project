@@ -35,12 +35,17 @@ const getAllProjects = (
             where: query,
             ...queries,
             attributes: {
-              exclude: ["student_id", "createdAt", "updatedAt"],
+              exclude: ["poster_id", "doer_id", "cate_id", "major_id", "createdAt", "updatedAt"],
             },
             include: [
               {
                 model: db.Student,
                 as: "project_poster",
+                attributes: ["student_id", "student_name", "avatar"],
+              },
+              {
+                model: db.Student,
+                as: "project_doer",
                 attributes: ["student_id", "student_name", "avatar"],
               },
               {

@@ -15,7 +15,7 @@ const router = express.Router();
  *       properties:
  *         project_id:
  *           type: string
- *           description: The auto-generated id of the book
+ *           description: The auto-generated id of the project
  *         project_name:
  *           type: string
  *           description: The project name
@@ -42,7 +42,7 @@ const router = express.Router();
  *           description: The project major
  *         status:
  *           type: string
- *           description: The project status('active', 'pending', 'deactive')
+ *           description: The project status('Active', 'Deactive', 'Received', 'Finished')
  */
 
 /**
@@ -114,7 +114,7 @@ router.get("/", verifyToken, controllers.getAllProjects);
  *         in: path
  *         schema:
  *           type: string
- *         description: Find project by student_id
+ *         description: Find project by project_id
  *     responses:
  *       200:
  *         description: For get the project by id

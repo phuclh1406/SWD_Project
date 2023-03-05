@@ -29,7 +29,7 @@ const router = express.Router();
  *           description: The student avatar
  *         status:
  *           type: string
- *           description: The student status('active', 'deactive')
+ *           description: The student status("Active", "Deactive")
  *       example:
  *         student_id: V2sSC1HSLASNtTT0RhzwqDxxwri2
  *         student_name: Nhan Nguyen
