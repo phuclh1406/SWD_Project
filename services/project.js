@@ -23,6 +23,7 @@ const getAllProjects = (
           });
         } else {
           const queries = { raw: true, nest: true };
+          queries.order = [['updatedAt', 'DESC']];
           if (project_name)
             query.project_name = { [Op.substring]: project_name };
           if (poster_id)
@@ -30,7 +31,6 @@ const getAllProjects = (
           if (role_name !== "Admin") {
             query.status = { [Op.notIn]: ['Deactive', 'Received'] };
           }
-
           const projects = await db.Project.findAndCountAll({
             where: query,
             ...queries,

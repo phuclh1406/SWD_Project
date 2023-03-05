@@ -22,6 +22,7 @@ const getAllApplications = (
           });
         } else {
           const queries = { raw: true, nest: true };
+          queries.order = [['updatedAt', 'DESC']];
           if (role_name !== "Admin") {
             query.status = { [Op.notIn]: ['Deactive', 'Pending'] };
           }

@@ -19,8 +19,11 @@ const getAllStudent = () =>
             where: {
               status: {
                 [Op.ne]: "Deactive",
-              },
+              }
             },
+            order: [
+              ['updatedAt', 'DESC']
+            ],
             attributes: {
               exclude: [
                 "role_id",
