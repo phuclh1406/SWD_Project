@@ -94,7 +94,7 @@ router.get("/:id", verifyToken, controllers.getApplicationById);
  *   post:
  *     security: 
  *         - BearerAuth: []
- *     summary: Create new application
+ *     summary: Apply to project
  *     tags: [application-controller]
  *     requestBody:
  *        required: true
@@ -106,7 +106,7 @@ router.get("/:id", verifyToken, controllers.getApplicationById);
  *              project_id: b84a02a8-1b39-4ebf-bc5b-4255df846818
  *     responses:
  *       200:
- *         description: Create new application successfully
+ *         description: Apply to project successfully
  *         content:
  *           application/json:
  *             schema:
@@ -149,7 +149,7 @@ router.post("/accept/", verifyToken, controllers.acceptApplication);
  *   put:
  *     security: 
  *         - BearerAuth: []
- *     summary: Update the application by id
+ *     summary: Update change project by id
  *     tags: [application-controller]
  *     requestBody:
  *        required: true
@@ -163,7 +163,7 @@ router.post("/accept/", verifyToken, controllers.acceptApplication);
  *               status: Active
  *     responses:
  *       200:
- *         description: For get the list of the applications
+ *         description: Update change project successfully
  *         content:
  *           application/json:
  *             schema:
