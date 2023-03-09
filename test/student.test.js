@@ -43,78 +43,38 @@ describe('getAllStudent function', () => {
   });
 });
 
-// //GET method by Id
-// describe('getAllStudent function', () => {
-//   it('should return a 200 response with the correct data', async () => {
-//     // Arrange  
-//     const student_id = "V2sSC1HSLASNtTT0RhzwqDxxwri2"
-//     const req = { query: {student_id: student_id} };
-//     const res = { status: jest.fn().mockReturnThis(), json: jest.fn() };
-//     const expectedResponse = { /* Add the expected response object here */ };
-
-//     // Mock the services.getAllStudent function to return the expected response
-//     services.getAllStudent = jest.fn().mockResolvedValue(expectedResponse);
-
-//     // Act
-//     await getAllStudent(req, res);
-
-//     // Assert
-//     expect(res.status).toHaveBeenCalledWith(200);
-//     expect(res.json).toHaveBeenCalledWith(expectedResponse);
-//   });
-
-//   it('should throw an error if getAllStudent function returns an error', async () => {
-//     // Arrange
-//     const req = { query: {} };
-//     const res = { status: jest.fn().mockReturnThis(), json: jest.fn() };
-//     const expectedError = new Error('Test error');
-  
-//     // Mock the services.getAllStudent function to throw an error
-//     services.getAllStudent = jest.fn().mockRejectedValue('Test error');
-  
-//     // Act & Assert
-//     try {
-//       await getAllStudent(req, res);
-//       // If the function does not throw an error, the test should fail
-//       fail('Expected an error to be thrown');
-//     } catch (error) {
-//       expect(error).toEqual(expectedError);
-//     }
-//   });
-// });
-
-//DELETE method
-describe('deleteStudent function', () => {
+//GET method by Id
+describe('getAllStudent function', () => {
   it('should return a 200 response with the correct data', async () => {
     // Arrange  
-    const student_ids = ["V2sSC1HSLASNtTT0RhzwqDxxwri2"]
-    const req = { query: {student_ids: student_ids} };
+    const student_id = "V2sSC1HSLASNtTT0RhzwqDxxwri2"
+    const req = { query: {student_id: student_id} };
     const res = { status: jest.fn().mockReturnThis(), json: jest.fn() };
     const expectedResponse = { /* Add the expected response object here */ };
 
-    // Mock the services.deleteStudent function to return the expected response
-    services.deleteStudent = jest.fn().mockResolvedValue(expectedResponse);
-    services.deleteStudent(req)
+    // Mock the services.getAllStudent function to return the expected response
+    services.getAllStudent = jest.fn().mockResolvedValue(expectedResponse);
+
     // Act
-    await deleteStudent(req, res);
+    await getAllStudent(req, res);
 
     // Assert
     expect(res.status).toHaveBeenCalledWith(200);
     expect(res.json).toHaveBeenCalledWith(expectedResponse);
   });
 
-  it('should throw an error if deleteStudent function returns an error', async () => {
+  it('should throw an error if get student by id function returns an error', async () => {
     // Arrange
-    const student_ids = ["V2sSC1HSLASNtTT0RhzwqDxxwri2"]
-    const req = { query: {student_ids: student_ids} };
+    const req = { query: {} };
     const res = { status: jest.fn().mockReturnThis(), json: jest.fn() };
     const expectedError = new Error('Test error');
   
-    // Mock the services.deleteStudent function to throw an error
-    services.deleteStudent = jest.fn().mockRejectedValue('Test error');
+    // Mock the services.getAllStudent function to throw an error
+    services.getAllStudent = jest.fn().mockRejectedValue('Test error');
+  
     // Act & Assert
     try {
-      await deleteStudent(req, res);
+      await getAllStudent(req, res);
       // If the function does not throw an error, the test should fail
       fail('Expected an error to be thrown');
     } catch (error) {
@@ -122,3 +82,5 @@ describe('deleteStudent function', () => {
     }
   });
 });
+
+
