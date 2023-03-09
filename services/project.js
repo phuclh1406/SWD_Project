@@ -92,6 +92,7 @@ const getAllProjects = (
             });
           } else {
             const queries = { raw: true, nest: true };
+            queries.order = [['updatedAt', 'DESC']];
             if (project_name)
               query.project_name = { [Op.substring]: project_name };
               query.status = { [Op.notIn]: ['Deactive', 'Received'] };
@@ -132,55 +133,6 @@ const getAllProjects = (
         reject(error);
       }
     });
-
-    const getProjectsByDoerId = (
-      { page, limit, order, project_name, ...query },
-      student_id
-    ) =>
-      new Promise(async (resolve, reject) => {
-        try {
-            const adminProject = await redisClient.get(`admin_projects_${page}`);
-            if (adminProject != null && adminProject != "") {
-              resolve({
-                msg: adminProject ? `Got projects` : "Cannot find projects",
-                projects: JSON.parse(adminProject),
-              });
-            } else {
-              const queries = { raw: true, nest: true };
-              const offset = !page || +page <= 1 ? 0 : +page - 1;
-              const flimit = +limit || +process.env.LIMIT_POST;
-              queries.offset = offset * flimit;
-              queries.limit = flimit;
-              if (order) queries.order = [order];
-                query.student_id = { [Op.eq]: student_id };
-                query.status = { [Op.ne]: "Deactive" };
-    
-              const projects = await db.Application.findAndCountAll({
-                where: query, 
-                ...queries,
-                attributes: {
-                  exclude: ["student_id", "post_id", "createdAt", "updatedAt"],
-                },
-                include: [
-                  {
-                    model: db.Student,
-                    as: "project_poster",
-                    attributes: ["student_id", "student_name", "avatar"],
-                  },
-                ],
-              });
-                redisClient.setEx(`projects_poster_${page}`, 3600, JSON.stringify(projects));
-              resolve({
-                msg: projects ? `Got projects` : "Cannot find projects",
-                projects: projects,
-              });
-            }
-          
-        } catch (error) {
-            console.log(error);
-          reject(error);
-        }
-      });
 
     // const getProjectsByDoerId = (
     //   { page, limit, order, project_name, ...query },
@@ -335,6 +287,11 @@ const getProjectById = (project_id) =>
             attributes: ["student_id", "student_name", "avatar"],
           },
           {
+            model: db.Student,
+            as: "project_doer",
+            attributes: ["student_id", "student_name", "avatar"],
+          },
+          {
             model: db.Category,
             as: "project_category",
             attributes: ["cate_id", "cate_name"],
@@ -346,15 +303,21 @@ const getProjectById = (project_id) =>
           },
         ],
       });
-      if (project) {
-        resolve({
-          project: project,
-        });
-      } else {
-        resolve({
-          msg: `Cannot find project with id: ${project_id}`,
-        });
-      }
+      // if (project) {
+      //   resolve({
+      //     project: project,
+      //   });
+      // } else {
+      //   resolve({
+      //     msg: `Cannot find project with id: ${project_id}`,
+      //   });
+      // }
+
+      resolve({
+        msg: project ? `Get project by id ${project_id}` : `Cannot find project with id ${project_id}`,
+        project: project ? project : null
+      })
+      
     } catch (error) {
       reject(error);
     }

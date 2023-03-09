@@ -187,7 +187,7 @@ router.post("/", verifyToken, controllers.createProject);
  *               status: Active
  *     responses:
  *       200:
- *         description: For get the list of the projects
+ *         description: For update the list of the projects
  *         content:
  *           application/json:
  *             schema:

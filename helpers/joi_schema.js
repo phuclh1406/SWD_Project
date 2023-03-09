@@ -76,17 +76,22 @@ const avatar = joi.string().required().messages({
   "string.empty": `avatar is not allowed to be empty`,
 });
 const role_id = joi.string().required().messages({
-  "string.empty": `avatar is not allowed to be empty`,
+  "string.empty": `role_id is not allowed to be empty`,
 });
 const url = joi.string().required().messages({
   "string.empty": `url is not allowed to be empty`,
 });
 const application_id = joi.string().required().messages({
-  "string.empty": `url is not allowed to be empty`,
+  "string.empty": `application_id is not allowed to be empty`,
 });
 const application_ids = joi.array().required().messages({
   'any.required': 'cate_ids are required'
 });
+
+const deliverable_id = joi.string().required().messages({
+  "string.empty": `deliverable_id is not allowed to be empty`,
+});
+
 
 module.exports = {
   name,
@@ -119,5 +124,6 @@ module.exports = {
   url,
   application_id, 
   application_ids,
-  
+  deliverable_id,
+
 };
