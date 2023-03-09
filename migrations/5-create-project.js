@@ -16,10 +16,17 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
+      price: {
+        type: Sequelize.DOUBLE,
+        allowNull: false
+      },
       url: {
         type: Sequelize.STRING,
       },
-      student_id: {
+      image: {
+        type: Sequelize.STRING,
+      },
+      poster_id: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
         references: {
@@ -27,9 +34,33 @@ module.exports = {
           key: 'student_id'
         }
       },
+      doer_id: {
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
+        references: {
+          model: 'students',
+          key: 'student_id'
+        }
+      },
+      cate_id: {
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
+        references: {
+          model: 'categories',
+          key: 'cate_id'
+        }
+      },
+      major_id: {
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
+        references: {
+          model: 'majors',
+          key: 'major_id'
+        }
+      },
       status: {
         type: Sequelize.ENUM,
-        values: ['Active', 'Deactive', 'Finished'],
+        values: ['Active', 'Deactive', 'Received', 'Finished'],
         defaultValue: 'Active',
       },
       createdAt: {

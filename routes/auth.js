@@ -60,7 +60,6 @@ router.post('/login-google', firebase_auth, controllers.loginGoogle);
  */
 router.post('/refresh-token', controllers.refreshAccessToken);
 
-router.use(verifyToken);
 
 /**
  * @swagger
@@ -84,6 +83,6 @@ router.use(verifyToken);
  *             schema:
  *               type: array
  */
-router.post('/logout', controllers.logout);
+router.post('/logout', verifyToken, controllers.logout);
 
 module.exports = router;

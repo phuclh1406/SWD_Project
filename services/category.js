@@ -10,11 +10,14 @@ const getAllCategories = ({page, limit, order, cate_name, ...query}, role_name) 
         queries.limit = flimit;
         if(order) queries.order = [order];
         if(cate_name) query.cate_name = {[Op.substring]: cate_name};
-        if (role_name !== 'Admin' ) {query.status = { [Op.ne]: "deactive" }};
+        if (role_name !== 'Admin' ) {query.status = { [Op.ne]: "Deactive" }};
 
         const categories = await db.Category.findAndCountAll({
             where: query,
             ...queries,
+            attributes: {
+                exclude: ['createdAt', 'updatedAt'],
+            },
         });
         resolve({
             msg: categories ? `Got category` : 'Cannot find category',

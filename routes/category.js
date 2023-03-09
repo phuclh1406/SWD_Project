@@ -4,8 +4,6 @@ const verifyToken = require('../middlewares/verify_token');
 
 const router = express.Router();
 
-router.use(verifyToken);
-
 /**
  * @swagger
  * components:
@@ -17,14 +15,14 @@ router.use(verifyToken);
  *         - author
  *       properties:
  *         category_id:
- *           type: UUID
- *           description: The auto-generated id of the book
+ *           type: string
+ *           description: The auto-generated id of the category
  *         category_name:
  *           type: string
  *           description: The category name
  *         status:
- *           type: enum
- *           description: The category status('active', 'pending', 'deactive')
+ *           type: string
+ *           description: The category status('Active', 'Deactive')
  */
 
 /**
@@ -71,7 +69,7 @@ router.use(verifyToken);
  *               items:
  *                 $ref: '#/components/schemas/Category'
  */
-router.get("/", controllers.getAllCategories);
+router.get("/", verifyToken, controllers.getAllCategories);
 
 /**
  * @swagger
@@ -100,7 +98,7 @@ router.get("/", controllers.getAllCategories);
  *                 $ref: '#/components/schemas/Category'
 
  */
-router.post("/", controllers.createCategory);
+router.post("/", verifyToken, controllers.createCategory);
 
 /**
  * @swagger
@@ -119,7 +117,7 @@ router.post("/", controllers.createCategory);
  *            example:
  *               cate_id: ec4b9413-cb91-473b-b80b-c6beaf1a420c
  *               cate_name: Design Pattern
- *               status: active
+ *               status: Active
  *     responses:
  *       200:
  *         description: For get the list of the categories
@@ -130,7 +128,7 @@ router.post("/", controllers.createCategory);
  *               items:
  *                 $ref: '#/components/schemas/Category'
  */
-router.put("/", controllers.updateCategory);
+router.put("/", verifyToken, controllers.updateCategory);
 
 /**
  * @swagger
@@ -156,6 +154,6 @@ router.put("/", controllers.updateCategory);
  *               items:
  *                 $ref: '#/components/schemas/Category'
  */
-router.put("/:id", controllers.deleteCategory);
+router.put("/:id", verifyToken, controllers.deleteCategory);
 
 module.exports = router;

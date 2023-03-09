@@ -5,9 +5,6 @@ const verifyRole = require('../middlewares/verify_role');
 
 const router = express.Router();
 
-router.use(verifyToken);
-router.use(verifyRole);
-
 /**
  * @swagger
  * components:
@@ -19,14 +16,14 @@ router.use(verifyRole);
  *         - author
  *       properties:
  *         role_id:
- *           type: UUID
- *           description: The auto-generated id of the book
+ *           type: string
+ *           description: The auto-generated id of the role
  *         role_name:
  *           type: string
  *           description: The role name
  *         status:
- *           type: enum
- *           description: The role status('active', 'deactive')
+ *           type: string
+ *           description: The role status("Active", "Deactive")
  */
 
 /**
@@ -73,6 +70,6 @@ router.use(verifyRole);
  *               items:
  *                 $ref: '#/components/schemas/Role'
  */
-router.get("/", controllers.getAllRoles);
+router.get("/", verifyToken, verifyRole, controllers.getAllRoles);
 
 module.exports = router;

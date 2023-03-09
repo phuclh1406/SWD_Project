@@ -10,14 +10,14 @@ const getAllMajors = ({page, limit, order, major_name, ...query}, role_name) => 
         queries.limit = flimit;
         if(order) queries.order = [order];
         if(major_name) query.major_name = {[Op.substring]: major_name};
-        if (role_name !== 'Admin' ) {query.status = { [Op.ne]: "deactive" }};
+        if (role_name !== 'Admin' ) {query.status = { [Op.ne]: "Deactive" }};
 
 
         const majors = await db.Major.findAndCountAll({
             where: query,
             ...queries,
             attributes: {
-                exclude: ['major_id', 'createAt', 'updateAt'],
+                exclude: ['createdAt', 'updatedAt'],
             },
         });
         resolve({
@@ -74,7 +74,7 @@ const deleteMajor = (major_ids) => new Promise( async (resolve, reject) => {
             where: {major_id: major_ids}
         });
         resolve({
-            msg: majors > 0 ? `${majors} majors is deleted` : 'Cannot delete majors/ project_id not found',
+            msg: majors > 0 ? `${majors} majors is deleted` : 'Cannot delete majors/ major_id not found',
         });
     } catch (error) {
         reject(error);

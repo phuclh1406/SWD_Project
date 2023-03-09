@@ -1,10 +1,7 @@
 const controllers = require('../controllers');
 const express = require('express');
 const verifyToken = require('../middlewares/verify_token');
-
 const router = express.Router();
-
-router.use(verifyToken);
 
 /**
  * @swagger
@@ -17,18 +14,61 @@ router.use(verifyToken);
  *         - author
  *       properties:
  *         project_id:
- *           type: UUID
- *           description: The auto-generated id of the book
+ *           type: string
+ *           description: The auto-generated id of the project
  *         project_name:
  *           type: string
  *           description: The project name
- *         student_id:
- *           type: UUID
- *           description: student id
+ *         description:
+ *           type: string
+ *           description: The project description
+ *         price:
+ *           type: number
+ *           description: The project price
+ *         url:
+ *           type: string
+ *           description: The project url 
+ *         poster_id:
+ *           type: string
+ *           description: The poster who posts project 
+ *         doer_id:
+ *           type: string
+ *           description: The doer who apply project
+ *         cate_id:
+ *           type: string
+ *           description: The project category
+ *         major_id:
+ *           type: string
+ *           description: The project major
  *         status:
- *           type: enum
- *           description: The project status('active', 'pending', 'deactive')
+ *           type: string
+ *           description: The project status('Active', 'Deactive', 'Received', 'Finished')
  */
+
+/**
+ * @swagger
+ * /api/v1/projects/home:
+ *   get:
+ *     summary: Returns the list of all the projects to home page
+ *     tags: [home-controller]
+ *     parameters:
+ *       - name: project_name
+ *         in: query
+ *         schema:
+ *           type: string
+ *         description: Find project by project_name
+ *     responses:
+ *       200:
+ *         description: Get the list of the projects successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Project'
+ */
+router.get("/home/", controllers.getAllProjectsHome);
+
 
 /**
  * @swagger
@@ -44,26 +84,11 @@ router.use(verifyToken);
  *         schema:
  *           type: string
  *         description: Find project by project_name
- *       - name: page
- *         in: query
- *         schema:
- *           type: int
- *         description: Paging page number
- *       - name: limit
- *         in: query
- *         schema:
- *           type: int
- *         description: Paging limit row to get in 1 page
- *       - name: order[0]
+ *       - name: poster_id
  *         in: query
  *         schema:
  *           type: string
- *         description: Sort by (project_name/status)
- *       - name: order[1]
- *         in: query
- *         schema:
- *           type: string
- *         description: Sort ASC/DESC
+ *         description: Find project by poster_id
  *     responses:
  *       200:
  *         description: Get the list of the projects successfully
@@ -74,7 +99,7 @@ router.use(verifyToken);
  *               items:
  *                 $ref: '#/components/schemas/Project'
  */
-router.get("/", controllers.getAllProjects);
+router.get("/", verifyToken, controllers.getAllProjects);
 
 /**
  * @swagger
@@ -89,7 +114,7 @@ router.get("/", controllers.getAllProjects);
  *         in: path
  *         schema:
  *           type: string
- *         description: Find project by student_id
+ *         description: Find project by project_id
  *     responses:
  *       200:
  *         description: For get the project by id
@@ -100,8 +125,7 @@ router.get("/", controllers.getAllProjects);
  *               items:
  *                 $ref: '#/components/schemas/Project'
  */
-router.get("/:id", controllers.getProjectById);
-
+router.get("/:id", verifyToken, controllers.getProjectById);
 
 /**
  * @swagger
@@ -118,10 +142,12 @@ router.get("/:id", controllers.getProjectById);
  *            schema:
  *              $ref: '#/components/schemas/Project'
  *            example:
- *              student_id: V2sSC1HSLASNtTT0RhzwqDxxwri2
  *              project_name: Football Field Booking Management System
  *              description: The system to manage field of the field owner and the field booking schedule of customer in Ho Chi Minh city
- *              url: https://github.com/nhannguyen24/math-util-live.git
+ *              price: 20
+ *              image: 
+ *              cate_id: b84a02a8-1b39-4ebf-bc5b-4255df846818
+ *              major_id: 9a3dbef2-a705-45aa-9dcd-b23b3d7c12f9
  *     responses:
  *       200:
  *         description: Create new project successfully
@@ -133,7 +159,7 @@ router.get("/:id", controllers.getProjectById);
  *                 $ref: '#/components/schemas/Project'
 
  */
-router.post("/", controllers.createProject);
+router.post("/", verifyToken, controllers.createProject);
 
 /**
  * @swagger
@@ -151,8 +177,14 @@ router.post("/", controllers.createProject);
  *              $ref: '#/components/schemas/Project'
  *            example:
  *               project_id: 8c382e13-8620-460a-bd95-96b1152c1368
- *               project_name: Design Pattern
- *               status: active
+ *               project_name: Football Field Booking Management System
+ *               description: The system to manage field of the field owner and the field booking schedule of customer in Ho Chi Minh city
+ *               price: 20
+ *               url: https://github.com/nhannguyen24/math-util-live.git
+ *               image: 
+ *               cate_id: b84a02a8-1b39-4ebf-bc5b-4255df846818
+ *               major_id: 9a3dbef2-a705-45aa-9dcd-b23b3d7c12f9
+ *               status: Active
  *     responses:
  *       200:
  *         description: For get the list of the projects
@@ -163,7 +195,7 @@ router.post("/", controllers.createProject);
  *               items:
  *                 $ref: '#/components/schemas/Project'
  */
-router.put("/", controllers.updateProject);
+router.put("/", verifyToken, controllers.updateProject);
 
 /**
  * @swagger
@@ -189,6 +221,6 @@ router.put("/", controllers.updateProject);
  *               items:
  *                 $ref: '#/components/schemas/Project'
  */
-router.put("/:id", controllers.deleteProject);
+router.put("/:id", verifyToken, controllers.deleteProject);
 
 module.exports = router;

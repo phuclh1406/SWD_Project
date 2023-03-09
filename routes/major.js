@@ -4,8 +4,6 @@ const verifyToken = require('../middlewares/verify_token');
 
 const router = express.Router();
 
-router.use(verifyToken);
-
 /**
  * @swagger
  * components:
@@ -17,14 +15,14 @@ router.use(verifyToken);
  *         - author
  *       properties:
  *         major_id:
- *           type: UUID
- *           description: The auto-generated id of the book
+ *           type: string
+ *           description: The auto-generated id of the major
  *         major_name:
  *           type: string
  *           description: The major name
  *         status:
- *           type: enum
- *           description: The major status('active', 'pending', 'deactive')
+ *           type: string
+ *           description: The major status('Active', 'Deactive')
  */
 
 /**
@@ -71,7 +69,7 @@ router.use(verifyToken);
  *               items:
  *                 $ref: '#/components/schemas/Major'
  */
-router.get("/", controllers.getAllMajors);
+router.get("/", verifyToken, controllers.getAllMajors);
 
 /**
  * @swagger
@@ -100,7 +98,7 @@ router.get("/", controllers.getAllMajors);
  *                 $ref: '#/components/schemas/Major'
 
  */
-router.post("/", controllers.createMajor);
+router.post("/", verifyToken, controllers.createMajor);
 
 /**
  * @swagger
@@ -119,7 +117,7 @@ router.post("/", controllers.createMajor);
  *            example:
  *               major_id: 9a3dbef2-a705-45aa-9dcd-b23b3d7c12f9
  *               major_name: Design Pattern
- *               status: active
+ *               status: Active
  *     responses:
  *       200:
  *         description: For get the list of the majors
@@ -130,7 +128,7 @@ router.post("/", controllers.createMajor);
  *               items:
  *                 $ref: '#/components/schemas/Major'
  */
-router.put("/", controllers.updateMajor);
+router.put("/", verifyToken, controllers.updateMajor);
 
 /**
  * @swagger
@@ -156,6 +154,6 @@ router.put("/", controllers.updateMajor);
  *               items:
  *                 $ref: '#/components/schemas/Major'
  */
-router.put("/:id", controllers.deleteMajor);
+router.put("/:id", verifyToken, controllers.deleteMajor);
 
 module.exports = router;

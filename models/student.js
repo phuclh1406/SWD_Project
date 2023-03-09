@@ -14,18 +14,25 @@ module.exports = (sequelize, DataTypes) => {
         targetKey: 'role_id',
         as: "student_role",
       });
-      Student.hasMany(models.Project, {as: "student_project" , foreignKey: 'student_id'});
+      Student.hasMany(models.Project, {as: "student_project" , foreignKey: 'poster_id'});
       Student.belongsTo(models.Major, {
         foreignKey: "major_id",
         targetKey: 'major_id',
         as: "student_major",
       });
-      Student.hasMany(models.JobPost, {as: 'student_post', foreignKey: 'doer_id'});
-      Student.belongsToMany(models.JobPost, {through: models.Application });
-      Student.hasMany(models.Application, {as: "student_application", foreignKey: 'student_id'});
+      // Student.hasMany(models.JobPost, {as: 'student_post', foreignKey: 'doer_id'});
+
+      Student.hasOne(models.Project, {as: 'doer_project', foreignKey: 'doer_id'});
+      
+      Student.belongsToMany(models.Project, {
+        through: 'Application',
+        foreignKey: 'student_id',
+        otherKey: 'project_id',
+        as: "student_application",
+      });
+
       Student.belongsToMany(models.Project, {through: models.History });
       Student.hasMany(models.History, {as: "student_history", foreignKey: 'student_id'});
-      Student.hasMany(models.Wallet, {as: "student_wallet", foreignKey: 'student_id'});
     }
   }
   Student.init(
@@ -48,8 +55,7 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: DataTypes.UUIDV4
       },
       major_id: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4
+        type: DataTypes.UUID
       },
       refresh_token: DataTypes.STRING,
       status: {
@@ -57,7 +63,7 @@ module.exports = (sequelize, DataTypes) => {
         values: ["Active", "Deactive"],
         validate: {
           isIn: {
-            args: [['Active', 'Deactive']],
+            args: [["Active", "Deactive"]],
             msg: 'Invalid value for student.status (Active, Deactive)'
           }
         }

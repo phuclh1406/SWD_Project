@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Major.hasMany(models.Student, {foreignKey: 'major_id', as: 'major_student'});
+      Major.hasMany(models.Project, {foreignKey: 'major_id', as: 'major_project'});
     }
   }
   Major.init({

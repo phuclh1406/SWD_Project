@@ -50,11 +50,25 @@ const updateStudent = async (req, res) => {
     }
 };
 
+const updateProfile = async (req, res) => {
+    try {
+        // const { error } = joi.object({student_id}).validate({student_id: req.body.student_id});
+        // if (error) throw new BadRequestError(error.details[0].message);
+        const {student_id} = req.user;
+        const response = await services.updateProfile(req.body, student_id);
+        return res.status(200).json(response);
+    } catch (error) {
+        console.log(error);
+        throw new InternalServerError(error);
+    }
+};
+
 const deleteStudent = async (req, res) => {
     try {
+        const {student_id} = req.user;
         const { error } = joi.object({student_ids}).validate(req.query);
         if (error) throw new BadRequestError(error.details[0].message);
-        const response = await services.deleteStudent(req.query.student_ids);
+        const response = await services.deleteStudent(req.query.student_ids, student_id);
         return res.status(200).json(response);
     } catch (error) {
         console.log(error);
@@ -73,4 +87,4 @@ const getStudentById = async (req, res) => {
     }
 };
 
-module.exports = {getAllStudent, updateStudent, deleteStudent, getStudentById, createStudent, getAllStudentPaging};
+module.exports = {getAllStudent, updateStudent, deleteStudent, getStudentById, createStudent, getAllStudentPaging, updateProfile};

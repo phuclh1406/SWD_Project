@@ -1,7 +1,7 @@
 const services = require('../services');
 const {BadRequestError, InternalServerError} = require('../errors');
 const joi = require('joi');
-const {project_name, student_id, project_id, project_ids, description, url} = require('../helpers/joi_schema');
+const {project_name, student_id, project_id, project_ids, description, url, price, cate_id, major_id} = require('../helpers/joi_schema');
 
 const getAllProjects = async (req, res) => {
     try {
@@ -13,13 +13,40 @@ const getAllProjects = async (req, res) => {
     }
 };
 
+const getAllProjectsHome = async (req, res) => {
+    try {
+        const response = await services.getAllProjectsHome(req.query);
+        return res.status(200).json(response);
+    } catch (error) {
+        throw new InternalServerError(error);
+    }
+};
+
 const createProject = async (req, res) => {
     try {
-        const { error } = joi.object({project_name, student_id, description, url}).validate(req.body);
-        if (error) {
-            return res.status(400).json({msg: error.details[0].message});
+        const {student_id} = req.user
+        // const { error } = joi.object({project_name, description, url, price, cate_id, major_id}).validate(req.body);
+        // if (error) {
+        //     return res.status(400).json({msg: error.details[0].message});
+        // }
+        const {project_name: project_name, description: description, url: url, price: price, cate_id: cate_id, major_id: major_id} = req.body;
+        if(!project_name) {
+            throw new BadRequestError('Please provide project_name');
         }
-        const response = await services.createProject(req.body);
+        if(!description) {
+            throw new BadRequestError('Please provide description');
+        }
+        if(!price) {
+            throw new BadRequestError('Please provide price');
+        }
+        if(!cate_id) {
+            throw new BadRequestError('Please provide cate_id');
+        }
+        if(!major_id) {
+            throw new BadRequestError('Please provide major_id');
+        }
+
+        const response = await services.createProject(req.body, student_id);
         return res.status(200).json(response);
     } catch (error) {
         console.log(error);
@@ -61,4 +88,4 @@ const getProjectById = async (req, res) => {
     }
 };
 
-module.exports = {getAllProjects, createProject, updateProject, deleteProject, getProjectById};
+module.exports = {getAllProjects, createProject, updateProject, deleteProject, getProjectById, getAllProjectsHome};
