@@ -83,4 +83,22 @@ describe('getAllStudent function', () => {
   });
 });
 
-
+describe('deleteStudent function', () => {
+  it('should return a 200 response with the correct data', async () => {
+    // Arrange
+    const student_ids = ["V2sSC1HSLASNtTT0RhzwqDxxwri2"]
+    const req = { user: { student_id: "12345" }, query: { student_ids } };
+    const res = { status: jest.fn().mockReturnThis(), json: jest.fn() };
+    const expectedResponse = { message: 'Student deleted successfully' };
+  
+    // Mock the services.deleteStudent function to return the expected response
+    services.deleteStudent = jest.fn().mockResolvedValue(expectedResponse);
+  
+    // Act
+    await deleteStudent(req, res);
+  
+    // Assert
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith(expectedResponse);
+  });
+});
