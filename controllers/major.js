@@ -13,6 +13,17 @@ const getAllMajors = async (req, res) => {
     }
 };
 
+const getMajorById = async (req, res) => {
+    try {
+        const { id: major_id } = req.params;
+        const response = await services.getMajorById(major_id);
+        return res.status(200).json(response);
+    } catch (error) {
+        console.log(error);
+        throw new InternalServerError(error.message);
+    }
+};
+
 const createMajor = async (req, res) => {
     try {
         const { error } = joi.object({major_name}).validate(req.body);
@@ -50,4 +61,4 @@ const deleteMajor = async (req, res) => {
     }
 };
 
-module.exports = {getAllMajors, createMajor, updateMajor, deleteMajor};
+module.exports = {getAllMajors, createMajor, updateMajor, deleteMajor, getMajorById};

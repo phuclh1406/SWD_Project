@@ -1,5 +1,6 @@
 const db = require('../models');
 const { Op } = require('sequelize');
+const { major_id } = require('../helpers/joi_schema');
 
 const getAllMajors = ({page, limit, order, major_name, ...query}, role_name) => new Promise( async (resolve, reject) => {
     try {
@@ -28,6 +29,27 @@ const getAllMajors = ({page, limit, order, major_name, ...query}, role_name) => 
         reject(error);
     }
 });
+
+const getMajorById = async (major_id) => {
+    try {
+  
+      const major = await db.Major.findOne({
+        where: { major_id: major_id },
+        attributes: {
+          exclude: ['createdAt', 'updatedAt'],
+        },
+      });
+  
+      if (!major) {
+        return { msg: 'Cannot find major' };
+      }
+  
+      return { msg: 'Got major', major };
+    } catch (error) {
+      throw error;
+    }
+  };
+
 
 const createMajor = (body) => new Promise( async (resolve, reject) => {
     try {
@@ -81,4 +103,4 @@ const deleteMajor = (major_ids) => new Promise( async (resolve, reject) => {
     }
 });
 
- module.exports = { getAllMajors, createMajor, updateMajor, deleteMajor};
+ module.exports = { getAllMajors, createMajor, updateMajor, deleteMajor, getMajorById};

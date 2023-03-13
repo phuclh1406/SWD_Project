@@ -73,6 +73,32 @@ router.get("/", verifyToken, controllers.getAllCategories);
 
 /**
  * @swagger
+ * /api/v1/categories/{id}:
+ *   get:
+ *     security: 
+ *         - BearerAuth: []
+ *     summary: Returns the the category by id
+ *     tags: [category-controller]
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         schema:
+ *           type: string
+ *         description: Find category by cate_id
+ *     responses:
+ *       200:
+ *         description: For get the category by id
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Category'
+ */
+router.get("/:id", verifyToken, controllers.getCategoryById);
+
+/**
+ * @swagger
  * /api/v1/categories:
  *   post:
  *     security: 

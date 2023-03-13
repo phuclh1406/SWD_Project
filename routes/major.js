@@ -73,6 +73,32 @@ router.get("/", verifyToken, controllers.getAllMajors);
 
 /**
  * @swagger
+ * /api/v1/majors/{id}:
+ *   get:
+ *     security: 
+ *         - BearerAuth: []
+ *     summary: Returns the the major by id
+ *     tags: [major-controller]
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         schema:
+ *           type: string
+ *         description: Find major by major_id
+ *     responses:
+ *       200:
+ *         description: For get the major by id
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Major'
+ */
+router.get("/:id", verifyToken, controllers.getMajorById);
+
+/**
+ * @swagger
  * /api/v1/majors:
  *   post:
  *     security: 
