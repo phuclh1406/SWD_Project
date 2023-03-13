@@ -69,20 +69,11 @@ const createMajor = (body) => new Promise( async (resolve, reject) => {
 
 const updateMajor = ({major_id, ...body}) => new Promise( async (resolve, reject) => {
     try {
-        const checkDuplicateName = await db.Major.findOne({
-            where: {major_name: body?.major_name}
-        });
-
-        if (checkDuplicateName !== null) {
-            resolve({
-                msg: 'Major name already have'
-            });
-        };
         const majors = await db.Major.update(body, {
             where: {major_id}
         });
         resolve({
-            msg: majors[0] > 0 ? `${majors[0]} project is updated` : 'Cannot update project/ project_id not found',
+            msg: majors[0] > 0 ? `${majors[0]} major is updated` : 'Cannot update major/ major_id not found',
         });
     } catch (error) {
         reject(error);
