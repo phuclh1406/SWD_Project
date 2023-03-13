@@ -20,18 +20,20 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
-    url: DataTypes.STRING,
+    title: DataTypes.STRING,
+    file: DataTypes.STRING,
+    description: DataTypes.STRING,
     application_id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4
     },
     status: {
       type: DataTypes.ENUM,
-      values: ["Active", "Pending", "Deactive", "Finished"],
+      values: ["Active", "Deactive", "Finished"],
       validate: {
         isIn: {
-          args: [["Active", "Pending", "Deactive", "Finished"]],
-          msg: 'Invalid value for deliverable.status (Active, Pending, Deactive, Finished)'
+          args: [["Active", "Deactive", "Finished"]],
+          msg: 'Invalid value for deliverable.status (Active, Deactive, Finished)'
         }
       }
     }

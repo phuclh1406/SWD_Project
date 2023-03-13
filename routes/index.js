@@ -7,6 +7,7 @@ const major = require('./major');
 const role = require('./role');
 const category = require('./category');
 const application = require('./application');
+const deliverable = require('./deliverable');
 const notFoundMiddleware = require('../middlewares/not-found');
 const errorHandlerMiddleware = require('../middlewares/error_handler');
 
@@ -19,6 +20,7 @@ const initRoutes = (app) => {
     app.use('/api/v1/categories', category);
     app.use('/api/v1/roles', role);
     app.use('/api/v1/applications', application);
+    app.use('/api/v1/deliverables', deliverable);
 
     
     app.use('/', (req, res) => {

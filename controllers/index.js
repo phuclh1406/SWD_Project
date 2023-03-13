@@ -4,6 +4,7 @@ const {uploadFile, pushNotification} = require('./firebaseService');
 const {getAllProjects, createProject, updateProject, deleteProject, getProjectById, getAllProjectsHome} = require('./project')
 const {getAllMajors, createMajor, updateMajor, deleteMajor, getMajorById} = require('./major')
 const {getAllCategories, createCategory, updateCategory, deleteCategory, getCategoryById} = require('./category')
+const {getAllDeliverables, createDeliverable, updateDeliverable, deleteDeliverable, getDeliverableById} = require('./deliverable')
 const {getAllRoles} = require('./role')
 const {getAllApplications, createApplication, acceptApplication, getApplicationById, updateApplication, deleteApplication} = require("./application")
 
@@ -42,6 +43,11 @@ module.exports = {
   updateApplication, 
   deleteApplication,
   getMajorById,
-  getCategoryById
+  getCategoryById,
+  getAllDeliverables, 
+  createDeliverable, 
+  updateDeliverable, 
+  deleteDeliverable, 
+  getDeliverableById
 
 };

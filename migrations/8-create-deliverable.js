@@ -8,7 +8,15 @@ module.exports = {
         defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
       },
-      url: {
+      title: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      file: {
+        type: Sequelize.STRING(1000),
+        allowNull: false,
+      },
+      description: {
         type: Sequelize.STRING,
       },
       application_id: {
