@@ -13,6 +13,17 @@ const getAllCategories = async (req, res) => {
     }
 };
 
+const getCategoryById = async (req, res) => {
+    try {
+        const { id: cate_id } = req.params;
+        const response = await services.getCategoryById(cate_id);
+        return res.status(200).json(response);
+    } catch (error) {
+        console.log(error);
+        throw new InternalServerError(error.message);
+    }
+};
+
 const createCategory = async (req, res) => {
     try {
         const { error } = joi.object({cate_name}).validate(req.body);
@@ -50,4 +61,4 @@ const deleteCategory = async (req, res) => {
     }
 };
 
-module.exports = {getAllCategories, createCategory, updateCategory, deleteCategory};
+module.exports = {getAllCategories, createCategory, updateCategory, deleteCategory, getCategoryById};

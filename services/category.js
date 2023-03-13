@@ -28,6 +28,26 @@ const getAllCategories = ({page, limit, order, cate_name, ...query}, role_name) 
     }
 });
 
+const getCategoryById = async (cate_id) => {
+    try {
+  
+      const cate = await db.Category.findOne({
+        where: { cate_id: cate_id },
+        attributes: {
+          exclude: ['createdAt', 'updatedAt'],
+        },
+      });
+  
+      if (!cate) {
+        return { msg: 'Cannot find category' };
+      }
+  
+      return { msg: 'Got category', cate };
+    } catch (error) {
+      throw error;
+    }
+  };
+
 const createCategory = (body) => new Promise( async (resolve, reject) => {
     try {
         const categories = await db.Category.findOrCreate({
@@ -80,4 +100,4 @@ const deleteCategory = (cate_ids) => new Promise( async (resolve, reject) => {
     }
 });
 
- module.exports = { getAllCategories, createCategory, updateCategory, deleteCategory};
+ module.exports = { getAllCategories, createCategory, updateCategory, deleteCategory, getCategoryById};
