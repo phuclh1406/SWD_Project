@@ -158,7 +158,7 @@ router.put("/", verifyToken, controllers.updateCategory);
 
 /**
  * @swagger
- * /api/v1/categories/{id}:
+ * /api/v1/categories/delete:
  *   put:
  *     security: 
  *         - BearerAuth: []
@@ -180,6 +180,6 @@ router.put("/", verifyToken, controllers.updateCategory);
  *               items:
  *                 $ref: '#/components/schemas/Category'
  */
-router.put("/:id", verifyToken, controllers.deleteCategory);
+router.put("/delete", verifyToken, controllers.deleteCategory);
 
 module.exports = router;

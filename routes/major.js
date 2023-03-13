@@ -158,7 +158,7 @@ router.put("/", verifyToken, controllers.updateMajor);
 
 /**
  * @swagger
- * /api/v1/majors/{id}:
+ * /api/v1/majors/delete:
  *   put:
  *     security: 
  *         - BearerAuth: []
@@ -180,6 +180,6 @@ router.put("/", verifyToken, controllers.updateMajor);
  *               items:
  *                 $ref: '#/components/schemas/Major'
  */
-router.put("/:id", verifyToken, controllers.deleteMajor);
+router.put("/delete", verifyToken, controllers.deleteMajor);
 
 module.exports = router;

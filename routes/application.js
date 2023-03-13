@@ -175,7 +175,7 @@ router.put("/", verifyToken, controllers.updateApplication);
 
 /**
  * @swagger
- * /api/v1/applications/{id}:
+ * /api/v1/applications/delete:
  *   put:
  *     security: 
  *         - BearerAuth: []
@@ -197,6 +197,6 @@ router.put("/", verifyToken, controllers.updateApplication);
  *               items:
  *                 $ref: '#/components/schemas/Application'
  */
-router.put("/:id", verifyToken, controllers.deleteApplication);
+router.put("/delete", verifyToken, controllers.deleteApplication);
 
 module.exports = router;
