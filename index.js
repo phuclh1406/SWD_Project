@@ -10,6 +10,7 @@ require("./config/connection_database");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static("client"));
 
 app.use(
   cors({

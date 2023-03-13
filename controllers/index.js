@@ -6,6 +6,7 @@ const {getAllDeliverables, createDeliverable, updateDeliverable, deleteDeliverab
 const {getAllMajors, createMajor, updateMajor, deleteMajor} = require('./major')
 const {getAllCategories, createCategory, updateCategory, deleteCategory} = require('./category')
 const {getAllRoles} = require('./role')
+const {payment, stripeWebhook} = require('./payment')
 const {getAllApplications, createApplication, acceptApplication, getApplicationById, updateApplication, deleteApplication} = require("./application")
 
 module.exports = {
@@ -46,6 +47,8 @@ module.exports = {
   createDeliverable, 
   updateDeliverable, 
   deleteDeliverable, 
-  getDeliverableById
+  getDeliverableById,
+  payment,
+  stripeWebhook
 
 };

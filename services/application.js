@@ -24,7 +24,7 @@ const getAllApplications = (
           const queries = { raw: true, nest: true };
           queries.order = [['updatedAt', 'DESC']];
           if (role_name !== "Admin") {
-            query.status = { [Op.notIn]: ['Deactive', 'Pending'] };
+            query.status = { [Op.notIn]: ['Deactive'] };
           }
           if (student_id)
             query.student_id = { [Op.eq]: student_id };
@@ -192,7 +192,7 @@ const createApplication = (body, student_id) =>
                 where: { project_id },
               });
             const application_update = await db.Application.update(
-                { status: "Pending" }, 
+                { status: "Accepted" }, 
                 {
                   where: { project_id },
                 });

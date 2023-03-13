@@ -150,30 +150,30 @@ router.post("/", verifyToken, controllers.createDeliverable);
  */
 router.put("/", verifyToken, controllers.updateDeliverable);
 
-// /**
-//  * @swagger
-//  * /api/v1/deliverables/{id}:
-//  *   put:
-//  *     security: 
-//  *         - BearerAuth: []
-//  *     summary: Delete the deliverables by id
-//  *     tags: [deliverable-controller]
-//  *     parameters:
-//  *       - name: deliverable_id[0]
-//  *         in: query
-//  *         schema:
-//  *           type: string
-//  *         description: Input deliverable_id to delete
-//  *     responses:
-//  *       200:
-//  *         description: Delete the deliverable by id
-//  *         content:
-//  *           application/json:
-//  *             schema:
-//  *               type: array
-//  *               items:
-//  *                 $ref: '#/components/schemas/Deliverable'
-//  */
-// router.put("/:id", verifyToken, controllers.deleteDeliverable);
+/**
+ * @swagger
+ * /api/v1/deliverables:
+ *   delete:
+ *     security: 
+ *         - BearerAuth: []
+ *     summary: Delete the deliverables by id
+ *     tags: [deliverable-controller]
+ *     parameters:
+ *       - name: deliverable_id
+ *         in: query
+ *         schema:
+ *           type: string
+ *         description: Input deliverable_id to delete
+ *     responses:
+ *       200:
+ *         description: Delete the deliverable by id
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Deliverable'
+ */
+router.delete("/", verifyToken, controllers.deleteDeliverable);
 
 module.exports = router;

@@ -15,6 +15,7 @@ const getAllDeliverables = async (req, res) => {
 
 const createDeliverable = async (req, res) => {
     try {
+        const {student_id} = req.user;
         const {title: title, file: file, application_id: application_id} = req.body;
         if(!title) {
             throw new BadRequestError('Please provide title');
@@ -25,7 +26,7 @@ const createDeliverable = async (req, res) => {
         if(!application_id) {
             throw new BadRequestError('Please provide application_id');
         }
-        const response = await services.createDeliverable(req.body);
+        const response = await services.createDeliverable(req.body, student_id);
         return res.status(200).json(response);
     } catch (error) {
         console.log(error);
@@ -48,6 +49,7 @@ const deleteDeliverable = async (req, res) => {
     try {
         const { error } = joi.object({deliverable_id}).validate(req.query);
         if (error) throw new BadRequestError(error.details[0].message);
+        // console.log(req.query);
         const response = await services.deleteDeliverable(req.query.deliverable_id);
         return res.status(200).json(response);
     } catch (error) {

@@ -1,6 +1,8 @@
 const db = require("../models");
 const { Op } = require("sequelize");
 const redisClient = require("../config/redis_config");
+const firebase = require("../config/firebase_config");
+const path = require("path");
 
 const getAllDeliverables = (
   { deliverable_name, application_id, ...query },
@@ -41,7 +43,7 @@ const getAllDeliverables = (
               {
                 model: db.Application,
                 as: "deliverable_application",
-                exclude: ["createdAt", "updatedAt"],
+                attributes: ["application_id", "price", "student_id", "project_id", "status"],
               },
             ],
           });
@@ -72,26 +74,43 @@ const getAllDeliverables = (
     }
   });
 
-const createDeliverable = (body) =>
+const createDeliverable = (body, student_id) =>
   new Promise(async (resolve, reject) => {
     try {
+      console.log(student_id);
       const application_id = body?.application_id;
-      const deliverables = await db.Deliverable.create({
-        ...body,
+
+      const application = await db.Application.findOne({
+        where: {application_id}
       });
-      await db.Application.update(
-        {
-          status: "Pending",
-        },
-        {
-          where: { application_id: application_id },
-        }
-      );
-      resolve({
-        msg: deliverables
-          ? "Create new deliverable successfully"
-          : "Cannot create new deliverable",
-      });
+
+
+      if (application.student_id !== student_id) {
+        resolve({
+          msg: "You didn't apply this project. Cannot create deliverable",
+        });
+      } else if (application.status !== 'Accepted') {
+        resolve({
+          msg: "Your application wasn't accepted by poster. Cannot create deliverable",
+        });
+      } else {
+        const deliverables = await db.Deliverable.create({
+          ...body,
+        });
+        await db.Application.update(
+          {
+            status: "Submitted",
+          },
+          {
+            where: { application_id: application_id },
+          }
+        );
+        resolve({
+          msg: deliverables
+            ? "Create new deliverable successfully"
+            : "Cannot create new deliverable",
+        });
+      }
     } catch (error) {
       reject(error);
     }
@@ -117,11 +136,8 @@ const updateDeliverable = ({ deliverable_id, ...body }) =>
 const deleteDeliverable = (deliverable_id) =>
   new Promise(async (resolve, reject) => {
     try {
-      const deliverable = await db.Deliverable.destroy({
-        where: { deliverable_id: deliverable_id },
-      });
       const deliverable_find = await db.Deliverable.findOne({
-        where: { deliverable_id: deliverable_id },
+        where: { deliverable_id },
         include: [
           {
             model: db.Application,
@@ -130,19 +146,35 @@ const deleteDeliverable = (deliverable_id) =>
           },
         ],
       });
-      console.log(deliverable_find);
+
+      if (deliverable_find.file) {
+        const filename = path.basename(`${deliverable_find.file}`).split('?')[0];
+
+        await firebase.bucket.file(filename).delete()
+          .then(() => {
+            console.log('File deleted successfully');
+          })
+          .catch((error) => {
+            console.error('Error deleting file:', error);
+          });
+      }
 
       const application_id = deliverable_find.application_id;
       console.log(application_id);
 
       await db.Application.update(
         {
-          status: "Active",
+          status: "Accepted",
         },
         {
           where: { application_id: application_id },
         }
       );
+
+      const deliverable = await db.Deliverable.destroy({
+        where: { deliverable_id },
+      });
+
       resolve({
         msg:
           deliverable > 0

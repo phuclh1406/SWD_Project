@@ -29,6 +29,7 @@
     "redis": "^4.6.5",
     "request": "^2.88.2",
     "sequelize": "^6.28.0",
+    "stripe": "^11.14.0",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^4.6.0"
   },
