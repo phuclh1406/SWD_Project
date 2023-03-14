@@ -18,7 +18,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /api/v1/statistic:
+ * /api/v1/statistic/projects:
  *   get:
  *     security: 
  *         - BearerAuth: []
@@ -34,11 +34,11 @@ const router = express.Router();
  *               items:
  *                 $ref: '#/components/schemas/Statistic'
  */
-router.get("/", verifyToken, controllers.countAllProject);
+router.get("/projects", verifyToken, controllers.countAllProject);
 
 /**
  * @swagger
- * /api/v1/statistic/week:
+ * /api/v1/statistic/projects/week:
  *   get:
  *     security: 
  *         - BearerAuth: []
@@ -54,11 +54,11 @@ router.get("/", verifyToken, controllers.countAllProject);
  *               items:
  *                 $ref: '#/components/schemas/Statistic'
  */
-router.get("/week", verifyToken, controllers.countAllProjectInOneWeek);
+router.get("/projects/week", verifyToken, controllers.countAllProjectInOneWeek);
 
 /**
  * @swagger
- * /api/v1/statistic/month:
+ * /api/v1/statistic/projects/month:
  *   get:
  *     security: 
  *         - BearerAuth: []
@@ -74,11 +74,11 @@ router.get("/week", verifyToken, controllers.countAllProjectInOneWeek);
  *               items:
  *                 $ref: '#/components/schemas/Statistic'
  */
-router.get("/month", verifyToken, controllers.countAllProjectInOneMonth);
+router.get("/projects/month", verifyToken, controllers.countAllProjectInOneMonth);
 
 /**
  * @swagger
- * /api/v1/statistic/6month:
+ * /api/v1/statistic/projects/6month:
  *   get:
  *     security: 
  *         - BearerAuth: []
@@ -94,11 +94,11 @@ router.get("/month", verifyToken, controllers.countAllProjectInOneMonth);
  *               items:
  *                 $ref: '#/components/schemas/Statistic'
  */
-router.get("/6month", verifyToken, controllers.countAllProjectInSixMonth);
+router.get("/projects/6month", verifyToken, controllers.countAllProjectInSixMonth);
 
 /**
  * @swagger
- * /api/v1/statistic/year:
+ * /api/v1/statistic/projects/year:
  *   get:
  *     security: 
  *         - BearerAuth: []
@@ -114,6 +114,6 @@ router.get("/6month", verifyToken, controllers.countAllProjectInSixMonth);
  *               items:
  *                 $ref: '#/components/schemas/Statistic'
  */
-router.get("/year", verifyToken, controllers.countAllProjectInOneYear);
+router.get("/projects/year", verifyToken, controllers.countAllProjectInOneYear);
 
 module.exports = router;
