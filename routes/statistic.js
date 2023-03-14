@@ -116,4 +116,24 @@ router.get("/projects/6month", verifyToken, controllers.countAllProjectInSixMont
  */
 router.get("/projects/year", verifyToken, controllers.countAllProjectInOneYear);
 
+/**
+ * @swagger
+ * /api/v1/statistic/projects/allIn:
+ *   get:
+ *     security: 
+ *         - BearerAuth: []
+ *     summary: Returns number of project in the system (1 week, 1 month, 6 month, 1 year, all in one api)
+ *     tags: [statistic-controller]
+ *     responses:
+ *       200:
+ *         description: count all project in the system (1 week, 1 month, 6 month, 1 year, all in one api)
+ *         content:
+ *           application/json:
+ *              schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Statistic'
+ */
+router.get("/projects/allIn", verifyToken, controllers.countAllProjectInOneAPI);
+
 module.exports = router;

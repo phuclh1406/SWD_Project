@@ -51,4 +51,13 @@ const countAllProjectInOneWeek = async (req, res) => {
     }
   };
 
-module.exports = { countAllProject, countAllProjectInOneYear, countAllProjectInOneMonth, countAllProjectInOneWeek, countAllProjectInSixMonth };
+  const countAllProjectInOneAPI = async (req, res) => {
+    try {
+      const response = await services.countAllProjectInOneAPI();
+      return res.status(200).json(response);
+    } catch (error) {
+      console.log(error);
+      throw new InternalServerError(error);
+    }
+  };
+module.exports = { countAllProject, countAllProjectInOneAPI, countAllProjectInOneYear, countAllProjectInSixMonth, countAllProjectInOneMonth, countAllProjectInOneWeek};
