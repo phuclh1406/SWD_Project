@@ -2,8 +2,8 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Histories', {
-      history_id: {
+    await queryInterface.createTable('Transactions', {
+      transaction_id: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
@@ -12,7 +12,7 @@ module.exports = {
         type: Sequelize.DOUBLE,
         allowNull: false
       },
-      student_id: {
+      poster_id: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
         references: {
@@ -20,18 +20,24 @@ module.exports = {
           key: 'student_id'
         }
       },
-      project_id: {
+      doer_id: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
         references: {
-          model: 'projects',
-          key: 'project_id'
+          model: 'students',
+          key: 'student_id'
+        }
+      },
+      deliverable_id: {
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
+        references: {
+          model: 'deliverables',
+          key: 'deliverable_id'
         }
       },
       status: {
-        type: Sequelize.ENUM,
-        values: ["Active", "Deactive"],
-        defaultValue: 'Active',
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
@@ -46,6 +52,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Histories');
+    await queryInterface.dropTable('Transactions');
   }
 };

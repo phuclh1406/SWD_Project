@@ -1,84 +1,106 @@
 const services = require('../services');
 const stripe = require('stripe')(process.env.STRIPE_KEY);
+const db = require("../models");
 
 const payment = async (req, res) => {
     try {
-      const customer = await stripe.customers.create({
-        metadata: {
-          student_id: req.body.student.student_id
-        }
-      })
-  
-      const line_items = req.body.applications.map(application => {
-        return {
-          price_data: {
-            currency: 'usd',
-            product_data: {
-              id: application.application_id.url,
-              name: application.application_project.project_name,
-              images: [application.application_project.image.url],
-              metadata: {
-                id: application.application_project.project_id.url
-              }
+      const {student_id} = req.user;
+      console.log(student_id);
+      const application = await db.Application.findOne({
+        where: { 
+            application_id: req.body.deliverables[0].deliverable_application.application_id
+        },
+        include: [
+          {
+            model: db.Student,
+            as: "application_student",
+            attributes: {
+              exclude: ["createdAt", "updatedAt"],
             },
-            unit_amount: application.application_project.price * 100
-          },
-          quantity: 1
-        }
+          }
+      ]
+      });
+    
+      const project_owner = await db.Project.findOne({
+        raw: true,
+        nest:true,
+        where: { 
+            project_id: application.project_id
+        },
+        include: [
+          {
+            model: db.Student,
+            as: "project_poster",
+            attributes: {
+              exclude: ["createdAt", "updatedAt"],
+            },
+          }
+      ]
       });
 
-    const session = await stripe.checkout.sessions.create({
-      customer: customer.id,
-      line_items,
-      mode: 'payment',
-      success_url: `${process.env.STRPIE_URL}/success.html`,
-      cancel_url: `${process.env.STRPIE_URL}/cancel.html`,
-    });
-  
-      //   // customer: customer.id,
-      //   mode: 'payment',
-      //   success_url: `${process.env.STRPIE_URL}/success.html`,
-      //   cancel_url: `${process.env.STRPIE_URL}/cancel.html`,
-      // });
+      // console.log();
+
+      if(project_owner.project_poster.student_id !== student_id) {
+        resolve({
+          msg: 'You are not owner of this project to accept application',
+        });
+      } else {
+        const customer = await stripe.customers.create({
+          metadata: {
+            poster_id: student_id,
+            doer_id: req.body.deliverables[0].deliverable_application.student_id,
+            deliverable_id: req.body.deliverables[0].deliverable_id,
+            application_id: req.body.deliverables[0].deliverable_application.application_id
+          }
+        })
     
+        const line_items = req.body.deliverables.map(deliverable => {
+          return {
+            price_data: {
+              currency: 'usd',
+              product_data: {
+                name: deliverable.title,
+              },
+              unit_amount: deliverable.deliverable_application.price * 100
+            },
+            quantity: 1
+          }
+        });
+  
+      const session = await stripe.checkout.sessions.create({
+        line_items,
+        customer: customer.id,
+        mode: 'payment',
+        success_url: `${process.env.STRPIE_URL}/success.html`,
+        cancel_url: `${process.env.STRPIE_URL}/cancel.html`,
+      });
       res.send({url: session.url});
+      }
     } catch (error) {
       console.log(error);
     }
-    // res.json({url: "Hi"});
   };
   
+  const createHistory = async (customer, data, lineItems) => {
+  const newTransaction = await db.Transaction.create({
+    poster_id: customer.metadata.poster_id,
+    doer_id: customer.metadata.doer_id,
+    deliverable_id: customer.metadata.deliverable_id,
+    price: data.amount_total,
+    status: data.payment_status
+  });
 
-  // Create Order 
-  const createOrder = async(customer, data, lineItems) => {
-    const newOrder = new Order ({
-      userId: customer.metadata.userId, 
-      customerId: data.customer,
-      paymentIntentId: data.payment_intent,
-      products: lineItems.data,
-      // subtotal: data.amount_subtotal,
-      total: data.amount_total,
-      payment_status: data.payment_status,
-    });
-
-    try {
-     const saveOrder =  await newOrder.save();
-
-     console.log("Process: ", saveOrder);
-    } catch (error) {
-      console.log(error);
-    }
-
-  }
+  console.log("Process: ", newTransaction.toJSON());
+};
 
 // Stripe webhook
 
 // This is your Stripe CLI webhook secret for testing your endpoint locally.
 let endpointSecret ;
 
-// endpointSecret = "whsec_529ea47186297862931c44246e83735da71f396f4dfc9907b46249ba95699c3d";
+endpointSecret = "whsec_529ea47186297862931c44246e83735da71f396f4dfc9907b46249ba95699c3d";
 
-const stripeWebhook = (req, res) => {
+const stripeWebhook = async (req, res) => {
   const sig = req.headers['stripe-signature'];
 
   let data; 
@@ -105,33 +127,26 @@ const stripeWebhook = (req, res) => {
     eventType = req.body.type; 
     console.log('eventType', eventType);
   }
-
+  console.log(eventType);
   // Handle the event
   if (eventType === "checkout.session.completed") {
-    console.log('customer', data.customer);
-    console.log('data', data);
-    const cus = stripe.customer.retrieve('cus_NVmH29vuHEwtd6')
-    console.log('cus', cus);
-    // .then((customer) => {
-    //   console.log("data:", data);
-      // stripe.checkout.sessions.listLineItems(
-      //   data.id,
-      //   {},
-      //   function(err, lineItems) {
-      //     console.log("Line_items", lineItems);
-      //     console.log(customer);
-      //     console.log("data:", data);
-
-      //     createOrder(customer, data, lineItems)
-      //   }
-      // );
-      // data.customer = ''; 
-      console.log(customer);
+    // console.log('customer', data.customer);
+    const cus = await stripe.customers.retrieve(
+      data.customer
+    ).then((customer) => {
+      console.log("data:", data);
+      stripe.checkout.sessions.listLineItems(
+        data.id,
+        {},
+        function(err, lineItems) {
+          console.log("Line_items", lineItems);
+          console.log('cus234', customer);
           console.log("data:", data);
 
-          createOrder(customer, data, lineItems)
-      
-    // }).catch(err => console.log(err.message));
+          createHistory(customer, data, lineItems)
+        }
+      );
+    }).catch(err => console.log(err.message));
   }
 
   // Return a 200 response to acknowledge receipt of the event

@@ -20,8 +20,6 @@ module.exports = (sequelize, DataTypes) => {
       });
 
       // Project.hasMany(models.JobPost, {as: 'project_post', foreignKey: 'post_id'});
-      Project.belongsToMany(models.Student, {through: models.History });
-      Project.hasMany(models.History, {as: "project_history", foreignKey: 'project_id'});
       Project.belongsTo(models.Category, {foreignKey: 'cate_id', targetKey: 'cate_id', as: 'project_category'});
       Project.belongsTo(models.Major, {foreignKey: 'major_id', targetKey: 'major_id', as: 'project_major'});
 

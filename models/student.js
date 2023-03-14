@@ -31,8 +31,8 @@ module.exports = (sequelize, DataTypes) => {
         as: "student_application",
       });
 
-      Student.belongsToMany(models.Project, {through: models.History });
-      Student.hasMany(models.History, {as: "student_history", foreignKey: 'student_id'});
+      Student.belongsToMany(models.Deliverable, {through: models.Transaction });
+      Student.hasMany(models.Transaction, {as: "student_transaction", foreignKey: 'student_id'});
     }
   }
   Student.init(

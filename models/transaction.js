@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class History extends Model {
+  class Transaction extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,38 +11,35 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      History.belongsTo(models.Student, {foreignKey: 'student_id', targetKey: 'student_id', as: 'history_student' })
-      History.belongsTo(models.Project, {foreignKey: 'project_id', targetKey: 'project_id', as: 'history_project'});
+      Transaction.belongsTo(models.Student, {foreignKey: 'student_id', targetKey: 'student_id', as: 'transaction_student' })
+      Transaction.belongsTo(models.Deliverable, {foreignKey: 'deliverable_id', targetKey: 'deliverable_id', as: 'transaction_project'});
     }
   }
-  History.init({
-    history_id: {
+  Transaction.init({
+    transaction_id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
     price: DataTypes.DOUBLE,
-    student_id: {
+    poster_id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4
     },
-    project_id: {
+    doer_id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4
+    },
+    deliverable_id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4
     },
     status: {
-      type: DataTypes.ENUM,
-      values: ["Active", "Deactive"],
-      validate: {
-        isIn: {
-          args: ["Active", "Deactive"],
-          msg: 'Invalid value for history.status (Active, Deactive)'
-        }
-      }
+      type: DataTypes.STRING
     }
   }, {
     sequelize,
-    modelName: 'History',
+    modelName: 'Transaction',
   });
-  return History;
+  return Transaction;
 };

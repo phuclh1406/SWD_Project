@@ -12,6 +12,8 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Deliverable.belongsTo(models.Application, {foreignKey: 'application_id', targetKey: 'application_id', as: 'deliverable_application'});
+      Deliverable.belongsToMany(models.Student, {through: models.Transaction });
+      Deliverable.hasMany(models.Transaction, {as: "deliverable_transaction", foreignKey: 'deliverable_id'});
     }
   }
   Deliverable.init({
