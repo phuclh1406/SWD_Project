@@ -6,6 +6,7 @@ const {getAllCategories, createCategory, updateCategory, deleteCategory, getCate
 const {getAllDeliverables, createDeliverable, updateDeliverable, deleteDeliverable, getDeliverableById} = require("./deliverable")
 const {getAllRoles} = require('./role')
 const {getAllApplications, createApplication, acceptApplication, getApplicationById, updateApplication, deleteApplication} = require("./application")
+const {countAllProject, countAllProjectInOneWeek, countAllProjectInOneMonth, countAllProjectInSixMonth, countAllProjectInOneYear, countAllProjectInOneAPI} = require('./statistic')
 
 module.exports = {
   loginGoogle,
@@ -46,5 +47,11 @@ module.exports = {
   updateDeliverable, 
   deleteDeliverable, 
   getDeliverableById,
+  countAllProject,
+  countAllProjectInOneWeek,
+  countAllProjectInOneMonth,
+  countAllProjectInSixMonth,
+  countAllProjectInOneYear,
+  countAllProjectInOneAPI
   
 };
