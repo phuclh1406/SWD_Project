@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const services = require('../services');
 const stripe = require('stripe')(process.env.STRIPE_KEY);
 const db = require("../models");
@@ -71,8 +73,8 @@ const payment = async (req, res) => {
         line_items,
         customer: customer.id,
         mode: 'payment',
-        success_url: `${process.env.STRPIE_URL}/success.html`,
-        cancel_url: `${process.env.STRPIE_URL}/cancel.html`,
+        success_url: `${process.env.CLIENT_URL}/success.html`,
+        cancel_url: `${process.env.CLIENT_URL}/cancel.html`,
       });
       res.send({url: session.url});
       }
@@ -98,7 +100,7 @@ const payment = async (req, res) => {
 // This is your Stripe CLI webhook secret for testing your endpoint locally.
 let endpointSecret ;
 
-endpointSecret = "whsec_529ea47186297862931c44246e83735da71f396f4dfc9907b46249ba95699c3d";
+endpointSecret = process.env.STRIPE_SECRET_KEY;
 
 const stripeWebhook = async (req, res) => {
   const sig = req.headers['stripe-signature'];
@@ -110,7 +112,7 @@ const stripeWebhook = async (req, res) => {
   let event;
 
   try {
-    event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
+    event = stripe.webhooks.constructEvent(req.rawBody, sig, endpointSecret);
     console.log("Webhook verified");
   } catch (err) {
     console.log(`Webhook Error: ${err.message}`);
