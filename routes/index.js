@@ -9,6 +9,7 @@ const category = require('./category');
 const application = require('./application');
 const deliverable = require('./deliverable');
 const statistic = require('./statistic')
+const stripe = require('./payment');
 const notFoundMiddleware = require('../middlewares/not-found');
 const errorHandlerMiddleware = require('../middlewares/error_handler');
 
@@ -23,6 +24,7 @@ const initRoutes = (app) => {
     app.use('/api/v1/applications', application);
     app.use('/api/v1/deliverables', deliverable);
     app.use('/api/v1/statistic', statistic);
+    app.use('/api/v1/stripe', stripe);
 
     
     app.use('/', (req, res) => {

@@ -6,6 +6,7 @@ const {getAllMajors, createMajor, updateMajor, deleteMajor, getMajorById} = requ
 const {getAllCategories, createCategory, updateCategory, deleteCategory, getCategoryById} = require('./category')
 const {getAllDeliverables, createDeliverable, updateDeliverable, deleteDeliverable, getDeliverableById} = require('./deliverable')
 const {getAllRoles} = require('./role')
+const {payment, stripeWebhook} = require('./payment')
 const {getAllApplications, createApplication, acceptApplication, getApplicationById, updateApplication, deleteApplication} = require("./application")
 const {countAllProject, countAllProjectInOneMonth, countAllProjectInOneWeek, countAllProjectInSixMonth, countAllProjectInOneYear} = require('./statistic')
 
@@ -54,6 +55,8 @@ module.exports = {
   countAllProjectInOneMonth,
   countAllProjectInOneWeek,
   countAllProjectInSixMonth,
-  countAllProjectInOneYear
+  countAllProjectInOneYear,
+  payment,
+  stripeWebhook
 
 };

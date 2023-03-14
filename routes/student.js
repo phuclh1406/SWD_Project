@@ -229,7 +229,7 @@ router.put("/profile/", verifyToken, controllers.updateProfile);
 
 /**
  * @swagger
- * /api/v1/students/{id}:
+ * /api/v1/students/delete:
  *   put:
  *     security: 
  *         - BearerAuth: []
@@ -251,6 +251,6 @@ router.put("/profile/", verifyToken, controllers.updateProfile);
  *               items:
  *                 $ref: '#/components/schemas/Student'
  */
-router.put("/:id", verifyToken, verifyRole, controllers.deleteStudent);
+router.put("/delete", verifyToken, verifyRole, controllers.deleteStudent);
 
 module.exports = router;

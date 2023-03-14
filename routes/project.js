@@ -199,7 +199,7 @@ router.put("/", verifyToken, controllers.updateProject);
 
 /**
  * @swagger
- * /api/v1/projects/{id}:
+ * /api/v1/projects/delete:
  *   put:
  *     security: 
  *         - BearerAuth: []
@@ -221,6 +221,6 @@ router.put("/", verifyToken, controllers.updateProject);
  *               items:
  *                 $ref: '#/components/schemas/Project'
  */
-router.put("/:id", verifyToken, controllers.deleteProject);
+router.put("/delete", verifyToken, controllers.deleteProject);
 
 module.exports = router;

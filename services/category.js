@@ -66,15 +66,6 @@ const createCategory = (body) => new Promise( async (resolve, reject) => {
 
 const updateCategory = ({cate_id, ...body}) => new Promise( async (resolve, reject) => {
     try {
-        const checkDuplicateName = await db.Category.findOne({
-            where: {cate_name: body?.cate_name}
-        });
-
-        if (checkDuplicateName !== null) {
-            resolve({
-                msg: 'Category name already have'
-            });
-        };
         const categories = await db.Category.update(body, {
             where: {cate_id}
         });

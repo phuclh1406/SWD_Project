@@ -227,15 +227,6 @@ const createProject = (body, student_id) =>
 const updateProject = ({ project_id, ...body }) =>
   new Promise(async (resolve, reject) => {
     try {
-      const checkDuplicateName = await db.Project.findOne({
-        where: { project_name: body?.project_name },
-      });
-
-      if (checkDuplicateName !== null) {
-        resolve({
-          msg: "Project name already have",
-        });
-      }
       const projects = await db.Project.update(body, {
         where: { project_id },
       });
