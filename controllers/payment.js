@@ -112,7 +112,7 @@ const stripeWebhook = async (req, res) => {
   let event;
 
   try {
-    event = stripe.webhooks.constructEvent(req.rawBody, sig, endpointSecret);
+    event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
     console.log("Webhook verified");
   } catch (err) {
     console.log(`Webhook Error: ${err.message}`);
