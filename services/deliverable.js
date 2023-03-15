@@ -37,13 +37,29 @@ const getAllDeliverables = (
             where: query,
             ...queries,
             attributes: {
-              exclude: ["application_id"],
+              exclude: ["application_id", "createdAt", "updatedAt"],
             },
             include: [
               {
                 model: db.Application,
                 as: "deliverable_application",
-                attributes: ["application_id", "price", "student_id", "project_id", "status"],
+                attributes: ["application_id", "price", "status"],
+                include: [
+                  {
+                    model: db.Student,
+                    as: "application_student",
+                    attributes: {
+                      exclude: ["createdAt", "updatedAt"],
+                    },
+                  },
+                  {
+                    model: db.Project,
+                    as: "application_project",
+                    attributes: {
+                      exclude: ["createdAt", "updatedAt"],
+                    },
+                  },
+                ],
               },
             ],
           });
