@@ -4,13 +4,9 @@ const { Op } = require('sequelize');
 const getAllCategories = ({page, limit, order, cate_name, ...query}, role_name) => new Promise( async (resolve, reject) => {
     try {
         const queries = {raw: true, nest: true};
-        const offset = (!page || +page <= 1) ? 0 : (+page - 1);
-        const flimit = +limit || +process.env.LIMIT_POST;
-        queries.offset = offset * flimit;
-        queries.limit = flimit;
-        if(order) queries.order = [order];
+        if(order) queries.order = [['updatedAt', 'DESC']];
         if(cate_name) query.cate_name = {[Op.substring]: cate_name};
-        if (role_name !== 'Admin' ) {query.status = { [Op.ne]: "Deactive" }};
+        if (role_name !== 'Admin') {query.status = { [Op.ne]: "Deactive" }};
 
         const categories = await db.Category.findAndCountAll({
             where: query,

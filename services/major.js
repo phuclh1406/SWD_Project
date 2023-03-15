@@ -5,14 +5,9 @@ const { major_id } = require('../helpers/joi_schema');
 const getAllMajors = ({page, limit, order, major_name, ...query}, role_name) => new Promise( async (resolve, reject) => {
     try {
         const queries = {raw: true, nest: true};
-        const offset = (!page || +page <= 1) ? 0 : (+page - 1);
-        const flimit = +limit || +process.env.LIMIT_POST;
-        queries.offset = offset * flimit;
-        queries.limit = flimit;
-        if(order) queries.order = [order];
+        if(order) queries.order = [['updatedAt', 'DESC']];
         if(major_name) query.major_name = {[Op.substring]: major_name};
         if (role_name !== 'Admin' ) {query.status = { [Op.ne]: "Deactive" }};
-
 
         const majors = await db.Major.findAndCountAll({
             where: query,

@@ -39,26 +39,6 @@ const router = express.Router();
  *         schema:
  *           type: string
  *         description: Find major by major_name
- *       - name: page
- *         in: query
- *         schema:
- *           type: int
- *         description: Paging page number
- *       - name: limit
- *         in: query
- *         schema:
- *           type: int
- *         description: Paging limit row to get in 1 page
- *       - name: order[0]
- *         in: query
- *         schema:
- *           type: string
- *         description: Sort by (major_name/status)
- *       - name: order[1]
- *         in: query
- *         schema:
- *           type: string
- *         description: Sort ASC/DESC
  *     responses:
  *       200:
  *         description: Get the list of the majors successfully
