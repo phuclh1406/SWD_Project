@@ -22,11 +22,11 @@ const router = express.Router();
  *   get:
  *     security: 
  *         - BearerAuth: []
- *     summary: Returns number of project in the system
+ *     summary: Returns number of project in the system (1 week, 1 month, 6 month, 1 year, all)
  *     tags: [statistic-controller]
  *     responses:
  *       200:
- *         description: count all project in the system
+ *         description: count all project in the system (1 week, 1 month, 6 month, 1 year, all)
  *         content:
  *           application/json:
  *              schema:
@@ -34,19 +34,19 @@ const router = express.Router();
  *               items:
  *                 $ref: '#/components/schemas/Statistic'
  */
-router.get("/projects", verifyToken, controllers.countAllProject);
+router.get("/projects", verifyToken, controllers.countAllProjectInOneAPI);
 
 /**
  * @swagger
- * /api/v1/statistic/projects/week:
+ * /api/v1/statistic/finishProject:
  *   get:
  *     security: 
  *         - BearerAuth: []
- *     summary: Returns number of project in the system (1 week)
+ *     summary: Returns number of finish project in the system (1 week, 1 month, 6 month, 1 year, all)
  *     tags: [statistic-controller]
  *     responses:
  *       200:
- *         description: count all project in the system (1 week)
+ *         description: count all finish project in the system (1 week, 1 month, 6 month, 1 year, all)
  *         content:
  *           application/json:
  *              schema:
@@ -54,19 +54,19 @@ router.get("/projects", verifyToken, controllers.countAllProject);
  *               items:
  *                 $ref: '#/components/schemas/Statistic'
  */
-router.get("/projects/week", verifyToken, controllers.countAllProjectInOneWeek);
+router.get("/finishProject", verifyToken, controllers.countAllFinishProject);
 
 /**
  * @swagger
- * /api/v1/statistic/projects/month:
+ * /api/v1/statistic/accounts:
  *   get:
  *     security: 
  *         - BearerAuth: []
- *     summary: Returns number of project in the system (1 month)
+ *     summary: Returns number of accounts registered in the system (1 week, 1 month, 6 month, 1 year, all)
  *     tags: [statistic-controller]
  *     responses:
  *       200:
- *         description: count all project in the system (1 month)
+ *         description: count all accounts registered in the system (1 week, 1 month, 6 month, 1 year, all)
  *         content:
  *           application/json:
  *              schema:
@@ -74,66 +74,6 @@ router.get("/projects/week", verifyToken, controllers.countAllProjectInOneWeek);
  *               items:
  *                 $ref: '#/components/schemas/Statistic'
  */
-router.get("/projects/month", verifyToken, controllers.countAllProjectInOneMonth);
-
-/**
- * @swagger
- * /api/v1/statistic/projects/6month:
- *   get:
- *     security: 
- *         - BearerAuth: []
- *     summary: Returns number of project in the system (6 month)
- *     tags: [statistic-controller]
- *     responses:
- *       200:
- *         description: count all project in the system (6 month)
- *         content:
- *           application/json:
- *              schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Statistic'
- */
-router.get("/projects/6month", verifyToken, controllers.countAllProjectInSixMonth);
-
-/**
- * @swagger
- * /api/v1/statistic/projects/year:
- *   get:
- *     security: 
- *         - BearerAuth: []
- *     summary: Returns number of project in the system (1 year)
- *     tags: [statistic-controller]
- *     responses:
- *       200:
- *         description: count all project in the system (1 year)
- *         content:
- *           application/json:
- *              schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Statistic'
- */
-router.get("/projects/year", verifyToken, controllers.countAllProjectInOneYear);
-
-/**
- * @swagger
- * /api/v1/statistic/projects/allIn:
- *   get:
- *     security: 
- *         - BearerAuth: []
- *     summary: Returns number of project in the system (1 week, 1 month, 6 month, 1 year, all in one api)
- *     tags: [statistic-controller]
- *     responses:
- *       200:
- *         description: count all project in the system (1 week, 1 month, 6 month, 1 year, all in one api)
- *         content:
- *           application/json:
- *              schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Statistic'
- */
-router.get("/projects/allIn", verifyToken, controllers.countAllProjectInOneAPI);
+router.get("/accounts", verifyToken, controllers.countAllAccount);
 
 module.exports = router;
