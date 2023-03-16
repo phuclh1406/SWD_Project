@@ -46,100 +46,24 @@ const countAllProjectInOneAPI = () =>
     }
   });
 
-
-const countAllProject = () =>
+  const countAllAccount = () =>
   new Promise(async (resolve, reject) => {
     try {
-        const { count } = await db.Project.findAndCountAll({});
+        const { count } = await db.Student.findAndCountAll({});
+        const { count: count1 } = await db.Student.findAndCountAll({
+          where: {
+            createdAt: {
+              [Op.gte]: Sequelize.literal("DATE_SUB(NOW(), INTERVAL 7 DAY)"),
+            },
+          },
+        }, { Sequelize });
       resolve({
-        msg: count > 0
-          ? count
-          : "No Record",
+        all: count > 0 ? count : "No record",
+        in_1_week: count1 > 0 ? count1 : "No record",
       });
     } catch (error) {
       reject(error);
     }
   });
 
-  const countAllProjectInOneMonth = () =>
-  new Promise(async (resolve, reject) => {
-    try {
-        const { count } = await db.Project.findAndCountAll({
-            where: {
-              createdAt: {
-                [Op.gte]: Sequelize.literal('DATE_SUB(NOW(), INTERVAL 30 DAY)')
-              }
-            }
-          }, { Sequelize });
-      resolve({
-        msg: count > 0
-          ? count
-          : "No record",
-      });
-    } catch (error) {
-      reject(error);
-    }
-  });
-
-  const countAllProjectInOneWeek = () =>
-  new Promise(async (resolve, reject) => {
-    try {
-        const { count } = await db.Project.findAndCountAll({
-            where: {
-              createdAt: {
-                [Op.gte]: Sequelize.literal('DATE_SUB(NOW(), INTERVAL 7 DAY)')
-              }
-            }
-          }, { Sequelize });
-      resolve({
-        msg: count > 0
-          ? count
-          : "No record",
-      });
-    } catch (error) {
-      reject(error);
-    }
-  });
-
-  const countAllProjectInSixMonth = () =>
-  new Promise(async (resolve, reject) => {
-    try {
-        const { count } = await db.Project.findAndCountAll({
-            where: {
-              createdAt: {
-                [Op.gte]: Sequelize.literal('DATE_SUB(NOW(), INTERVAL 180 DAY)')
-              }
-            }
-          }, { Sequelize });
-      resolve({
-        msg: count > 0
-          ? count
-          : "No record",
-      });
-    } catch (error) {
-      reject(error);
-    }
-  });
-
-  const countAllProjectInOneYear = () =>
-  new Promise(async (resolve, reject) => {
-    try {
-        const { count } = await db.Project.findAndCountAll({
-            where: {
-              createdAt: {
-                [Op.gte]: Sequelize.literal('DATE_SUB(NOW(), INTERVAL 365 DAY)')
-              }
-            }
-          }, { Sequelize });
-      resolve({
-        msg: count > 0
-          ? count
-          : "No record",
-      });
-    } catch (error) {
-      reject(error);
-    }
-    
-  });
-
-module.exports = {countAllProject, countAllProjectInOneMonth, countAllProjectInOneWeek, countAllProjectInSixMonth, countAllProjectInOneYear, countAllProjectInOneAPI}
+module.exports = {countAllProjectInOneAPI, countAllAccount}
