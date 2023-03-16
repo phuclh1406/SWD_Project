@@ -36,4 +36,24 @@ const router = express.Router();
  */
 router.get("/projects", verifyToken, controllers.countAllProjectInOneAPI);
 
+/**
+ * @swagger
+ * /api/v1/statistic/accounts:
+ *   get:
+ *     security: 
+ *         - BearerAuth: []
+ *     summary: Returns number of accounts registered in the system (1 week, 1 month, 6 month, 1 year, all)
+ *     tags: [statistic-controller]
+ *     responses:
+ *       200:
+ *         description: count all accounts registered in the system (1 week, 1 month, 6 month, 1 year, all)
+ *         content:
+ *           application/json:
+ *              schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Statistic'
+ */
+router.get("/accounts", verifyToken, controllers.countAllAccount);
+
 module.exports = router;
