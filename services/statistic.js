@@ -166,4 +166,70 @@ const countAllProjectInOneAPI = () =>
     }
   });
 
-module.exports = {countAllProjectInOneAPI, countAllAccount, countAllFinishProject}
+  const summaryAllTransaction = () =>
+  new Promise(async (resolve, reject) => {
+    try {
+      const totalAmount = await db.Transaction.findAll({
+        attributes: [
+          [Sequelize.fn('sum', Sequelize.col('price')), 'total_price'],
+        ],
+        raw: true
+      });
+
+      const totalAmount1 = await db.Transaction.findAll({
+        where: {
+          createdAt: {
+            [Op.gte]: Sequelize.literal("DATE_SUB(NOW(), INTERVAL 30 DAY)"),
+          },
+        },
+        attributes: [
+          [Sequelize.fn('sum', Sequelize.col('price')), 'total_price'],
+        ],
+        raw: true
+      });
+      const totalAmount2 = await db.Transaction.findAll({
+        where: {
+          createdAt: {
+            [Op.gte]: Sequelize.literal("DATE_SUB(NOW(), INTERVAL 180 DAY)"),
+          },
+        },
+        attributes: [
+          [Sequelize.fn('sum', Sequelize.col('price')), 'total_price'],
+        ],
+        raw: true
+      });
+      const totalAmount3 = await db.Transaction.findAll({
+        where: {
+          createdAt: {
+            [Op.gte]: Sequelize.literal("DATE_SUB(NOW(), INTERVAL 7 DAY)"),
+          },
+        },
+        attributes: [
+          [Sequelize.fn('sum', Sequelize.col('price')), 'total_price'],
+        ],
+        raw: true
+      });
+      const totalAmount4 = await db.Transaction.findAll({
+        where: {
+          createdAt: {
+            [Op.gte]: Sequelize.literal("DATE_SUB(NOW(), INTERVAL 365 DAY)"),
+          },
+        },
+        attributes: [
+          [Sequelize.fn('sum', Sequelize.col('price')), 'total_price'],
+        ],
+        raw: true
+      });
+      resolve({
+        all: totalAmount[0].total_price > 0 ? totalAmount[0].total_price : "No record",
+        in_1_week: totalAmount3[0].total_price > 0 ? totalAmount3[0].total_price : "No record",
+        in_1_month: totalAmount1[0].total_price > 0 ? totalAmount1[0].total_price : "No record",
+        in_6_month: totalAmount2[0].total_price > 0 ? totalAmount2[0].total_price : "No record",
+        in_1_year: totalAmount4[0].total_price > 0 ? totalAmount4[0].total_price : "No record",
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
+
+module.exports = {countAllProjectInOneAPI, countAllAccount, countAllFinishProject, summaryAllTransaction}
