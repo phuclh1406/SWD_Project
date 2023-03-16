@@ -6,7 +6,7 @@ const {getAllCategories, createCategory, updateCategory, deleteCategory, getCate
 const {getAllDeliverables, createDeliverable, updateDeliverable, deleteDeliverable, getDeliverableById} = require("./deliverable")
 const {getAllRoles} = require('./role')
 const {getAllApplications, createApplication, acceptApplication, getApplicationById, updateApplication, deleteApplication} = require("./application")
-const {countAllProjectInOneAPI, countAllAccount} = require('./statistic')
+const {countAllProjectInOneAPI, countAllAccount, countAllFinishProject} = require('./statistic')
 const {getAllTransactions} = require('./payment')
 
 module.exports = {
@@ -50,6 +50,7 @@ module.exports = {
   getDeliverableById,
   countAllProjectInOneAPI,
   getAllTransactions,
-  countAllAccount
+  countAllAccount,
+  countAllFinishProject
 
 };

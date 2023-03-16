@@ -20,4 +20,14 @@ const { BadRequestError, InternalServerError } = require("../errors");
       throw new InternalServerError(error);
     }
   };
-module.exports = {countAllProjectInOneAPI, countAllAccount};
+
+  const countAllFinishProject = async (req, res) => {
+    try {
+      const response = await services.countAllFinishProject();
+      return res.status(200).json(response);
+    } catch (error) {
+      console.log(error);
+      throw new InternalServerError(error);
+    }
+  };
+module.exports = {countAllProjectInOneAPI, countAllAccount, countAllFinishProject};

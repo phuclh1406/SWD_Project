@@ -22,11 +22,11 @@ const router = express.Router();
  *   get:
  *     security: 
  *         - BearerAuth: []
- *     summary: Returns number of project in the system (1 week, 1 month, 6 month, 1 year, all in one api)
+ *     summary: Returns number of project in the system (1 week, 1 month, 6 month, 1 year, all)
  *     tags: [statistic-controller]
  *     responses:
  *       200:
- *         description: count all project in the system (1 week, 1 month, 6 month, 1 year, all in one api)
+ *         description: count all project in the system (1 week, 1 month, 6 month, 1 year, all)
  *         content:
  *           application/json:
  *              schema:
@@ -35,6 +35,26 @@ const router = express.Router();
  *                 $ref: '#/components/schemas/Statistic'
  */
 router.get("/projects", verifyToken, controllers.countAllProjectInOneAPI);
+
+/**
+ * @swagger
+ * /api/v1/statistic/finishProject:
+ *   get:
+ *     security: 
+ *         - BearerAuth: []
+ *     summary: Returns number of finish project in the system (1 week, 1 month, 6 month, 1 year, all)
+ *     tags: [statistic-controller]
+ *     responses:
+ *       200:
+ *         description: count all finish project in the system (1 week, 1 month, 6 month, 1 year, all)
+ *         content:
+ *           application/json:
+ *              schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Statistic'
+ */
+router.get("/finishProject", verifyToken, controllers.countAllFinishProject);
 
 /**
  * @swagger

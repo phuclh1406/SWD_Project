@@ -106,4 +106,64 @@ const countAllProjectInOneAPI = () =>
     }
   });
 
-module.exports = {countAllProjectInOneAPI, countAllAccount}
+  const countAllFinishProject = () =>
+  new Promise(async (resolve, reject) => {
+    try {
+        const { count } = await db.Project.findAndCountAll({where: {
+          status: {
+            [Op.eq]: 'Finished'
+          }
+        },});
+        const { count: count1 } = await db.Project.findAndCountAll({
+          where: {
+            createdAt: {
+              [Op.gte]: Sequelize.literal("DATE_SUB(NOW(), INTERVAL 7 DAY)"),
+            },
+            status: {
+              [Op.eq]: 'Finished'
+            }
+          },
+        }, { Sequelize });
+        const { count: count2 } = await db.Project.findAndCountAll({
+          where: {
+            createdAt: {
+              [Op.gte]: Sequelize.literal("DATE_SUB(NOW(), INTERVAL 30 DAY)"),
+            },
+            status: {
+              [Op.eq]: 'Finished'
+            }
+          },
+        }, { Sequelize });
+        const { count: count3 } = await db.Project.findAndCountAll({
+          where: {
+            createdAt: {
+              [Op.gte]: Sequelize.literal("DATE_SUB(NOW(), INTERVAL 180 DAY)"),
+            },
+            status: {
+              [Op.eq]: 'Finished'
+            }
+          },
+        }, { Sequelize });
+        const { count: count4 } = await db.Project.findAndCountAll({
+          where: {
+            createdAt: {
+              [Op.gte]: Sequelize.literal("DATE_SUB(NOW(), INTERVAL 365 DAY)"),
+            },
+            status: {
+              [Op.eq]: 'Finished'
+            }
+          },
+        }, { Sequelize });
+      resolve({
+        all: count > 0 ? count : "No record",
+        in_1_week: count1 > 0 ? count1 : "No record",
+        in_1_month: count2 > 0 ? count2 : "No record",
+        in_6_month: count3 > 0 ? count3 : "No record",
+        in_1_year: count4 > 0 ? count4 : "No record",
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
+
+module.exports = {countAllProjectInOneAPI, countAllAccount, countAllFinishProject}
