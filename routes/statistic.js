@@ -76,4 +76,24 @@ router.get("/finishProject", verifyToken, controllers.countAllFinishProject);
  */
 router.get("/accounts", verifyToken, controllers.countAllAccount);
 
+/**
+ * @swagger
+ * /api/v1/statistic/transaction:
+ *   get:
+ *     security: 
+ *         - BearerAuth: []
+ *     summary: Returns sum of transaction in the system (1 week, 1 month, 6 month, 1 year, all)
+ *     tags: [statistic-controller]
+ *     responses:
+ *       200:
+ *         description: sum all transaction in the system (1 week, 1 month, 6 month, 1 year, all)
+ *         content:
+ *           application/json:
+ *              schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Statistic'
+ */
+router.get("/transaction", verifyToken, controllers.summaryAllTransaction);
+
 module.exports = router;
