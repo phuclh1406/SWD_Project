@@ -8,7 +8,7 @@ const {getAllDeliverables, createDeliverable, updateDeliverable, deleteDeliverab
 const {getAllRoles} = require('./role');
 const {payment, stripeWebhook} = require('./payment');
 const {getAllApplications, createApplication, acceptApplication, getApplicationById, updateApplication, deleteApplication} = require("./application");
-const {sendMail} = require('./sendMail');
+const {sendMail} = require('./forgotPassword');
 const {countAllProjectInOneAPI, countAllAccount, countAllFinishProject, summaryAllTransaction} = require('./statistic');
 
 module.exports = {

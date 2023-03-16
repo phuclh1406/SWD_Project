@@ -10,7 +10,7 @@ const application = require('./application');
 const deliverable = require('./deliverable');
 const statistic = require('./statistic')
 const stripe = require('./payment');
-const mail = require('./sendMail');
+const mail = require('./forgotPassword');
 const notFoundMiddleware = require('../middlewares/not-found');
 const errorHandlerMiddleware = require('../middlewares/error_handler');
 
