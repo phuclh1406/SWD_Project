@@ -10,6 +10,7 @@ const application = require('./application');
 const deliverable = require('./deliverable');
 const statistic = require('./statistic')
 const stripe = require('./payment');
+const mail = require('./sendMail');
 const notFoundMiddleware = require('../middlewares/not-found');
 const errorHandlerMiddleware = require('../middlewares/error_handler');
 
@@ -25,6 +26,7 @@ const initRoutes = (app) => {
     app.use('/api/v1/deliverables', deliverable);
     app.use('/api/v1/statistic', statistic);
     app.use('/api/v1/stripe', stripe);
+    app.use('/api/v1/forgotpass', mail);
 
     
     app.use('/', (req, res) => {

@@ -1,13 +1,14 @@
 const {loginGoogle, refreshAccessToken, logout, login, register}= require("./auth");
 const {getAllStudent, updateStudent, deleteStudent, getStudentById, createStudent, getAllStudentPaging, updateProfile} = require("./student");
-const {getAllProjects, createProject, updateProject, deleteProject, getProjectById, getAllProjectsHome} = require("./project")
-const {getAllMajors, createMajor, updateMajor, deleteMajor, getMajorById} = require("./major")
-const {getAllCategories, createCategory, updateCategory, deleteCategory, getCategoryById} = require("./category")
-const {getAllDeliverables, createDeliverable, updateDeliverable, deleteDeliverable, getDeliverableById} = require("./deliverable")
-const {getAllRoles} = require('./role')
-const {getAllApplications, createApplication, acceptApplication, getApplicationById, updateApplication, deleteApplication} = require("./application")
-const {countAllProjectInOneAPI, countAllAccount, countAllFinishProject} = require('./statistic')
-const {getAllTransactions} = require('./payment')
+const {getAllProjects, createProject, updateProject, deleteProject, getProjectById, getAllProjectsHome} = require("./project");
+const {getAllMajors, createMajor, updateMajor, deleteMajor, getMajorById} = require("./major");
+const {getAllCategories, createCategory, updateCategory, deleteCategory, getCategoryById} = require("./category");
+const {getAllDeliverables, createDeliverable, updateDeliverable, deleteDeliverable, getDeliverableById} = require("./deliverable");
+const {getAllRoles} = require('./role');
+const {getAllApplications, createApplication, acceptApplication, getApplicationById, updateApplication, deleteApplication} = require("./application");
+const {countAllProjectInOneAPI, countAllAccount, countAllFinishProject} = require('./statistic');
+const {getAllTransactions} = require('./payment');
+const {sendMails} = require('./sendMail');
 
 module.exports = {
   loginGoogle,
@@ -54,4 +55,6 @@ module.exports = {
   register,
   countAllAccount,
   countAllFinishProject,
+  sendMails,
+
 };

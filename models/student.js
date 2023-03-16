@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
         as: "student_role",
       });
       Student.hasMany(models.Project, {as: "student_project" , foreignKey: 'poster_id'});
+      Student.hasMany(models.Otp, {as: "student_otp" , foreignKey: 'student_id'});
       Student.belongsTo(models.Major, {
         foreignKey: "major_id",
         targetKey: 'major_id',
