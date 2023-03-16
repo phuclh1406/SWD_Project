@@ -1,4 +1,4 @@
-const {loginGoogle, refreshAccessToken, logout}= require("./auth");
+const {loginGoogle, refreshAccessToken, logout, login, register}= require("./auth");
 const {getAllStudent, updateStudent, deleteStudent, getStudentById, createStudent, getAllStudentPaging, updateProfile} = require("./student");
 const {getAllProjects, createProject, updateProject, deleteProject, getProjectById, getAllProjectsHome} = require("./project")
 const {getAllMajors, createMajor, updateMajor, deleteMajor, getMajorById} = require("./major")
@@ -55,5 +55,7 @@ module.exports = {
   countAllProjectInOneYear,
   countAllProjectInOneAPI,
   getAllTransactions,
+  login, 
+  register,
 
 };

@@ -85,4 +85,88 @@ router.post('/refresh-token', controllers.refreshAccessToken);
  */
 router.post('/logout', verifyToken, controllers.logout);
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     User-login:
+ *       type: object
+ *       properties:
+ *         email:
+ *           type: String
+ *           description: User email
+ *         password:
+ *           type: String
+ *           description: User password
+ */
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     User-register:
+ *       type: object
+ *       properties:
+ *         email:
+ *           type: String
+ *           description: User email
+ *         password:
+ *           type: String
+ *           description: User password
+ *         confirm_pass:
+ *           type: String
+ *           description: User confirm_pass
+ */
+
+/**
+ * @swagger
+ * /api/v1/auth/login:
+ *   post:
+ *     summary: For login 
+ *     tags: [auth-controller]
+ *     requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/User-login'
+ *            example:
+ *              email: dnhan2426@gmail.com
+ *              password: "123456"
+ *     responses:
+ *       200:
+ *         description: For login 
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ */
+router.post('/login', controllers.login);
+
+/**
+ * @swagger
+ * /api/v1/auth/register:
+ *   post:
+ *     summary: For register new account
+ *     tags: [auth-controller]
+ *     requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/User-register'
+ *            example:
+ *              email: dnhan2426@gmail.com
+ *              password: "123456"
+ *              confirm_pass: "123456" 
+ *     responses:
+ *       200:
+ *         description: For register new account
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ */
+router.post('/register', controllers.register);
+
 module.exports = router;

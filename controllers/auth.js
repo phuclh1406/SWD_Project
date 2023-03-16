@@ -43,4 +43,40 @@ const logout = async (req, res) => {
     }
 };
 
-module.exports = {loginGoogle, refreshAccessToken, logout};
+const register = async (req, res) => {
+    try {
+        const {email: email, password: password, confirm_pass: confirm_pass} = req.body;
+        if(!email) {
+            throw new BadRequestError('Please provide email');
+        }
+        if(!password) {
+            throw new BadRequestError('Please provide password');
+        }
+        if(!confirm_pass) {
+            throw new BadRequestError('Please provide confirm password');
+        }
+        const response = await services.register(req.body)
+        return res.status(200).json(response)
+
+    } catch (error) {
+        throw new InternalServerError(error);
+    }
+}
+const login = async (req, res) => {
+    try {
+        const {email: email, password: password} = req.body;
+        if(!email) {
+            throw new BadRequestError('Please provide email');
+        }
+        if(!password) {
+            throw new BadRequestError('Please provide password');
+        }
+        const response = await services.login(req.body)
+        return res.status(200).json(response)
+    } catch (error) {
+        console.log(error);
+        throw new InternalServerError(error);
+    }
+}
+
+module.exports = {loginGoogle, refreshAccessToken, logout, login, register };
