@@ -25,7 +25,7 @@ const router = express.Router();
  *                example: "a3cba015-3737-4b04-85ef-b5b877d13ce2"
  *              price:
  *                type: integer
- *                example: 20
+ *                example: 200000
  *              student_id:
  *                type: string
  *                example: "UqS5MbD2RtPxJ83LWCgapm8tXBj2"

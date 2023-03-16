@@ -61,7 +61,7 @@ const payment = async (req, res) => {
               product_data: {
                 name: deliverable.title,
               },
-              unit_amount: deliverable.deliverable_application.price * 100
+              unit_amount: deliverable.deliverable_application.price
             },
             quantity: 1
           }
