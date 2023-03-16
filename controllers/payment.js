@@ -43,9 +43,7 @@ const payment = async (req, res) => {
       // console.log();
 
       if(project_owner.project_poster.student_id !== student_id) {
-        resolve({
-          msg: 'You are not owner of this project to accept application',
-        });
+        return res.status(400).json('You are not owner of this project to accept application');
       } else {
         const customer = await stripe.customers.create({
           metadata: {
@@ -59,7 +57,7 @@ const payment = async (req, res) => {
         const line_items = req.body.deliverables.map(deliverable => {
           return {
             price_data: {
-              currency: 'usd',
+              currency: 'vnd',
               product_data: {
                 name: deliverable.title,
               },
