@@ -1,4 +1,4 @@
-const {loginGoogle, refreshAccessToken, logout} = require("./auth");
+const {loginGoogle, refreshAccessToken, logout, login, register } = require("./auth");
 const {getAllStudent, updateStudent, deleteStudent, getStudentById, createStudent, getAllStudentPaging, updateProfile} = require("./student");
 const {uploadFile, pushNotification} = require('./firebaseService');
 const {getAllProjects, createProject, updateProject, deleteProject, getProjectById, getAllProjectsHome} = require('./project')
@@ -54,6 +54,8 @@ module.exports = {
   countAllProjectInOneAPI,
   payment,
   stripeWebhook,
+  login, 
+  register,
   countAllAccount,
   countAllFinishProject,
   summaryAllTransaction
