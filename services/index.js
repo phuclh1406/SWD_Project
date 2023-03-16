@@ -9,14 +9,7 @@ const {getAllApplications, createApplication, acceptApplication, getApplicationB
 const {countAllProjectInOneAPI, countAllAccount, countAllFinishProject} = require('./statistic');
 const {getAllTransactions} = require('./payment');
 const {sendMails} = require('./sendMail');
-const {getAllProjects, createProject, updateProject, deleteProject, getProjectById, getAllProjectsHome} = require("./project")
-const {getAllMajors, createMajor, updateMajor, deleteMajor, getMajorById} = require("./major")
-const {getAllCategories, createCategory, updateCategory, deleteCategory, getCategoryById} = require("./category")
-const {getAllDeliverables, createDeliverable, updateDeliverable, deleteDeliverable, getDeliverableById} = require("./deliverable")
-const {getAllRoles} = require('./role')
-const {getAllApplications, createApplication, acceptApplication, getApplicationById, updateApplication, deleteApplication} = require("./application")
 const {countAllProjectInOneAPI, countAllAccount, countAllFinishProject, summaryAllTransaction} = require('./statistic')
-const {getAllTransactions} = require('./payment')
 
 module.exports = {
   loginGoogle,
