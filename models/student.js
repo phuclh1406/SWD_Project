@@ -59,6 +59,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.UUID
       },
       refresh_token: DataTypes.STRING,
+      accessChangePassword: DataTypes.BOOLEAN,
       status: {
         type: DataTypes.ENUM,
         values: ["Active", "Deactive"],

@@ -7,7 +7,7 @@ const {getAllDeliverables, createDeliverable, updateDeliverable, deleteDeliverab
 const {getAllRoles} = require('./role');
 const {getAllApplications, createApplication, acceptApplication, getApplicationById, updateApplication, deleteApplication} = require("./application");
 const {getAllTransactions} = require('./payment');
-const {sendMails} = require('./forgotPassword');
+const {sendMails, verifyOtp} = require('./forgotPassword');
 const {countAllProjectInOneAPI, countAllAccount, countAllFinishProject, summaryAllTransaction} = require('./statistic')
 
 module.exports = {
@@ -57,5 +57,6 @@ module.exports = {
   countAllFinishProject,
   sendMails,
   summaryAllTransaction,
-
+  verifyOtp,
+  
 };

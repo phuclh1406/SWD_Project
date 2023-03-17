@@ -12,6 +12,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
+      time_expired:{
+        type: Sequelize.DATE,
+        allowNull: false,
+      },
       student_id: {
         type: Sequelize.UUID,
         references: {

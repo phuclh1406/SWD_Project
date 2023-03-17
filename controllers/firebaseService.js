@@ -40,7 +40,7 @@ const uploadFile = async (req, res) => {
     const file = firebase.bucket.file(req.file.originalname);
     const [url] = await file.getSignedUrl({
       action: "read",
-      expires: "03-17-2023", // expiration date in mm-dd-yyyy format
+      expires: "6-17-2023", // expiration date in mm-dd-yyyy format
     });
     console.log(url);
 

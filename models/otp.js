@@ -25,6 +25,7 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
     },
     otp: DataTypes.STRING,
+    time_expired: DataTypes.DATE,
     student_id: {
       type: DataTypes.UUID
     },
