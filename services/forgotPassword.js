@@ -11,6 +11,16 @@ const sendMails = (body) =>
         where: { email: body?.mailTo },
       });
 
+      const otp = await db.Student.findOne({
+        where: { student_id: student.student_id },
+      });
+
+      if (otp) {
+        await db.Otp.destroy({
+          where: { student_id: student.student_id },
+        });
+      }
+
       if (!student) {
         resolve({
           msg: "Cannot find student with email",
@@ -20,7 +30,7 @@ const sendMails = (body) =>
         const otp = generateOTP();
 
         const now = new Date();
-        now.setMinutes(now.getMinutes() + 5);
+        now.setMinutes(now.getMinutes() + 1);
 
         const otpRecord = await db.Otp.create({
           otp,
