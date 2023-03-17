@@ -1,5 +1,8 @@
 const db = require("../models");
 const sgMail = require("@sendgrid/mail");
+const bcrypt = require('bcryptjs');
+
+const hashPassword = password => bcrypt.hashSync(password, bcrypt.genSaltSync(8));
 
 const sendMails = (body) =>
   new Promise(async (resolve, reject) => {
@@ -128,7 +131,7 @@ const verifyOtp = ({OTP, otp_id}) =>
           if (student.accessChangePassword) {
             if(confirm_password === new_password) {
               const studentUpdate = await db.Student.update({
-                password: new_password,
+                password: hashPassword(new_password),
                 accessChangePassword: false,
               }, {
                 where: { email: email },
