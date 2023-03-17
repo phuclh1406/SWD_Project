@@ -19,15 +19,11 @@ const sendMails = (body) =>
         const now = new Date();
         now.setMinutes(now.getMinutes() + 5);
 
-        console.log(now);
         const otpRecord = await db.Otp.create({
           otp,
           time_expired: now,
           student_id,
         });
-        console.log(otpRecord);
-        console.log(otpRecord[0]);
-        console.log(otpRecord[1]);
         sendEmail({
           to: body?.mailTo,
           templateId: "d-7db778ad382642aaa1bc7ee2ed842f74",
@@ -90,7 +86,7 @@ const verifyOtp = ({OTP, otp_id}) =>
   
         const now = new Date();
         if (!student.accessChangePassword) {
-          if (userOtp.time_expired < now) {
+          if (userOtp.time_expired > now) {
             if (userOtp.otp === OTP) {
               resolve({
                 msg: "Valid OTP",
@@ -98,7 +94,7 @@ const verifyOtp = ({OTP, otp_id}) =>
               const students = await db.Student.update({
                 accessChangePassword: true,
               }, {
-                where: { student_id: userOtp.student_id},
+                where: { student_id: userOtp.otp_student.student_id },
               });
             }
             resolve({
@@ -110,11 +106,48 @@ const verifyOtp = ({OTP, otp_id}) =>
           });
         }
         resolve({
-          msg: "Already verify",
+          msg: "Otp not found/User already verify OTP",
         });
       }
       resolve({
-        msg: "Otp not found",
+        msg: "Otp not found/Otp has been expired",
+      });
+      
+    } catch (error) {
+      reject(error);
+    }
+  });
+
+  const changePassword = ({email, new_password, confirm_password}) =>
+  new Promise(async (resolve, reject) => {
+    try {
+      const student = await db.Student.findOne({
+        where: { email: email }
+      });
+      if (student) {
+          if (student.accessChangePassword) {
+            if(confirm_password === new_password) {
+              const studentUpdate = await db.Student.update({
+                password: new_password,
+                accessChangePassword: false,
+              }, {
+                where: { email: email },
+              });
+              
+              resolve({
+                msg: "Change password successfully",
+              });
+            } 
+            resolve({
+              msg: "Confirm password not match with new password",
+            });
+          }
+          resolve({
+            msg: "Please verify before changing password",
+          });
+      }
+      resolve({
+        msg: "Student's email not found"
       });
       
     } catch (error) {
@@ -125,5 +158,5 @@ const verifyOtp = ({OTP, otp_id}) =>
 module.exports = {
   sendMails,
   verifyOtp,
-  
+  changePassword,
 };

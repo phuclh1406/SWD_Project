@@ -8,6 +8,26 @@ const router = express.Router();
  * @swagger
  * components:
  *   schemas:
+ *     New_password:
+ *       type: object
+ *       required:
+ *         - new_password
+ *         - confirm_password
+ *         - email
+ *       properties:
+ *         mailTo:
+ *           type: string
+ *           description: Change new password
+ *       example:
+ *         new_password: "123456"
+ *         confirm_password: "123456"
+ *         email: dnhan2426@gmail.com
+ */
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
  *     Mail_send:
  *       type: object
  *       required:
@@ -38,7 +58,7 @@ const router = express.Router();
  *           description: otp_id for find OTP
  *       example:
  *         OTP: "123456"
- *         otp_id: "some_otp_id"
+ *         otp_id: some_otp_id
  */
 
 /**
@@ -96,5 +116,33 @@ router.post("/send_recovery_email", controllers.sendMail);
  */
 router.post("/verify_otp", controllers.verifyOtp);
 
+/**
+ * @swagger
+ * /api/v1/forgotpass/change_password:
+ *   post:
+ *     summary: Change new password
+ *     tags: [forgot-password-controller]
+ *     requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/New_password'
+ *            example:
+ *              new_password: "123456"
+ *              confirm_password: "123456"
+ *              email: dnhan2426@gmail.com
+ *     responses:
+ *       200:
+ *         description: Change new password
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/New_password'
+
+ */
+router.post("/change_password", controllers.changePassword);
 
 module.exports = router;

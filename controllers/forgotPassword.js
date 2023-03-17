@@ -32,4 +32,24 @@ const verifyOtp = async (req, res) => {
     }
 }
 
-module.exports = {sendMail, verifyOtp};
+const changePassword = async (req, res) => {
+    try {
+        const {email: email, new_password: new_password, confirm_password: confirm_password } = req.body;
+        if(!new_password) {
+            throw new BadRequestError('Please provide new password');
+        }
+        if(!confirm_password) {
+            throw new BadRequestError('Please provide confirm password');
+        }
+        if(!email) {
+            throw new BadRequestError('Please provide email');
+        }
+        const response = await services.changePassword(req.body);
+        return res.status(200).json(response);
+    } catch (error) {
+        console.log(error);
+        throw new InternalServerError(error);
+    }
+}
+
+module.exports = {sendMail, verifyOtp, changePassword};
