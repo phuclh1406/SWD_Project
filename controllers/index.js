@@ -6,7 +6,7 @@ const {getAllMajors, createMajor, updateMajor, deleteMajor, getMajorById} = requ
 const {getAllCategories, createCategory, updateCategory, deleteCategory, getCategoryById} = require('./category');
 const {getAllDeliverables, createDeliverable, updateDeliverable, deleteDeliverable, getDeliverableById} = require('./deliverable');
 const {getAllRoles} = require('./role');
-const {payment, stripeWebhook} = require('./payment');
+const {payment, stripeWebhook, getAllTransactions} = require('./payment');
 const {getAllApplications, createApplication, acceptApplication, getApplicationById, updateApplication, deleteApplication} = require("./application");
 const {sendMail, verifyOtp, changePassword} = require('./forgotPassword');
 const {countAllProjectInOneAPI, countAllAccount, countAllFinishProject, summaryAllTransaction} = require('./statistic');
@@ -63,5 +63,6 @@ module.exports = {
   summaryAllTransaction,
   verifyOtp,
   changePassword,
-  
+  getAllTransactions,
+
 };

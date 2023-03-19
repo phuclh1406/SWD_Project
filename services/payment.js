@@ -3,15 +3,14 @@ const { Op } = require("sequelize");
 const redisClient = require("../config/redis_config");
 
 const getAllTransactions = (
-  { transaction_name, poster_id, ...query },
-  role_name
+  { poster_id, ...query }
 ) =>
   new Promise(async (resolve, reject) => {
     try {
-        const transaction = await redisClient.get('admin_transactions');
+        const transaction = await redisClient.get('transactions');
         if (transaction != null && transaction != "") {
           resolve({
-            msg: transaction ? `Got transactions` : "Cannot find transactions",
+            msg: `Got transactions`,
             transactions: JSON.parse(transaction),
           });
         } else {
@@ -37,7 +36,7 @@ const getAllTransactions = (
                 attributes: ["student_id", "student_name", "avatar"],
               },
               {
-                model: db.Deliverble,
+                model: db.Deliverable,
                 as: "transaction_deliverable",
                 attributes: ["deliverable_id", "title", "file"],
               }
@@ -52,7 +51,7 @@ const getAllTransactions = (
         }
     } catch (error) {
         console.log(error);
-      reject(error);
+        reject(error);
     }
   });
 

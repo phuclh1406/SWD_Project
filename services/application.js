@@ -14,13 +14,28 @@ const getAllApplications = (
             projects: JSON.parse(application),
             });
         } else {
-        const application = await redisClient.get(`admin_applications`);
-        if (application != null && application != "") {
+        const admin_application = await redisClient.get(`admin_applications`);
+        if (admin_application != null && admin_application != "") {
           resolve({
-            msg: application ? `Got applications` : "Cannot find applications",
-            applications: JSON.parse(application),
+            msg: admin_application ? `Got applications` : "Cannot find applications",
+            applications: JSON.parse(admin_application),
           });
         } else {
+          const currentDate = new Date();
+          const projects = await db.Project.findAll({});
+    
+          for (const project of projects) {
+            if (project.time_end > currentDate) {
+              const application_update = await db.Application.findAll({
+                where: { project_id: project.project_id },
+              });
+          
+              for (const application of application_update) {
+                await db.Application.update({ status: 'Overdue' }, { where: { application_id: application.application_id } });
+              }
+            }
+          }
+
           const queries = { raw: true, nest: true };
           queries.order = [['updatedAt', 'DESC']];
           if (role_name !== "Admin") {

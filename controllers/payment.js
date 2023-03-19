@@ -90,6 +90,22 @@ const payment = async (req, res) => {
     status: data.payment_status
   });
 
+  const application = await db.Application.findOne({
+    where: { application_id: customer.metadata.application_id },
+  });
+
+  const project_update = await db.Project.update({ status: "Finished" }, {
+      where: { project_id: application.project_id },
+    });
+
+  const application_update = await db.Application.update({status: 'Finished'}, {
+    where: { application_id: customer.metadata.application_id },
+    });
+
+  const deliverable_update = await db.Deliverable.update({status: 'Finished'}, {
+    where: { deliverable_id: customer.metadata.deliverable_id },
+    });
+
   console.log("Process: ", newTransaction.toJSON());
 };
 
@@ -153,4 +169,14 @@ const stripeWebhook = async (req, res) => {
   res.send().end;
 };
 
-module.exports = {payment, stripeWebhook};
+const getAllTransactions = async (req, res) => {
+  try {
+      const response = await services.getAllTransactions(req.query);
+      return res.status(200).json(response);
+  } catch (error) {
+      console.log(error);
+      throw new InternalServerError(error);
+  }
+};
+
+module.exports = {payment, stripeWebhook, getAllTransactions};

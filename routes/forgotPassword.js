@@ -84,7 +84,6 @@ const router = express.Router();
  *               type: array
  *               items:
  *                 $ref: '#/components/schemas/Mail_send'
-
  */
 router.post("/send_recovery_email", controllers.sendMail);
 

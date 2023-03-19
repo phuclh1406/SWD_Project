@@ -32,8 +32,22 @@ module.exports = (sequelize, DataTypes) => {
         as: "student_application",
       });
 
-      Student.belongsToMany(models.Deliverable, {through: models.Transaction });
-      Student.hasMany(models.Transaction, {as: "student_transaction", foreignKey: 'student_id'});
+      // Student.belongsToMany(models.Deliverable, {through: models.Transaction });
+      // Student.hasMany(models.Transaction, {as: "poster_transaction", foreignKey: 'poster_id'});
+      // Student.hasMany(models.Transaction, {as: "doer_transaction", foreignKey: 'doer_id'});
+
+      Student.belongsToMany(models.Deliverable, {
+        through: 'Transaction',
+        foreignKey: 'poster_id',
+        otherKey: 'deliverable_id',
+        as: "poster_transaction",
+      });
+      Student.belongsToMany(models.Deliverable, {
+        through: 'Transaction',
+        foreignKey: 'doer_id',
+        otherKey: 'deliverable_id',
+        as: "doer_transaction",
+      });
     }
   }
   Student.init(

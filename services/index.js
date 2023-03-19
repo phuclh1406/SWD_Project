@@ -59,5 +59,5 @@ module.exports = {
   summaryAllTransaction,
   verifyOtp,
   changePassword,
-  
+
 };

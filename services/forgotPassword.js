@@ -71,7 +71,7 @@ const generateOTP = () => {
 const deleteOTPAfterTimeLimit = async (otp) => {
   setTimeout(async () => {
     await db.Otp.destroy({ where: { otp } });
-  }, 300000);
+  }, 60000);
 };
 
 const verifyOtp = ({OTP, otp_id}) =>

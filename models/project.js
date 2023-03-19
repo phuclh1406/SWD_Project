@@ -42,6 +42,7 @@ module.exports = (sequelize, DataTypes) => {
     price: DataTypes.DOUBLE,
     url: DataTypes.STRING,
     image: DataTypes.STRING,
+    time_end: DataTypes.DATE,
     poster_id: {
       type: DataTypes.UUID,
     },

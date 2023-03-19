@@ -33,6 +33,36 @@ const router = express.Router();
 
 /**
  * @swagger
+ * components:
+ *   schemas:
+ *     Transaction:
+ *       type: object
+ *       required:
+ *         - title
+ *         - author
+ *       properties:
+ *         transaction_id:
+ *           type: string
+ *           description: The auto-generated id of the transaction
+ *         price:
+ *           type: number
+ *           description: The transaction total price
+ *         poster_id:
+ *           type: string
+ *           description: The poster who pay money 
+ *         doer_id:
+ *           type: string
+ *           description: The doer who receive money
+ *         deliverable_id:
+ *           type: string
+ *           description: The transaction of deliverable
+ *         status:
+ *           type: string
+ *           description: The transaction status
+ */
+
+/**
+ * @swagger
  * /api/v1/stripe/create-checkout-session:
  *   post:
  *     security: 
@@ -57,5 +87,31 @@ const router = express.Router();
  *         description: Invalid request data
  */
 router.post('/create-checkout-session', verifyToken, controllers.payment);
+
+/**
+ * @swagger
+ * /api/v1/stripe:
+ *   get:
+ *     security: 
+ *         - BearerAuth: []
+ *     summary: Returns the list of all the transactions
+ *     tags: [payment-controller]
+ *     parameters:
+ *       - name: poster_id
+ *         in: query
+ *         schema:
+ *           type: string
+ *         description: Find transactions by poster_id
+ *     responses:
+ *       200:
+ *         description: Get the list of the transactions successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Project'
+ */
+router.get("/", verifyToken, controllers.getAllTransactions);
 
 module.exports = router;

@@ -27,7 +27,10 @@ const router = express.Router();
  *           description: The project price
  *         url:
  *           type: string
- *           description: The project url 
+ *           description: The project url
+ *         time_end:
+ *           type: string
+ *           format: date-time
  *         poster_id:
  *           type: string
  *           description: The poster who posts project 
@@ -146,6 +149,7 @@ router.get("/:id", verifyToken, controllers.getProjectById);
  *              description: The system to manage field of the field owner and the field booking schedule of customer in Ho Chi Minh city
  *              price: 20
  *              image: 
+ *              time_end: 2023-03-18 07:00:00.000
  *              cate_id: b84a02a8-1b39-4ebf-bc5b-4255df846818
  *              major_id: 9a3dbef2-a705-45aa-9dcd-b23b3d7c12f9
  *     responses:
@@ -182,6 +186,7 @@ router.post("/", verifyToken, controllers.createProject);
  *               price: 20
  *               url: https://github.com/nhannguyen24/math-util-live.git
  *               image: 
+ *               time_end: 2023-03-18 07:00:00.000
  *               cate_id: b84a02a8-1b39-4ebf-bc5b-4255df846818
  *               major_id: 9a3dbef2-a705-45aa-9dcd-b23b3d7c12f9
  *               status: Active

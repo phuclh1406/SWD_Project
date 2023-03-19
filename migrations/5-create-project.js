@@ -26,6 +26,9 @@ module.exports = {
       image: {
         type: Sequelize.STRING,
       },
+      time_end: {
+        type: Sequelize.DATE,
+      },
       poster_id: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,

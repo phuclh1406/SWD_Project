@@ -29,7 +29,7 @@ const getAllProjects = (
           if (poster_id)
             query.poster_id = { [Op.eq]: poster_id };
           if (role_name !== "Admin") {
-            query.status = { [Op.notIn]: ['Deactive', 'Received'] };
+            query.status = { [Op.notIn]: ['Deactive', 'Received', 'Finished'] };
           }
           const projects = await db.Project.findAndCountAll({
             where: query,
@@ -95,7 +95,7 @@ const getAllProjects = (
             queries.order = [['updatedAt', 'DESC']];
             if (project_name)
               query.project_name = { [Op.substring]: project_name };
-              query.status = { [Op.notIn]: ['Deactive', 'Received'] };
+              query.status = { [Op.notIn]: ['Deactive', 'Received', 'Finished'] };
   
             const projects = await db.Project.findAndCountAll({
               where: query,
@@ -133,73 +133,6 @@ const getAllProjects = (
         reject(error);
       }
     });
-
-    // const getProjectsByDoerId = (
-    //   { page, limit, order, project_name, ...query },
-    //   student_id
-    // ) =>
-    //   new Promise(async (resolve, reject) => {
-    //     try {
-    //         const project_redis = await redisClient.get(`projects_doer_${page}`);
-    //         if (project_redis != null && Project != "") {
-    //           resolve({
-    //             msg: project_redis ? `Got projects` : "Cannot find projects",
-    //             project_redis: JSON.parse(project_redis),
-    //           });
-    //         } else {
-    //           // const queries = { raw: true, nest: true };
-    //           // const offset = !page || +page <= 1 ? 0 : +page - 1;
-    //           // const flimit = +limit || +process.env.LIMIT_POST;
-    //           // queries.offset = offset * flimit;
-    //           // queries.limit = flimit;
-    //           // if (order) queries.order = [order];
-    //           // if (project_name)
-    //           //   query.project_name = { [Op.substring]: project_name };
-    //           //   query.student_id = { [Op.eq]: student_id };
-    //           //   query.status = { [Op.ne]: "Deactive" };
-    
-    //           // const projects = await db.Project.findAndCountAll({
-    //           //   where: query, 
-    //           //   ...queries,
-    //           //   attributes: {
-    //           //     exclude: ["student_id", "createdAt", "updatedAt"],
-    //           //   },
-    //           //   include: [
-    //           //     {
-    //           //       model: db.Student,
-    //           //       as: "project_student",
-    //           //       attributes: ["student_id", "student_name", "avatar"],
-    //           //     },
-    //           //   ],
-    //           // });
-
-    //           const projects = await sequelize.query(`
-    //             SELECT *
-    //             FROM students s
-    //             LEFT JOIN applications a ON s.student_id = a.student_id
-    //             LEFT JOIN posts p ON a.post_id = p.post_id 
-    //             LEFT JOIN projects pj ON p.project_id = pj.project_id
-    //             WHERE s.student_id = ?
-    //             ORDER BY s.student_id ASC
-    //             LIMIT ?
-    //             OFFSET ?
-    //           `, {
-    //             replacements: [student_id, pageSize, (page - 1) * pageSize],
-    //             type: sequelize.QueryTypes.SELECT
-    //           });
-              
-    //           redisClient.setEx(`projects_doer_${page}`, 3600, JSON.stringify(projects));
-    
-    //           resolve({
-    //             msg: projects ? `Got projects` : "Cannot find projects",
-    //             projects: projects,
-    //           });
-    //         }
-    //     } catch (error) {
-    //         console.log(error);
-    //       reject(error);
-    //     }
-    //   });
 
 const createProject = (body, student_id) =>
   new Promise(async (resolve, reject) => {
