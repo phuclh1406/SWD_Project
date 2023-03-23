@@ -71,8 +71,8 @@ const payment = async (req, res) => {
         line_items,
         customer: customer.id,
         mode: 'payment',
-        success_url: `${process.env.CLIENT_URL}/success.html`,
-        cancel_url: `${process.env.CLIENT_URL}/cancel.html`,
+        success_url: `https://user-page-eight.vercel.app/`,
+        cancel_url: `https://user-page-eight.vercel.app/`,
       });
       res.send({url: session.url});
       }
