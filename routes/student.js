@@ -230,7 +230,7 @@ router.put("/profile/", verifyToken, controllers.updateProfile);
 /**
  * @swagger
  * /api/v1/students/delete:
- *   delete:
+ *   put:
  *     security: 
  *         - BearerAuth: []
  *     summary: Delete the students by id
