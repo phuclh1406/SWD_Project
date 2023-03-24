@@ -205,7 +205,7 @@ router.put("/", verifyToken, controllers.updateProject);
 /**
  * @swagger
  * /api/v1/projects/delete:
- *   put:
+ *   delete:
  *     security: 
  *         - BearerAuth: []
  *     summary: Delete the projects by id
